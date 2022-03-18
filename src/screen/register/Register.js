@@ -3,23 +3,26 @@ import {goToScreen} from '../../navigation/NavigationHelper';
 import {
   ADMINISTRATOR,
   APPLICANT,
+  LOGIN_PATH,
   RECRUITER,
-  REGISTER_PATH,
 } from '../../navigation/NavigationPath';
 
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
-export const Login = service => {
-  const {callLoginService} = service();
+export const Register = service => {
+  const {callRegisterService} = service();
+  const [fullname, setFullname] = useState('');
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [validation, setValidation] = useState({
+    safeFullname: false,
     safeEmail: false,
     safePassword: false,
+    fullname: '',
     email: '',
     password: '',
   });
@@ -44,8 +47,8 @@ export const Login = service => {
     // console.log(validation);
     setemail(email);
   };
-  const goToRegister = () => {
-    goToScreen(REGISTER_PATH, false);
+  const goToLogin = () => {
+    goToScreen(LOGIN_PATH, true);
   };
 
   const changePassword = password => {
@@ -62,27 +65,41 @@ export const Login = service => {
     setPassword(password);
   };
 
+  const changeFullname = fullname => {
+    let temp = validation;
+    if (fullname.length >= 4) {
+      temp.fullname = '';
+      temp.safeFullname = true;
+    } else {
+      temp.safeFullname = false;
+      temp.fullname = 'Fullname Minimum 4 Character';
+    }
+    setValidation(temp);
+    setFullname(fullname);
+  };
+
   const onAuthenticate = async () => {
-    console.log('request to api : ', email, password);
+    const params = {fullname, email, password};
     try {
       setLoading(true);
-      const response = await callLoginService(email, password);
+      const response = await callRegisterService(params);
 
       setLoading(false);
-      let loginInfo;
+      let registerInfo;
+      console.log(response);
       console.log('Tokennya : ', jwt_decode(response.data.token));
       if (response) {
-        loginInfo = jwt_decode(response.data.token);
-        loginInfo.token = response.data.token;
+        registerInfo = jwt_decode(response.data.token);
+        registerInfo.token = response.data.token;
 
-        dispatch(setLogin(loginInfo));
-        if (loginInfo.Role === 'user') {
+        dispatch(setLogin(registerInfo));
+        if (registerInfo.Role === 'user') {
           goToScreen(APPLICANT.DASHBOARD, true);
         }
-        if (loginInfo.Role === 'recruiter') {
+        if (registerInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);
         }
-        if (loginInfo.Role === 'administrator') {
+        if (registerInfo.Role === 'administrator') {
           goToScreen(ADMINISTRATOR.DASHBOARD, true);
         }
       }
@@ -93,6 +110,7 @@ export const Login = service => {
     }
   };
   return {
+    fullname,
     email,
     password,
     changeemail,
@@ -102,6 +120,7 @@ export const Login = service => {
     alert,
     setAlert,
     validation,
-    goToRegister,
+    goToLogin,
+    changeFullname,
   };
 };

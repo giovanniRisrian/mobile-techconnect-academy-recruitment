@@ -8,7 +8,7 @@ import {
   DASHBOARD,
   LOGIN_PATH,
   RECRUITER,
-  REGISTER,
+  REGISTER_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
 import {Text} from 'react-native';
@@ -20,6 +20,8 @@ import ApplicantDashboard from '../screen/applicant/dashboard/ApplicantDashboard
 import AdministratorDashboard from '../screen/admin/dashboard/AdministratorDashboard';
 import RecruiterDashboard from '../screen/recruiter/dashboard/RecruiterDashboard';
 import RegisterScreen from '../screen/register/RegisterScreen';
+import {Register} from '../screen/register/Register';
+import RegisterService from '../service/RegisterService';
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
@@ -36,6 +38,14 @@ const RootNavigator = () => {
               <LoginScreen {...props} login={() => Login(LoginService)} />
             )}
           </Stack.Screen>
+          <Stack.Screen name={REGISTER_PATH}>
+            {props => (
+              <RegisterScreen
+                {...props}
+                register={() => Register(RegisterService)}
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen
             name={APPLICANT.DASHBOARD}
             component={ApplicantDashboard}
@@ -48,7 +58,7 @@ const RootNavigator = () => {
             name={ADMINISTRATOR.DASHBOARD}
             component={AdministratorDashboard}
           />
-          <Stack.Screen name={REGISTER} component={RegisterScreen} />
+          {/* <Stack.Screen name={REGISTER} component={RegisterScreen} /> */}
         </Stack.Group>
       </Stack.Navigator>
       {/* {isLogin ? <BottomTabs /> : <Text></Text>} */}
