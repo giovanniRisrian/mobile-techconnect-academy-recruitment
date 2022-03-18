@@ -4,6 +4,7 @@ import {
   ADMINISTRATOR,
   APPLICANT,
   RECRUITER,
+  REGISTER,
 } from '../../navigation/NavigationPath';
 
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
@@ -42,6 +43,9 @@ export const Login = service => {
 
     // console.log(validation);
     setemail(email);
+  };
+  const goToRegister = () => {
+    goToScreen(REGISTER, false);
   };
 
   const changePassword = password => {
@@ -98,5 +102,6 @@ export const Login = service => {
     alert,
     setAlert,
     validation,
+    goToRegister,
   };
 };

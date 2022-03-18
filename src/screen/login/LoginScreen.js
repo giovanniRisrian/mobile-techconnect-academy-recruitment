@@ -21,6 +21,7 @@ const LoginScreen = ({login}) => {
     alert,
     setAlert,
     validation,
+    goToRegister,
   } = login();
 
   if (isLoading) {
@@ -77,6 +78,12 @@ const LoginScreen = ({login}) => {
           onPress={() => onAuthenticate()}>
           <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
+        <Text style={styles.title}>
+          Belum memiliki akun?{' '}
+          <Text style={{color: 'blue'}} onPress={() => goToRegister()}>
+            Daftar
+          </Text>
+        </Text>
       </SafeAreaView>
     );
   }
