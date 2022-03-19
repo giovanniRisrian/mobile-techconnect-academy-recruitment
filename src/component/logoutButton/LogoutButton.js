@@ -15,7 +15,7 @@ const LogoutButton = () => {
   const dispatch = useDispatch();
 
   const Logout = () => {
-    dispatch(setLogin({isLogin: null}));
+    dispatch(setLogin(null));
     goToLogin();
   };
   return (

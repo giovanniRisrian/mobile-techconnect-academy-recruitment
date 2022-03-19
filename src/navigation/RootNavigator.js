@@ -6,9 +6,12 @@ import {
   APPLICANT,
   APPLICANT_DASHBOARD,
   DASHBOARD,
+  HOME_PATH,
   LOGIN_PATH,
+  PROFILE_PATH,
   RECRUITER,
   REGISTER_PATH,
+  VACANY_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
 import {Text} from 'react-native';
@@ -22,6 +25,10 @@ import RecruiterDashboard from '../screen/recruiter/dashboard/RecruiterDashboard
 import RegisterScreen from '../screen/register/RegisterScreen';
 import {Register} from '../screen/register/Register';
 import RegisterService from '../service/RegisterService';
+import ProfileScreen from '../screen/applicant/profile/ProfileScreen';
+import HomeScreen from '../screen/home/HomeScreen';
+import VacanyScreen from '../screen/vacany/VacanyScreen';
+import BottomTabs from '../component/bottomTabs/BottomTabs';
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
@@ -58,9 +65,14 @@ const RootNavigator = () => {
             name={ADMINISTRATOR.DASHBOARD}
             component={AdministratorDashboard}
           />
+          <Stack.Screen name={PROFILE_PATH} component={ProfileScreen} />
+          <Stack.Screen name={HOME_PATH} component={HomeScreen} />
+          <Stack.Screen name={VACANY_PATH} component={VacanyScreen} />
+
           {/* <Stack.Screen name={REGISTER} component={RegisterScreen} /> */}
         </Stack.Group>
       </Stack.Navigator>
+      {isLogin ? <BottomTabs /> : <Text></Text>}
       {/* {isLogin ? <BottomTabs /> : <Text></Text>} */}
     </NavigationContainer>
   );
