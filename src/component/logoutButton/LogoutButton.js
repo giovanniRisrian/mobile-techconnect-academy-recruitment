@@ -9,14 +9,34 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {goToLogin} from '../../navigation/NavigationHelper';
-
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 const LogoutButton = () => {
   const dispatch = useDispatch();
-
-  const Logout = () => {
-    dispatch(setLogin(null));
-    goToLogin();
+  const GoogleLogout = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      console.log('Logout Success');
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  const Logout = async () => {
+    try {
+      console.log('Masuik sinikah');
+      await GoogleLogout();
+      dispatch(setLogin(null));
+      goToLogin();
+    } catch (error) {
+      console.log('eh masuk sinikah');
+      dispatch(setLogin(null));
+      goToLogin();
+    }
   };
   return (
     <View>

@@ -10,6 +10,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import GoogleLoginButton from '../../component/googleLoginButton/GoogleLoginButton';
+import GoogleLoginButtonComponent from '../../component/googleLoginButton/GoogleLoginButtonComponent';
+import LoginService from '../../service/LoginService';
+import RegisterService from '../../service/RegisterService';
 const LoginScreen = ({login}) => {
   const {
     email,
@@ -84,6 +88,9 @@ const LoginScreen = ({login}) => {
             Daftar
           </Text>
         </Text>
+        <GoogleLoginButtonComponent
+          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
+        />
       </SafeAreaView>
     );
   }
