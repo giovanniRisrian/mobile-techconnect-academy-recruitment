@@ -1,10 +1,16 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import React from "react";
+import ProfilePersonalScreen from "./ProfilePersonalScreen";
+import { SafeAreaView } from "react-native";
+import { ScrollView } from "native-base";
+import ProfileEducationScreen from "./ProfileEducationScreen";
+
 const ProfileScreen = () => {
   return (
-    <View>
-      <Text>Ini Adalah Profile Screen</Text>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <ProfileEducationScreen />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 export default ProfileScreen;
