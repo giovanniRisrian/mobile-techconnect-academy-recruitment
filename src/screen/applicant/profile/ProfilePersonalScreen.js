@@ -99,18 +99,21 @@ const ProfilePersonalScreen = ({ bloc }) => {
           {/* Start of Edit & Upload Button */}
 
           <HStack space={4} alignItems="center" marginTop={2}>
-            <Button
-              onPress={() => changeDisable(!disabled)}
-              variant="subtle"
-              colorScheme="secondary"
-              size="xs"
-            >
-              Edit Profile
-            </Button>
+            {disabled ? (
+              <Button
+                onPress={() => changeDisable(!disabled)}
+                variant="subtle"
+                colorScheme="primary"
+                size="xs"
+              >
+                Edit Profile
+              </Button>
+            ) : null}
+
             <Button
               onPress={() => console.log("Upload CV")}
               variant="subtle"
-              colorScheme="secondary"
+              colorScheme="primary"
               size="xs"
             >
               Upload CV
@@ -138,6 +141,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       placeholder="Name"
                       variant="underlined"
                       error={Boolean(errors.Personal?.Name)}
+                      isReadOnly={disabled}
                     />
                   )}
                 />
@@ -161,6 +165,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      error={Boolean(errors.Personal?.Email)}
+                      isReadOnly={disabled}
                     />
                   )}
                 />
@@ -188,6 +194,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      error={Boolean(errors.Personal?.TelephoneNo)}
+                      isReadOnly={disabled}
                     />
                   )}
                 />
@@ -214,6 +222,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       value={value}
                       onChange={onChange}
                       onBlur={onBlur}
+                      isReadOnly={disabled}
+                      //   error={Boolean(errors.Personal?.Gender)}
                     >
                       <Stack
                         direction={{
@@ -250,13 +260,14 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       value={value}
                       onChange={onChange}
                       onBlur={onBlur}
+                      isReadOnly={disabled}
                     />
                   )}
                 /> */}
                 <Input placeholder="Birth Date" variant="underlined" />
                 <FormControl.HelperText mt={0}>
                   <Text fontSize={"2xs"}>
-                    {errors.Personal?.Name ? errors.Personal?.Name.message : ""}
+                    {/* {errors.Personal?.Name ? errors.Personal?.Name.message : ""} */}
                   </Text>
                 </FormControl.HelperText>
               </Box>
@@ -274,6 +285,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      error={Boolean(errors.Personal?.Domicile)}
+                      isReadOnly={disabled}
                     />
                   )}
                 />
@@ -301,6 +314,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      error={Boolean(errors.Personal?.TotalWorkingExperience)}
+                      isReadOnly={disabled}
                     />
                   )}
                 />
@@ -326,6 +341,8 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      error={Boolean(errors.Personal?.SalaryExpectation)}
+                      isReadOnly={disabled}
                     />
                   )}
                 ></Controller>
@@ -362,11 +379,13 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <Input
-                            placeholder="Skill Set"
+                            placeholder="Skill"
                             variant="underlined"
                             value={value}
                             onChangeText={onChange}
                             onBlur={onBlur}
+                            error={Boolean(errors.Personal?.SkillSet)}
+                            isReadOnly={disabled}
                           />
                         )}
                       />
@@ -380,7 +399,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                             <Button
                               onPress={() => handleDelete()}
                               variant="subtle"
-                              colorScheme="secondary"
+                              colorScheme="primary"
                               size="xs"
                             >
                               X
@@ -407,31 +426,50 @@ const ProfilePersonalScreen = ({ bloc }) => {
                   space={4}
                   alignItems="center"
                   justifyContent="center"
-                  marginTop={2}
+                  marginTop={1}
                 >
-                  <Button
-                    onPress={() => SkillSetAppend({ Skill: "" })}
-                    variant="subtle"
-                    colorScheme="secondary"
-                    size="xs"
-                    disabled={SkillSetField.length >= 9}
-                  >
-                    Add SkillSet
-                  </Button>
+                  <Box width={"50%"}>
+                    <Button
+                      onPress={() => SkillSetAppend({ Skill: "" })}
+                      variant="subtle"
+                      colorScheme="primary"
+                      size="xs"
+                      disabled={SkillSetField.length >= 9}
+                    >
+                      Add Skill
+                    </Button>
+                  </Box>
                 </HStack>
               )}
             </Box>
 
             {/* Start Button */}
-            <Button
-              onPress={handleSubmit(onSubmit)}
-              mt={2}
-              variant="subtle"
-              size="xs"
-              colorScheme="secondary"
-            >
-              Submit
-            </Button>
+            {disabled ? (
+              <Box />
+            ) : (
+              <HStack justifyContent="center" mb={1} mt={5}>
+                <Box width={"50%"}>
+                  <Button
+                    onPress={() => changeDisable(!disabled)}
+                    variant="subtle"
+                    size="xs"
+                    colorScheme="red"
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+                <Box width={"50%"}>
+                  <Button
+                    onPress={handleSubmit(onSubmit)}
+                    variant="subtle"
+                    size="xs"
+                    colorScheme="blue"
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </HStack>
+            )}
 
             {/* End Button */}
           </FormControl>

@@ -18,36 +18,37 @@ import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const validationSchema = Yup.object().shape({
-  Education: Yup.array().of(
-    Yup.object().shape({
-      Title: Yup.string().required("This field is required"),
-      Institution: Yup.string().required("This field is required"),
-      Major: Yup.string().required("This field is required"),
-      YearIn: Yup.string()
-        .required("This field is required")
-        .min(4, "Year in must be 4 character")
-        .max(4, "Year in must be 4 character"),
-      YearOut: Yup.string()
-        .required("This field is required")
-        .min(4, "Year out must be 4 character")
-        .max(4, "Year in must be 4 character"),
-      GPA: Yup.string().required("This field is required"),
-    })
-  ),
-});
+// const validationSchema = Yup.object().shape({
+//   Education: Yup.array().of(
+//     Yup.object().shape({
+//       Title: Yup.string().required("This field is required"),
+//       Institution: Yup.string().required("This field is required"),
+//       Major: Yup.string().required("This field is required"),
+//       YearIn: Yup.string()
+//         .required("This field is required")
+//         .min(4, "Year in must be 4 character")
+//         .max(4, "Year in must be 4 character"),
+//       YearOut: Yup.string()
+//         .required("This field is required")
+//         .min(4, "Year out must be 4 character")
+//         .max(4, "Year in must be 4 character"),
+//       GPA: Yup.string().required("This field is required"),
+//     })
+//   ),
+// });
 
-const ProfileEducationScreen = ({ bloc }) => {
+const ProfileWorkExperienceScreen = ({ bloc }) => {
   const [disabled, changeDisable] = useState(false);
   const [initialValues, setInitial] = useState({
-    Education: [
+    WorkExperience: [
       {
-        Title: "",
-        Institution: "",
-        Major: "",
+        CompanyName: "",
+        Position: "",
+        Level: "",
+        Industry: "",
         YearIn: "",
         YearOut: "",
-        GPA: "",
+        Description: "",
       },
     ],
   });
@@ -58,15 +59,15 @@ const ProfileEducationScreen = ({ bloc }) => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    // resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
   });
 
   const {
-    fields: EducationField,
-    append: EducationAppend,
-    remove: EducationRemove,
-  } = useFieldArray({ control, name: "Education" });
+    fields: WorkExperienceField,
+    append: WorkExperienceAppend,
+    remove: WorkExperienceRemove,
+  } = useFieldArray({ control, name: "WorkExperience" });
 
   const onSubmit = (values) => {
     // function to submit
@@ -117,27 +118,27 @@ const ProfileEducationScreen = ({ bloc }) => {
 
           {/* End of Edit & Upload Button */}
           {/* Start of Form */}
-          {EducationField.map((values, idx) => {
+          {WorkExperienceField.map((values, idx) => {
             const handleDelete = () => {
-              EducationRemove(idx);
+              WorkExperienceRemove(idx);
             };
             return (
               <Box key={idx}>
                 <FormControl mt="4">
                   <FormControl.Label alignSelf="center" mb={3}>
-                    {`Education #${idx + 1}`}
+                    {`Work Experience #${idx + 1}`}
                   </FormControl.Label>
                   <HStack justifyContent="space-evenly">
                     <Box w="48%">
                       <FormControl.Label alignSelf="center" mb={0}>
-                        Title
+                        Company Name
                       </FormControl.Label>
                       <Controller
-                        name={`Education[${idx}].Title`}
+                        name={`WorkExperience[${idx}].CompanyName`}
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <Input
-                            placeholder="Title"
+                            placeholder="Company Name"
                             variant="underlined"
                             value={value}
                             onChangeText={onChange}
@@ -147,22 +148,22 @@ const ProfileEducationScreen = ({ bloc }) => {
                         )}
                       />
 
-                      <FormControl.HelperText>
+                      {/* <FormControl.HelperText>
                         {errors?.Education?.[idx]?.Title
                           ? errors?.Education?.[idx]?.Title.message
                           : ""}
-                      </FormControl.HelperText>
+                      </FormControl.HelperText> */}
                     </Box>
                     <Box w="48%">
                       <FormControl.Label alignSelf="center" mb={0}>
-                        Institution
+                        Position
                       </FormControl.Label>
                       <Controller
-                        name={`Education[${idx}].Institution`}
+                        name={`WorkExperience[${idx}].Position`}
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <Input
-                            placeholder="Institution"
+                            placeholder="Position"
                             variant="underlined"
                             value={value}
                             onChangeText={onChange}
@@ -172,44 +173,25 @@ const ProfileEducationScreen = ({ bloc }) => {
                         )}
                       />
 
-                      <FormControl.HelperText>
+                      {/* <FormControl.HelperText>
                         {errors?.Education?.[idx]?.Institution
                           ? errors?.Education?.[idx]?.Institution.message
                           : ""}
-                      </FormControl.HelperText>
+                      </FormControl.HelperText> */}
                     </Box>
                   </HStack>
+
                   <HStack justifyContent="space-evenly" mt={3}>
                     <Box w="48%">
                       <FormControl.Label alignSelf="center" mb={0}>
-                        Year In
-                      </FormControl.Label>
-                      <Input placeholder="Year In" variant="underlined" />
-                      <FormControl.HelperText>
-                        {/* Error */}
-                      </FormControl.HelperText>
-                    </Box>
-                    <Box w="48%">
-                      <FormControl.Label alignSelf="center" mb={0}>
-                        Year Out
-                      </FormControl.Label>
-                      <Input placeholder="Year Out" variant="underlined" />
-                      <FormControl.HelperText>
-                        {/* Error */}
-                      </FormControl.HelperText>
-                    </Box>
-                  </HStack>
-                  <HStack justifyContent="space-evenly" mt={3}>
-                    <Box w="48%">
-                      <FormControl.Label alignSelf="center" mb={0}>
-                        Major
+                        Level
                       </FormControl.Label>
                       <Controller
-                        name={`Education[${idx}].Major`}
+                        name={`WorkExperience[${idx}].Level`}
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <Input
-                            placeholder="Major"
+                            placeholder="Level"
                             variant="underlined"
                             value={value}
                             onChangeText={onChange}
@@ -218,22 +200,22 @@ const ProfileEducationScreen = ({ bloc }) => {
                           />
                         )}
                       />
-                      <FormControl.HelperText>
+                      {/* <FormControl.HelperText>
                         {errors?.Education?.[idx]?.Major
                           ? errors?.Education?.[idx]?.Major.message
                           : ""}
-                      </FormControl.HelperText>
+                      </FormControl.HelperText> */}
                     </Box>
                     <Box w="48%">
                       <FormControl.Label alignSelf="center" mb={0}>
-                        GPA
+                        Industry
                       </FormControl.Label>
                       <Controller
-                        name={`Education[${idx}].GPA`}
+                        name={`WorkExperience[${idx}].Industry`}
                         control={control}
                         render={({ field: { onChange, onBlur, value } }) => (
                           <Input
-                            placeholder="GPA"
+                            placeholder="Industry"
                             variant="underlined"
                             value={value}
                             onChangeText={onChange}
@@ -242,16 +224,94 @@ const ProfileEducationScreen = ({ bloc }) => {
                           />
                         )}
                       />
-
-                      <FormControl.HelperText>
+                      {/* <FormControl.HelperText>
                         {errors?.Education?.[idx]?.GPA
                           ? errors?.Education?.[idx]?.GPA.message
                           : ""}
-                      </FormControl.HelperText>
+                      </FormControl.HelperText> */}
                     </Box>
                   </HStack>
 
-                  {/* Start of Edit & Upload Button */}
+                  <HStack justifyContent="space-evenly" mt={3}>
+                    <Box w="48%">
+                      <FormControl.Label alignSelf="center" mb={0}>
+                        Start Date
+                      </FormControl.Label>
+                      <Controller
+                        name={`WorkExperience[${idx}].YearIn`}
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Input
+                            placeholder="Start Date"
+                            variant="underlined"
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            isReadOnly={disabled}
+                          />
+                        )}
+                      />
+                      {/* <FormControl.HelperText>
+                        {errors?.Education?.[idx]?.Major
+                          ? errors?.Education?.[idx]?.Major.message
+                          : ""}
+                      </FormControl.HelperText> */}
+                    </Box>
+                    <Box w="48%">
+                      <FormControl.Label alignSelf="center" mb={0}>
+                        End Date
+                      </FormControl.Label>
+                      <Controller
+                        name={`WorkExperience[${idx}].YearOut`}
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Input
+                            placeholder="End Date"
+                            variant="underlined"
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            isReadOnly={disabled}
+                          />
+                        )}
+                      />
+                      {/* <FormControl.HelperText>
+                        {errors?.Education?.[idx]?.GPA
+                          ? errors?.Education?.[idx]?.GPA.message
+                          : ""}
+                      </FormControl.HelperText> */}
+                    </Box>
+                  </HStack>
+
+                  <HStack justifyContent="space-evenly" mt={3}>
+                    <Box w="96%">
+                      <FormControl.Label alignSelf="center" mb={0}>
+                        Description
+                      </FormControl.Label>
+                      <Controller
+                        name={`Organization[${idx}].Description`}
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Input
+                            multiline
+                            numberOfLines={3}
+                            placeholder="Description"
+                            variant="underlined"
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            isReadOnly={disabled}
+                          />
+                        )}
+                      />
+                      {/* <FormControl.HelperText>
+                        {errors?.Education?.[idx]?.Major
+                          ? errors?.Education?.[idx]?.Major.message
+                          : ""}
+                      </FormControl.HelperText> */}
+                    </Box>
+                  </HStack>
+
                   {idx === 0 ? (
                     <Box />
                   ) : (
@@ -288,19 +348,20 @@ const ProfileEducationScreen = ({ bloc }) => {
               <Box width={"50%"}>
                 <Button
                   onPress={() =>
-                    EducationAppend({
-                      Title: "",
-                      Institution: "",
-                      Major: "",
+                    WorkExperienceAppend({
+                      CompanyName: "",
+                      Position: "",
+                      Level: "",
+                      Industry: "",
                       YearIn: "",
                       YearOut: "",
-                      GPA: "",
+                      Description: "",
                     })
                   }
                   variant="subtle"
                   colorScheme="primary"
                   size="xs"
-                  disabled={EducationField.length >= 3}
+                  disabled={WorkExperienceField.length >= 3}
                 >
                   Add
                 </Button>
@@ -341,4 +402,4 @@ const ProfileEducationScreen = ({ bloc }) => {
   );
 };
 
-export default ProfileEducationScreen;
+export default ProfileWorkExperienceScreen;
