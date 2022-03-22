@@ -12,6 +12,10 @@ target 'TechConnectAcademyRecruitment' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+
+  pod 'react-native-blob-util', :path => '../node_modules/react-native-blob-util'
+
   target 'TechConnectAcademyRecruitmentTests' do
     inherit! :complete
     # Pods for testing

@@ -1,9 +1,14 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+import UpploadResumeButtonComponent from '../../component/uploadButton/UploadResumeButtonComponent';
+import UploadResumeButton from '../../component/uploadButton/UploadResumeButton';
+import UploadResumeService from '../../service/UploadFileService';
 const HomeScreen = () => {
   return (
     <View>
-      <Text>Ini Adalah Home Screen</Text>
+      <UpploadResumeButtonComponent
+        uploadResume={() => UploadResumeButton(UploadResumeService)}
+      />
     </View>
   );
 };

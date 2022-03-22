@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   buttonLeft: {
     width: '25%',
     height: 50,
-    backgroundColor: '#2b2c36',
+    backgroundColor: '#631cc7',
     borderTopLeftRadius: 15,
     borderColor: 'white',
   },
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
   button: {
     width: '25%',
     height: 50,
-    backgroundColor: '#2b2c36',
+    backgroundColor: '#631cc7',
     borderColor: 'white',
   },
   buttonRight: {
     width: '25%',
     height: 50,
-    backgroundColor: '#2b2c36',
+    backgroundColor: '#631cc7',
     borderTopRightRadius: 15,
     borderColor: 'white',
   },
