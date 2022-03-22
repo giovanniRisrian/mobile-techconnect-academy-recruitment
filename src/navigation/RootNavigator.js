@@ -1,6 +1,6 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ADMINISTRATOR,
   APPLICANT,
@@ -12,41 +12,44 @@ import {
   RECRUITER,
   REGISTER_PATH,
   VACANY_PATH,
-} from './NavigationPath';
-import {navigationRef} from './RootNavigation';
-import {Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import LoginScreen from '../screen/login/LoginScreen';
-import {Login} from '../screen/login/Login';
-import LoginService from '../service/LoginService';
-import ApplicantDashboard from '../screen/applicant/dashboard/ApplicantDashboard';
-import AdministratorDashboard from '../screen/admin/dashboard/AdministratorDashboard';
-import RecruiterDashboard from '../screen/recruiter/dashboard/RecruiterDashboard';
-import RegisterScreen from '../screen/register/RegisterScreen';
-import {Register} from '../screen/register/Register';
-import RegisterService from '../service/RegisterService';
-import ProfileScreen from '../screen/applicant/profile/ProfileScreen';
-import HomeScreen from '../screen/home/HomeScreen';
-import VacanyScreen from '../screen/vacany/VacanyScreen';
-import BottomTabs from '../component/bottomTabs/BottomTabs';
+} from "./NavigationPath";
+import { navigationRef } from "./RootNavigation";
+import { Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import LoginScreen from "../screen/login/LoginScreen";
+import { Login } from "../screen/login/Login";
+import LoginService from "../service/LoginService";
+import ApplicantDashboard from "../screen/applicant/dashboard/ApplicantDashboard";
+import AdministratorDashboard from "../screen/admin/dashboard/AdministratorDashboard";
+import RecruiterDashboard from "../screen/recruiter/dashboard/RecruiterDashboard";
+import RegisterScreen from "../screen/register/RegisterScreen";
+import { Register } from "../screen/register/Register";
+import RegisterService from "../service/RegisterService";
+import ProfileScreen from "../screen/applicant/profile/component/ProfileScreen";
+import HomeScreen from "../screen/home/HomeScreen";
+import VacanyScreen from "../screen/vacany/VacanyScreen";
+import BottomTabs from "../component/bottomTabs/BottomTabs";
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
-  const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
-  console.log('Info Loginnya gesss', isLogin);
+  const isLogin = useSelector(
+    (state) => state.TechconnectAcademyReducer.isLogin
+  );
+  console.log("Info Loginnya gesss", isLogin);
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         initialRouteName={LOGIN_PATH}
-        screenOptions={{animation: 'none', headerShown: false}}>
+        screenOptions={{ animation: "none", headerShown: false }}
+      >
         <Stack.Group>
           <Stack.Screen name={LOGIN_PATH}>
-            {props => (
+            {(props) => (
               <LoginScreen {...props} login={() => Login(LoginService)} />
             )}
           </Stack.Screen>
           <Stack.Screen name={REGISTER_PATH}>
-            {props => (
+            {(props) => (
               <RegisterScreen
                 {...props}
                 register={() => Register(RegisterService)}
