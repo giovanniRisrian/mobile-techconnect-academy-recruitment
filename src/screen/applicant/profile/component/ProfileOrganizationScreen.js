@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,12 +14,15 @@ import {
   IconButton,
   Icon,
   ScrollView,
-} from "native-base";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
+} from 'native-base';
+import * as Yup from 'yup';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import jwt_decode from 'jwt-decode';
+import {useSelector} from 'react-redux';
+import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
+import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
+import UploadResumeService from '../../../../service/UploadFileService';
 
 // const validationSchema = Yup.object().shape({
 //   Education: Yup.array().of(
@@ -40,21 +43,21 @@ import { useSelector } from "react-redux";
 //   ),
 // });
 
-const ProfileOrganizationScreen = ({ bloc }) => {
-  const { addProfile, getDataByID } = bloc();
+const ProfileOrganizationScreen = ({bloc}) => {
+  const {addProfile, getDataByID} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLogin
+    state => state.TechconnectAcademyReducer.isLogin,
   );
   const [disabled, changeDisable] = useState(true);
   const [initialValues, changeInitial] = useState({
     Organization: [
       {
-        Organization: "",
-        Scope: "",
-        Duration: "",
-        Description: "",
-        Position: "",
+        Organization: '',
+        Scope: '',
+        Duration: '',
+        Description: '',
+        Position: '',
       },
     ],
   });
@@ -63,7 +66,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     // resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
@@ -73,9 +76,9 @@ const ProfileOrganizationScreen = ({ bloc }) => {
     fields: OrganizationField,
     append: OrganizationAppend,
     remove: OrganizationRemove,
-  } = useFieldArray({ control, name: "Organization" });
+  } = useFieldArray({control, name: 'Organization'});
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
     changeDisable(!disabled);
@@ -99,8 +102,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
               bg="grey.900"
               alignSelf="center"
               size="2xl"
-              source={require("../../../../assets/images/avatar.png")}
-            ></Avatar>
+              source={require('../../../../assets/images/avatar.png')}></Avatar>
 
             {/* End of Avatar */}
             {/* Start of Edit & Upload Button */}
@@ -111,19 +113,15 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                   onPress={() => changeDisable(!disabled)}
                   variant="subtle"
                   colorScheme="primary"
-                  size="xs"
-                >
+                  size="xs">
                   Edit Profile
                 </Button>
-              ) : null}
-              <Button
-                onPress={() => console.log("Upload CV")}
-                variant="subtle"
-                colorScheme="primary"
-                size="xs"
-              >
-                Upload CV
-              </Button>
+              ) : (
+                <UpploadResumeButtonComponent
+                  uploadResume={() => UploadResumeButton(UploadResumeService)}
+                />
+              )}
+
               {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
             </HStack>
 
@@ -147,7 +145,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Organization`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Organization"
                               variant="underlined"
@@ -172,7 +170,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Scope`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Scope"
                               variant="underlined"
@@ -200,7 +198,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Duration`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Duration"
                               variant="underlined"
@@ -224,7 +222,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Position`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Position"
                               variant="underlined"
@@ -251,7 +249,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Description`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               multiline
                               numberOfLines={3}
@@ -283,8 +281,7 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                             onPress={() => handleDelete()}
                             variant="subtle"
                             colorScheme="primary"
-                            size="xs"
-                          >
+                            size="xs">
                             X
                           </Button>
                         )}
@@ -303,24 +300,22 @@ const ProfileOrganizationScreen = ({ bloc }) => {
                 space={4}
                 alignItems="center"
                 justifyContent="center"
-                marginTop={1}
-              >
-                <Box width={"50%"}>
+                marginTop={1}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() =>
                       OrganizationAppend({
-                        Organization: "",
-                        Scope: "",
-                        Duration: "",
-                        Description: "",
-                        Position: "",
+                        Organization: '',
+                        Scope: '',
+                        Duration: '',
+                        Description: '',
+                        Position: '',
                       })
                     }
                     variant="subtle"
                     colorScheme="primary"
                     size="xs"
-                    disabled={OrganizationField.length >= 3}
-                  >
+                    disabled={OrganizationField.length >= 3}>
                     Add
                   </Button>
                 </Box>
@@ -331,23 +326,21 @@ const ProfileOrganizationScreen = ({ bloc }) => {
               <Box />
             ) : (
               <HStack justifyContent="center" mb={1} mt={5}>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="red"
-                  >
+                    colorScheme="red">
                     Cancel
                   </Button>
                 </Box>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={handleSubmit(onSubmit)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="blue"
-                  >
+                    colorScheme="blue">
                     Submit
                   </Button>
                 </Box>

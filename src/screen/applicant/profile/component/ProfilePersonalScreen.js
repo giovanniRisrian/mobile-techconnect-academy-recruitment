@@ -15,6 +15,7 @@ import {
   Icon,
   Text,
   ScrollView,
+  Select,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -24,11 +25,13 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
+import DatePicker from 'react-native-neat-date-picker';
+import dayjs from 'dayjs';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
     Name: Yup.string().required('This field is required'),
-    // Gender: Yup.string().required("This field is required"),
+    Gender: Yup.string().required('This field is required'),
     // BirthDate: Yup.date().required("This field is required"),
     Domicile: Yup.string().required('This field is required'),
     Email: Yup.string()
@@ -50,6 +53,8 @@ const ProfilePersonalScreen = ({bloc}) => {
     state => state.TechconnectAcademyReducer.isLogin,
   );
   const [disabled, changeDisable] = useState(true);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [birthdate, setBirthdate] = useState('');
   const [initialValues, changeInitial] = useState({
     Personal: {
       Name: '',
@@ -84,15 +89,23 @@ const ProfilePersonalScreen = ({bloc}) => {
     remove: SkillSetRemove,
   } = useFieldArray({control, name: 'SkillSet'});
 
+  const onConfirm = date => {
+    // You should close the modal in here
+    setShowDatePicker(false);
+    setBirthdate(date.date);
+  };
   const onSubmit = values => {
     // function to submit
+    values.Personal.BirthDate = dayjs(birthdate).format('YYYY-MM-DD');
     addProfile(values, file, userInfo);
     changeDisable(!disabled);
   };
 
   useEffect(() => {
-    getDataByID(userInfo.id, userInfo, changeInitial);
-  }, []);
+    if (disabled) {
+      getDataByID(userInfo.id, userInfo, changeInitial);
+    }
+  }, [disabled]);
 
   useEffect(() => {
     reset(initialValues);
@@ -127,16 +140,6 @@ const ProfilePersonalScreen = ({bloc}) => {
                   uploadResume={() => UploadResumeButton(UploadResumeService)}
                 />
               )}
-
-              {/* <Button
-                onPress={() => console.log("Upload CV")}
-                variant="subtle"
-                colorScheme="primary"
-                size="xs"
-              >
-                Upload CV
-              </Button> */}
-              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
             </HStack>
 
             {/* End of Edit & Upload Button */}
@@ -229,40 +232,37 @@ const ProfilePersonalScreen = ({bloc}) => {
                   </FormControl.HelperText>
                 </Box>
                 <Box w="48%">
-                  <FormControl.Label alignSelf="center" mb={1}>
+                  <FormControl.Label alignSelf="center" mb={0}>
                     Gender
                   </FormControl.Label>
                   <Controller
                     name="Personal.Gender"
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
-                      <Radio.Group
-                        name="Personal.Gender"
-                        accessibilityLabel="favorite number"
-                        value={value}
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        isReadOnly={disabled}
-                        error={Boolean(errors.Personal?.Gender)}>
-                        <Stack
-                          direction={{
-                            base: 'row',
-                            md: 'row',
-                          }}
-                          alignItems="center"
-                          justifyContent="center"
-                          space={4}
-                          w="100%">
-                          <Radio value="male" size="sm" my={1}>
-                            Male
-                          </Radio>
-                          <Radio value="female" size="sm" my={1}>
-                            Female
-                          </Radio>
-                        </Stack>
-                      </Radio.Group>
+                      <Select
+                        selectedValue={value}
+                        error={Boolean(errors.Personal?.TelephoneNo)}
+                        isDisabled={disabled}
+                        variant="underlined"
+                        accessibilityLabel="Gender"
+                        placeholder="Gender"
+                        // _selectedItem={{
+                        //   bg: 'teal.600',
+                        //   endIcon: <CheckIcon size="2" />,
+                        // }}
+                        onValueChange={onChange}>
+                        <Select.Item label="Male" value="male" />
+                        <Select.Item label="Female" value="female" />
+                      </Select>
                     )}
                   />
+                  <FormControl.HelperText mt={0}>
+                    <Text fontSize={'2xs'}>
+                      {errors.Personal?.Gender
+                        ? errors.Personal?.Gender.message
+                        : ''}
+                    </Text>
+                  </FormControl.HelperText>
                 </Box>
               </HStack>
               <HStack justifyContent="space-evenly" mt={2}>
@@ -275,13 +275,21 @@ const ProfilePersonalScreen = ({bloc}) => {
                     control={control}
                     render={({field: {onChange, onBlur, value}}) => (
                       <Input
+                        placeholder="Birth Date"
                         variant="underlined"
                         value={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         isReadOnly={disabled}
+                        onPressIn={() => setShowDatePicker(true)}
                       />
                     )}
+                  />
+                  <DatePicker
+                    isVisible={showDatePicker}
+                    mode={'single'}
+                    onCancel={() => setShowDatePicker(false)}
+                    onConfirm={onConfirm}
                   />
 
                   <FormControl.HelperText mt={0}>
