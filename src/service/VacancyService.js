@@ -1,9 +1,11 @@
 import clientService from './ApiClient';
 
 const VacancyService = () => {
-  const getVacancyList = async (name,type) => {
+  const getVacancyList = async (name, type) => {
     try {
-      let data = await clientService().get(`/program?&sort_by=created_at&order_by=desc&name=${name}&program_type=${type}`)
+      let data = await clientService().get(
+        `/program?&sort_by=created_at&order_by=desc&name=${name}&program_type=${type}`,
+      );
       return data;
     } catch (err) {
       throw err;
@@ -36,22 +38,22 @@ const VacancyService = () => {
     } catch (err) {
       throw err;
     }
-  }
-  const getType = async() => {
+  };
+  const getType = async () => {
     try {
-      let data = await clientService().get(`/program/programtype`)
+      let data = await clientService().get(`/program/programtype`);
       return data;
     } catch (err) {
-        throw err
+      throw err;
     }
-  }
-  return{
+  };
+  return {
     getVacancyList,
     getVacancyId,
     applyProgram,
     getUserId,
-    getType
-  }
+    getType,
+  };
 };
 
 export default VacancyService;
