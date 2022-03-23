@@ -58,7 +58,7 @@ const LoginScreen = ({login}) => {
             setAlert(false);
           }}
         />
-        <Text style={styles.title}>Login</Text>
+        {/* <Text style={styles.title}>Login</Text> */}
         <Image
           source={require('../../assets/images/TCA.png')}
           style={styles.image}

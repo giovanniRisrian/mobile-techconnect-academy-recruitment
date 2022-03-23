@@ -1,28 +1,65 @@
-import {View, Text, StyleSheet, SafeAreaView, TextInput} from 'react-native';
-import {HStack, NativeBaseProvider, VStack} from 'native-base';
-import React, {useEffect} from 'react';
-import CardCategories from '../../component/cardCategories/cardCategories';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {NativeBaseProvider} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import VacancyList from '../../containers/VacancyList';
-import {Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const VacanyScreen = ({vacancy, route}) => {
-  const {setList, list, allVacancy, setSearch, searchByName, vacancyById} =
-    vacancy();
+  const {
+    setList,
+    allVacancy,
+    searchByName,
+    vacancyById,
+    search,
+    list,
+    doApplyProgram,
+    getTypeProgram,
+    typeProgram,
+    setType,
+    isLoading,
+  } = vacancy();
 
-  console.log(route.params);
   useEffect(() => {
     if (route.params == null) {
-      allVacancy();
+      console.log('Routenya adalah');
+      getTypeProgram();
+      allVacancy('', '');
     } else {
       setList(route.params);
     }
   }, []);
-  console.log('Routenya adalah');
+
+  const programTypeName = text => {
+    allVacancy('', text.toLowerCase());
+    setType(text);
+  };
+
+  let typeItem = ({item}) => {
+    return (
+      <View>
+        <TouchableOpacity
+          style={styles.buttonApply}
+          onPress={() => programTypeName(item.ProgramName)}>
+          <Text style={styles.textButton}>{item.ProgramName}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <NativeBaseProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.contentTitle}>
+        <KeyboardAvoidingView style={styles.contentTitle}>
           <Text style={styles.title}>
             Find Your{'\n'}
             <Text style={styles.spanTitle}>Dream Career</Text>
@@ -33,18 +70,42 @@ const VacanyScreen = ({vacancy, route}) => {
               style={styles.input}
               placeholder="Seach"
               underlineColorAndroid="transparent"
-              onChangeText={setSearch}
+              onChangeText={text => searchByName(text)}
+              value={search}
             />
           </View>
+          <Text style={styles.textCategories}>Based on categories</Text>
+          <FlatList
+            data={typeProgram}
+            keyExtractor={typeProgram => typeProgram.ID}
+            renderItem={typeItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </KeyboardAvoidingView>
 
-          <Text style={styles.textCategories}>Categories</Text>
-          <HStack space={3} justifyContent="space-around">
-            <CardCategories title="Program" />
-            <CardCategories title="Training" />
-            <CardCategories title="Certification" />
-          </HStack>
-          <Text style={styles.textCategories}>All Jobs</Text>
-          <VacancyList programs={list.ProgramList} vacancyId={vacancyById} />
+        <View style={{flex: 1, marginLeft: 20}}>
+          {search && list?.ProgramList.length === 0 ? (
+            <View
+              style={{
+                justifyContent: 'center',
+                flex: 1,
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../assets/images/nodata.png')}
+                alt="no-data"
+                style={{marginBottom: 20}}
+              />
+            </View>
+          ) : (
+            <VacancyList
+              programs={list?.ProgramList}
+              vacancyId={vacancyById}
+              apply={doApplyProgram}
+              loading={isLoading}
+            />
+          )}
         </View>
       </SafeAreaView>
     </NativeBaseProvider>
@@ -75,8 +136,8 @@ const styles = StyleSheet.create({
   textCategories: {
     fontSize: 18,
     fontWeight: '400',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 25,
+    marginBottom: 20,
   },
   searchSection: {
     flexDirection: 'row',
@@ -85,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 15,
     marginRight: 20,
-    marginTop: 10,
+    marginTop: 30,
   },
   searchIcon: {
     padding: 10,
@@ -99,6 +160,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     color: '#424242',
     borderRadius: 15,
+  },
+  buttonApply: {
+    backgroundColor: '#5F4E98',
+    borderRadius: 10,
+    marginLeft: 20,
+    padding: 5,
+    marginBottom: 10,
+  },
+  textButton: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '400',
   },
 });
 export default VacanyScreen;

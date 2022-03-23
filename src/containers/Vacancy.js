@@ -1,63 +1,70 @@
-import {Pressable, Box, Flex, Text} from 'native-base';
-import React, {useState} from 'react';
-import {goToScreenWithParams} from '../navigation/NavigationHelper';
-import {VACANCY_DETAIL_PATH} from '../navigation/NavigationPath';
+import React, { useRef, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  ActivityIndicator,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-const CardVacancy = ({program, getId}) => {
-  const detailProgram = () => {
-    getId(program.ID);
-    goToScreenWithParams(VACANCY_DETAIL_PATH, program.ID, false);
+const VacancyItem = ({
+  program,
+  onSetModalInfo,
+  onSetModalVisible,
+  onLoading,
+}) => {
+  const onShowModal = () => {
+    onSetModalInfo(program);
+    onSetModalVisible(true);
   };
-
   return (
     <>
-      <Pressable onPress={detailProgram}>
-        {({isHovered, isFocused, isPressed}) => {
-          return (
-            <Box
-              borderWidth="1"
-              borderColor="coolGray.300"
-              shadow="3"
-              bg={
-                isPressed
-                  ? 'coolGray.200'
-                  : isHovered
-                  ? 'coolGray.200'
-                  : 'coolGray.100'
-              }
-              p="6"
-              rounded="8"
-              style={{
-                transform: [
-                  {
-                    scale: isPressed ? 0.96 : 1,
-                  },
-                ],
-                marginVertical: 10,
-                marginHorizontal: 9,
-              }}>
-              <Flex>
-                <Text
-                  mt="2"
-                  fontSize={20}
-                  fontWeight="medium"
-                  alignSelf="flex-start">
-                  {program?.ProgramName}
-                </Text>
-                <Text
-                  mt="2"
-                  fontSize={14}
-                  fontWeight="medium"
-                  alignSelf="flex-start">
-                  {program?.ProgramLocation?.Address}
-                </Text>
-              </Flex>
-            </Box>
-          );
-        }}
-      </Pressable>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={onShowModal}>
+          <Text style={styles.title}>{program?.ProgramName}</Text>
+          <Text style={styles.location}>
+            <Text style={{ color: "#5F4E98" }}>
+              <Icon name="location-pin" size={18} />
+            </Text>
+            {program?.ProgramLocation?.Address}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
 
-export default CardVacancy;
+const styles = StyleSheet.create({
+  container: {
+    marginRight: 20,
+    marginBottom: 10,
+    backgroundColor: "#EEEEEE",
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: "#ededed",
+    paddingLeft: 14,
+    paddingTop: 7,
+    paddingBottom: 7,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowColor: "#000000",
+    shadowOffset: { width: 3, height: 3 },
+    elevation: 3,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 15,
+    height: 80,
+  },
+  title: {
+    fontSize: 19,
+    fontWeight: "600",
+  },
+  location: {
+    fontSize: 16,
+  },
+});
+
+export default VacancyItem;

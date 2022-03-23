@@ -4,21 +4,53 @@ import {goToScreenWithParams} from '../../navigation/NavigationHelper';
 import {HOME_PATH, PROFILE_PATH} from '../../navigation/NavigationPath';
 import {useDispatch} from 'react-redux';
 import {showLoading} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
-
+import AwesomeAlert from 'react-native-awesome-alerts';
+import {useSelector} from 'react-redux';
 export const Vacancy = service => {
   const [list, setList] = useState([]);
-  const [alert, setAlert] = useState(false);
+  const [typeProgram, setTypeProgram] = useState([]);
+  const [types, setType] = useState('');
   const dispatch = useDispatch();
-  let {getVacancyList, getVacancyId, applyProgram, getUserId} = service();
-  const allVacancy = async () => {
+  const [search, setSearch] = useState('');
+
+  let {getVacancyList, getVacancyId, applyProgram, getUserId, getType} =
+    service();
+  const isLoading = useSelector(
+    state => state.TechconnectAcademyReducer.isLoading,
+  );
+
+  const allVacancy = async (name, type) => {
     try {
       dispatch(showLoading(true));
-      const response = await getVacancyList();
-      // console.log('ini Vacany', response.data.ProgramList);
+      const response = await getVacancyList(name, type);
       setList(response.data);
       dispatch(showLoading(false));
     } catch (err) {
+      dispatch(showLoading(false));
       throw err;
+    }
+  };
+
+  const getTypeProgram = async () => {
+    try {
+      const response = await getType();
+      setTypeProgram(response.data);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const searchByName = text => {
+    if (text) {
+      dispatch(showLoading(true));
+      allVacancy(text, '');
+      setSearch(text);
+      dispatch(showLoading(false));
+    } else {
+      dispatch(showLoading(true));
+      setList(list);
+      setSearch(text);
+      dispatch(showLoading(false));
     }
   };
 
@@ -29,6 +61,7 @@ export const Vacancy = service => {
       setList(response.data);
       dispatch(showLoading(false));
     } catch (err) {
+      dispatch(showLoading(false));
       throw err;
     }
   };
@@ -112,7 +145,12 @@ export const Vacancy = service => {
       }
       return res;
     } catch (err) {
-      Alert.alert('You have already apply this program');
+      Alert.alert('You have been apply this program', null, [
+        {
+          text: 'OK',
+          onPress: () => null,
+        },
+      ]);
       throw err;
     }
   };
@@ -123,5 +161,12 @@ export const Vacancy = service => {
     vacancyById,
     doApplyProgram,
     setList,
+    search,
+    searchByName,
+    getTypeProgram,
+    types,
+    typeProgram,
+    setType,
+    isLoading,
   };
 };
