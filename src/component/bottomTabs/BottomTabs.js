@@ -26,7 +26,7 @@ const toHome = () => {
 };
 
 const toVacany = () => {
-  goToScreen(VACANY_PATH, false);
+  goToScreen(VACANY_PATH, true);
 };
 
 const toDashboard = (role) => {

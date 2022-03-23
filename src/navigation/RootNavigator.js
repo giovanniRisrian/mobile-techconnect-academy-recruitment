@@ -11,6 +11,7 @@ import {
   PROFILE_PATH,
   RECRUITER,
   REGISTER_PATH,
+  SPLASH_PATH,
   VACANCY_DETAIL_PATH,
   VACANY_PATH,
 } from './NavigationPath';
@@ -32,7 +33,7 @@ import VacanyScreen from '../screen/vacany/VacanyScreen';
 import BottomTabs from '../component/bottomTabs/BottomTabs';
 import { Vacancy } from '../screen/vacany/Vacancy';
 import VacancyService from '../service/VacancyService';
-import VacancyDetailScreen from '../screen/vacany/VacancyDetailScreen';
+import SplashScreen from '../screen/splash/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
@@ -42,9 +43,10 @@ const RootNavigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName={LOGIN_PATH}
+        initialRouteName={SPLASH_PATH}
         screenOptions={{animation: 'none', headerShown: false}}>
         <Stack.Group>
+          <Stack.Screen name={SPLASH_PATH} component={SplashScreen} />
           <Stack.Screen name={LOGIN_PATH}>
             {props => (
               <LoginScreen {...props} login={() => Login(LoginService)} />
@@ -75,15 +77,6 @@ const RootNavigator = () => {
           <Stack.Screen name={VACANY_PATH}>
             {props => (
               <VacanyScreen
-                {...props}
-                vacancy={() => Vacancy(VacancyService)}
-              />
-            )}
-          </Stack.Screen>
-
-          <Stack.Screen name={VACANCY_DETAIL_PATH}>
-            {props => (
-              <VacancyDetailScreen
                 {...props}
                 vacancy={() => Vacancy(VacancyService)}
               />

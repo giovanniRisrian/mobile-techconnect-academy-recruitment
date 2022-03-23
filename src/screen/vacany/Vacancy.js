@@ -1,41 +1,76 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Alert } from "react-native";
 import { goToScreenWithParams } from "../../navigation/NavigationHelper";
 import { HOME_PATH, PROFILE_PATH } from "../../navigation/NavigationPath";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { showLoading } from "../../stores/techconnectAcademy/TechconnectAcademyAction";
+import AwesomeAlert from "react-native-awesome-alerts";
+import { useSelector } from "react-redux";
 
 export const Vacancy = (service) => {
   const [list, setList] = useState([]);
-  const [alert, setAlert] = useState(false)
-  const dispatch = useDispatch()
-  let { getVacancyList, getVacancyId, applyProgram, getUserId } = service();
-  const allVacancy = async () => {
+  const [typeProgram, setTypeProgram] = useState([]);
+  const [types, setType] = useState("");
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+
+  let { getVacancyList, getVacancyId, applyProgram, getUserId, getType } =
+    service();
+  const isLoading = useSelector(
+    (state) => state.TechconnectAcademyReducer.isLoading
+  );
+
+  const allVacancy = async (name, type) => {
     try {
-      dispatch(showLoading(true))
-      const response = await getVacancyList();
+      dispatch(showLoading(true));
+      const response = await getVacancyList(name, type);
       setList(response.data);
-      dispatch(showLoading(false))
+      dispatch(showLoading(false));
+    } catch (err) {
+      dispatch(showLoading(false));
+      throw err;
+    }
+  };
+
+  const getTypeProgram = async () => {
+    try {
+      const response = await getType();
+      setTypeProgram(response.data);
     } catch (err) {
       throw err;
+    }
+  };
+
+  const searchByName = (text) => {
+    if (text) {
+      dispatch(showLoading(true));
+      allVacancy(text, "");
+      setSearch(text);
+      dispatch(showLoading(false));
+    } else {
+      dispatch(showLoading(true));
+      setList(list);
+      setSearch(text);
+      dispatch(showLoading(false));
     }
   };
 
   const vacancyById = async (id) => {
     try {
-      dispatch(showLoading(true))
+      dispatch(showLoading(true));
       const response = await getVacancyId(id);
       setList(response.data);
-      dispatch(showLoading(false))
+      dispatch(showLoading(false));
     } catch (err) {
+      dispatch(showLoading(false));
       throw err;
     }
   };
 
-  const getUserbyId = async(context) => {
-    try{
-      let res = await getUserId(context)
-      let data = res.data
+  const getUserbyId = async (context) => {
+    try {
+      let res = await getUserId(context);
+      let data = res.data;
       let counter = 0;
       if (data.Personal.Name) {
         counter += 1;
@@ -55,7 +90,7 @@ export const Vacancy = (service) => {
       if (data.Personal.Gender) {
         counter += 1;
       }
-      if(data.SkillSet[0].Skill){
+      if (data.SkillSet[0].Skill) {
         counter += 1;
       }
       if (data.Education[0].Title) {
@@ -84,34 +119,54 @@ export const Vacancy = (service) => {
     } catch (err) {
       throw err;
     }
-  }
+  };
 
-  const doApplyProgram = async(value, context) => {
-    try{
+  const doApplyProgram = async (value, context) => {
+    try {
       const config = {
         headers: { Authorization: `Bearer ${context.token}` },
       };
-      let status = await getUserbyId(config)
+      let status = await getUserbyId(config);
       let res;
-      if(status === true){
+      if (status === true) {
         res = await applyProgram(value, config);
-        Alert.alert('Success', null,  [{ text: "OK", onPress: () => goToScreenWithParams(HOME_PATH,context.id,true) }])
-      }else{
-        Alert.alert('You must filled mandatory field', null,  [{ text: "OK", onPress: () => goToScreenWithParams(PROFILE_PATH,context.id,true) }])
-
+        Alert.alert("Success", null, [
+          {
+            text: "OK",
+            onPress: () => goToScreenWithParams(HOME_PATH, context.id, true),
+          },
+        ]);
+      } else {
+        Alert.alert("You must filled mandatory field", null, [
+          {
+            text: "OK",
+            onPress: () => goToScreenWithParams(PROFILE_PATH, context.id, true),
+          },
+        ]);
       }
-      return res
-    }catch(err){
-     Alert.alert('You have already apply this program')
+      return res;
+    } catch (err) {
+      Alert.alert("You have been apply this program", null, [
+        {
+          text: "OK",
+          onPress: () => null,
+        },
+      ]);
       throw err;
     }
-  }
-
+  };
 
   return {
     allVacancy,
     list,
     vacancyById,
-    doApplyProgram
+    doApplyProgram,
+    search,
+    searchByName,
+    getTypeProgram,
+    types,
+    typeProgram,
+    setType,
+    isLoading,
   };
 };
