@@ -6,18 +6,24 @@ import ProfileWorkExperienceScreen from "./ProfileWorkExperienceScreen";
 import { TabBar, TabView } from "react-native-tab-view";
 import { SafeAreaView, useWindowDimensions } from "react-native";
 import { ScrollView } from "native-base";
+import Profile from "../Profile";
+import ProfileService from "../../../../service/ProfileService";
 
 const ProfileScreen = () => {
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case "first":
-        return <ProfilePersonalScreen />;
-      case "second":
-        return <ProfileEducationScreen />;
-      case "third":
-        return <ProfileOrganizationScreen />;
-      case "fourth":
-        return <ProfileWorkExperienceScreen />;
+      case "personal":
+        return <ProfilePersonalScreen bloc={() => Profile(ProfileService)} />;
+      case "education":
+        return <ProfileEducationScreen bloc={() => Profile(ProfileService)} />;
+      case "organization":
+        return (
+          <ProfileOrganizationScreen bloc={() => Profile(ProfileService)} />
+        );
+      case "workexperience":
+        return (
+          <ProfileWorkExperienceScreen bloc={() => Profile(ProfileService)} />
+        );
       default:
         return null;
     }
@@ -27,10 +33,10 @@ const ProfileScreen = () => {
 
   const [index, setIndex] = useState(0);
   const [routes] = React.useState([
-    { key: "first", title: "Personal" },
-    { key: "second", title: "Education" },
-    { key: "third", title: "Organization" },
-    { key: "fourth", title: "Work Experience" },
+    { key: "personal", title: "Personal" },
+    { key: "education", title: "Education" },
+    { key: "organization", title: "Organization" },
+    { key: "workexperience", title: "Work Experience" },
   ]);
 
   const renderTabBar = (props) => (

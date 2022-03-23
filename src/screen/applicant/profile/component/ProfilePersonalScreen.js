@@ -19,6 +19,8 @@ import {
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import jwt_decode from "jwt-decode";
+import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -39,6 +41,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfilePersonalScreen = ({ bloc }) => {
+  const { addProfile, getDataByID } = bloc();
+  const [file, setFile] = useState(false);
+  const userInfo = useSelector(
+    (state) => state.TechconnectAcademyReducer.isLogin
+  );
   const [disabled, changeDisable] = useState(true);
   const [initialValues, changeInitial] = useState({
     Personal: {
@@ -74,14 +81,15 @@ const ProfilePersonalScreen = ({ bloc }) => {
     remove: SkillSetRemove,
   } = useFieldArray({ control, name: "SkillSet" });
 
-  const onSubmit = (data) => {
+  const onSubmit = (values) => {
     // function to submit
-    console.log("Ini muncul ga", data);
+    // addProfile(values, file, data);
+    console.log("Ini muncul ga", values);
     changeDisable(!disabled);
   };
 
   useEffect(() => {
-    // getDataByID(userInfo.id, data, changeInitial);
+    getDataByID(userInfo.id, userInfo, changeInitial);
   }, []);
 
   useEffect(() => {
@@ -146,7 +154,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         placeholder="Name"
                         variant="underlined"
-                        error={Boolean(errors.Personal?.Name)}
+                        // error={Boolean(errors.Personal?.Name)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -173,7 +181,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        error={Boolean(errors.Personal?.Email)}
+                        // error={Boolean(errors.Personal?.Email)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -202,7 +210,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        error={Boolean(errors.Personal?.TelephoneNo)}
+                        // error={Boolean(errors.Personal?.TelephoneNo)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -225,13 +233,13 @@ const ProfilePersonalScreen = ({ bloc }) => {
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                       <Radio.Group
-                        name="myRadioGroup"
+                        name="Personal.Gender"
                         accessibilityLabel="favorite number"
                         value={value}
                         onChange={onChange}
                         onBlur={onBlur}
                         isReadOnly={disabled}
-                        //   error={Boolean(errors.Personal?.Gender)}
+                        // error={Boolean(errors.Personal?.Gender)}
                       >
                         <Stack
                           direction={{
@@ -261,10 +269,11 @@ const ProfilePersonalScreen = ({ bloc }) => {
                     Birth Date
                   </FormControl.Label>
                   <Controller
-                    name=""
+                    name="Personal.BirthDate"
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                       <Input
+                        variant="underlined"
                         value={value}
                         onChange={onChange}
                         onBlur={onBlur}
@@ -272,7 +281,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                       />
                     )}
                   />
-                  <Input placeholder="Birth Date" variant="underlined" />
+
                   <FormControl.HelperText mt={0}>
                     <Text fontSize={"2xs"}>
                       {/* {errors.Personal?.Name ? errors.Personal?.Name.message : ""} */}
@@ -293,7 +302,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        error={Boolean(errors.Personal?.Domicile)}
+                        // error={Boolean(errors.Personal?.Domicile)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -322,7 +331,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        error={Boolean(errors.Personal?.TotalWorkingExperience)}
+                        // error={Boolean(errors.Personal?.TotalWorkingExperience)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -349,7 +358,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        error={Boolean(errors.Personal?.SalaryExpectation)}
+                        // error={Boolean(errors.Personal?.SalaryExpectation)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -392,7 +401,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                               value={value}
                               onChangeText={onChange}
                               onBlur={onBlur}
-                              error={Boolean(errors.Personal?.SkillSet)}
+                              // error={Boolean(errors.Personal?.SkillSet)}
                               isReadOnly={disabled}
                             />
                           )}

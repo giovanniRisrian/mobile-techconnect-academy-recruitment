@@ -18,6 +18,8 @@ import {
 import * as Yup from "yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import jwt_decode from "jwt-decode";
+import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   Education: Yup.array().of(
@@ -39,8 +41,13 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileEducationScreen = ({ bloc }) => {
+  const { addProfile, getDataByID } = bloc();
+  const [file, setFile] = useState(false);
+  const userInfo = useSelector(
+    (state) => state.TechconnectAcademyReducer.isLogin
+  );
   const [disabled, changeDisable] = useState(true);
-  const [initialValues, setInitial] = useState({
+  const [initialValues, changeInitial] = useState({
     Education: [
       {
         Title: "",
@@ -72,11 +79,12 @@ const ProfileEducationScreen = ({ bloc }) => {
   const onSubmit = (values) => {
     // function to submit
     console.log("HEI INI MUNCUL GA", values);
-    // changeDisable(!disabled);
+    // addProfile(values, file, data);
+    changeDisable(!disabled);
   };
 
   useEffect(() => {
-    // getDataByID(userInfo.id, data, changeInitial);
+    getDataByID(userInfo.id, userInfo, changeInitial);
   }, []);
 
   useEffect(() => {

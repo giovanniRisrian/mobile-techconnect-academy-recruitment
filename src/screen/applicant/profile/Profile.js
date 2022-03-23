@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 
 const Profile = (profileService) => {
   let { updateDataApplicant, getDataApplicantbyId } = profileService();
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const addProfile = async (values, file, context) => {
     // // console.log("ini context", context);
     // // console.log("handleApplicant", values);
@@ -29,7 +28,7 @@ const Profile = (profileService) => {
       formData.append("json", jsonPretendFile);
       formData.append("file", file);
       const response = await updateDataApplicant(formData, config);
-      navigate("/applicant/profile");
+      // navigate("/applicant/profile");
       window.location.reload();
       return response;
     } catch (err) {
@@ -40,15 +39,15 @@ const Profile = (profileService) => {
   const getDataByID = async (id, context, changeInitial) => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${context.userInfo}` },
+        headers: { Authorization: `Bearer ${context.token}` },
       };
 
       const data = { id: id };
       const formData = new FormData();
       formData.append("id", id);
       const response = await getDataApplicantbyId(formData, config);
-      // // console.log("reposne",response.data.data)
-      let dataReceive = response.data.data;
+      console.log("lets go response", response.data);
+      let dataReceive = response.data;
 
       let mock = {
         Personal: {

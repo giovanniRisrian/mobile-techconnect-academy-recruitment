@@ -6,8 +6,8 @@ const ProfileService = () => {
       let data = await clientService().get(`/user`, header);
       return data;
     } catch (e) {
-      console.log(error);
-      throw error;
+      console.log(e);
+      throw e;
     }
   };
 
@@ -16,22 +16,12 @@ const ProfileService = () => {
       let data = await clientService().put(`/applicant/update`, params, header);
       return data;
     } catch (e) {
-      console.log(error);
-      throw error;
+      console.log(e);
+      throw e;
     }
   };
 
-  // const uploadDataApplicant = async (params, header) => {
-  //   try {
-  //     let data = await clientService().put(`/applicant/insert`, params, header);
-  //     return data;
-  //   } catch (e) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // };
-
-  return { getDataApplicantbyId, updateDataApplicant };
+  return { updateDataApplicant, getDataApplicantbyId };
 };
 
 export default ProfileService;
