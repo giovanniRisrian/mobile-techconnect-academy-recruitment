@@ -61,10 +61,10 @@ const clientService = () => {
     }
   };
 
-  const get = async url => {
+  const get = async (url,header) => {
     try {
       console.log('apakahmasuksini');
-      let result = await client.get(url);
+      let result = await client.get(url,header);
       return result.data;
     } catch (error) {
       console.log(error);
