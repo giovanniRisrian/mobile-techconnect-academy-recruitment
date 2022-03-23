@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_URL} from '@env';
+import {API_URL} from 'react-native-dotenv';
 
 const client = axios.create({
   baseURL: API_URL,
@@ -72,11 +72,38 @@ const clientService = () => {
     }
   };
 
+  const getWithToken = async (url,header) => {
+    try {
+      let result = await client.get(url,header);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  const postwithToken = async (url,params,header) => {
+    try {
+      let result = await client.post(url, params,header);
+      return result.data;
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          console.log('Unauthorized');
+          throw error;
+        }
+      } else {
+        console.log('Error');
+      }
+    }
+  };
+
   return {
     post,
     get,
     loginPost,
     registerPost,
+    getWithToken,
+    postwithToken,
   };
 };
 
