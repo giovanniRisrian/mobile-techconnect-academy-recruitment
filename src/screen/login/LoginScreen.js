@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {
   Image,
@@ -10,6 +10,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import GoogleLoginButton from '../../component/googleLoginButton/GoogleLoginButton';
+import GoogleLoginButtonComponent from '../../component/googleLoginButton/GoogleLoginButtonComponent';
+import LoginService from '../../service/LoginService';
+import RegisterService from '../../service/RegisterService';
 const LoginScreen = ({login}) => {
   const {
     email,
@@ -22,8 +26,14 @@ const LoginScreen = ({login}) => {
     setAlert,
     validation,
     goToRegister,
+    isLogged,
+    passLogin,
   } = login();
+  useEffect(() => {
+    passLogin();
+  }, []);
 
+  console.log('ISLOGED ADALAH', isLogged);
   if (isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -84,6 +94,9 @@ const LoginScreen = ({login}) => {
             Daftar
           </Text>
         </Text>
+        <GoogleLoginButtonComponent
+          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
+        />
       </SafeAreaView>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,8 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-} from "react-native";
-import { goToLogin, goToScreen } from "../../navigation/NavigationHelper";
+} from 'react-native';
+import {goToLogin, goToScreen} from '../../navigation/NavigationHelper';
 import {
   ADMINISTRATOR,
   APPLICANT,
@@ -17,10 +17,10 @@ import {
   PROFILE_PATH,
   RECRUITER,
   VACANY_PATH,
-} from "../../navigation/NavigationPath";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+} from '../../navigation/NavigationPath';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 const toHome = () => {
   goToScreen(HOME_PATH, false);
 };
@@ -29,14 +29,14 @@ const toVacany = () => {
   goToScreen(VACANY_PATH, true);
 };
 
-const toDashboard = (role) => {
-  if (role === "user") {
+const toDashboard = role => {
+  if (role === 'user') {
     goToScreen(APPLICANT.DASHBOARD, false);
   }
-  if (role === "recruiter") {
+  if (role === 'recruiter') {
     goToScreen(RECRUITER.DASHBOARD, false);
   }
-  if (role === "administrator") {
+  if (role === 'administrator') {
     goToScreen(ADMINISTRATOR.DASHBOARD, false);
   }
 };
@@ -47,36 +47,33 @@ const toLogin = () => {
   goToLogin();
 };
 const BottomTabs = () => {
-  const isLogin = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLogin
-  );
+  const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.buttonLeft} onPress={() => toHome()}>
         <Text style={styles.text}>
-          {" "}
+          {' '}
           <Icon name="home" size={25} />
         </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => toVacany()}>
         <Text style={styles.text}>
-          {" "}
+          {' '}
           <Icon name="briefcase-search" size={25} />
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           isLogin != null ? toDashboard(isLogin.Role) : toLogin();
         }}>
         <Text style={styles.text}>Dashboard</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.buttonRight}
         onPress={() => {
           isLogin != null ? toProfile() : toLogin();
-        }}
-      >
+        }}>
         <Text style={styles.text}>
           <Icon name="account-circle" size={25} />
         </Text>
@@ -87,14 +84,14 @@ const BottomTabs = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginHorizontal: 10,
     borderTopStartRadius: 15,
     borderBottomStartRadius: 15,
     borderTopEndRadius: 15,
     borderBottomEndRadius: 15,
-    backgroundColor: "#EEEEEE",
-    shadowColor: "#000",
+    backgroundColor: '#EEEEEE',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 4,
@@ -106,30 +103,30 @@ const styles = StyleSheet.create({
   },
   dialogContentView: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   text: {
-    textAlign: "center",
-    color: "#5F4E98",
+    textAlign: 'center',
+    color: '#5F4E98',
     marginTop: 10,
   },
 
   buttonLeft: {
-    width: "25%",
+    width: '33%',
     height: 50,
-    borderColor: "white",
+    borderColor: 'white',
   },
 
   button: {
-    width: "25%",
+    width: '33%',
     height: 50,
-    borderColor: "white",
+    borderColor: 'white',
   },
   buttonRight: {
-    width: "25%",
+    width: '33%',
     height: 50,
-    borderColor: "white",
+    borderColor: 'white',
   },
 });
 export default BottomTabs;

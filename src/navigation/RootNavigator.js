@@ -6,6 +6,7 @@ import {
   APPLICANT,
   APPLICANT_DASHBOARD,
   DASHBOARD,
+  DETAIL_STATUS,
   HOME_PATH,
   LOGIN_PATH,
   PROFILE_PATH,
@@ -27,14 +28,17 @@ import RecruiterDashboard from '../screen/recruiter/dashboard/RecruiterDashboard
 import RegisterScreen from '../screen/register/RegisterScreen';
 import {Register} from '../screen/register/Register';
 import RegisterService from '../service/RegisterService';
-import ProfileScreen from '../screen/applicant/profile/ProfileScreen';
+import ProfileScreen from '../screen/applicant/profile/component/ProfileScreen';
 import HomeScreen from '../screen/home/HomeScreen';
 import VacanyScreen from '../screen/vacany/VacanyScreen';
 import BottomTabs from '../component/bottomTabs/BottomTabs';
-import { Vacancy } from '../screen/vacany/Vacancy';
+import {Vacancy} from '../screen/vacany/Vacancy';
 import VacancyService from '../service/VacancyService';
 import SplashScreen from '../screen/splash/SplashScreen';
 
+import StatusRecruitmentScreen from '../screen/applicant/status/statusRecruitment/StatusRecruitmentScreen';
+import StatusRecruitment from '../screen/applicant/status/statusRecruitment/StatusRecruitment';
+import StatusService from '../service/StatusService';
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
@@ -57,6 +61,14 @@ const RootNavigator = () => {
               <RegisterScreen
                 {...props}
                 register={() => Register(RegisterService)}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name={DETAIL_STATUS}>
+            {props => (
+              <StatusRecruitmentScreen
+                {...props}
+                bloc={() => StatusRecruitment(StatusService)}
               />
             )}
           </Stack.Screen>

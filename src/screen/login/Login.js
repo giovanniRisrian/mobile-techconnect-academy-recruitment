@@ -6,16 +6,21 @@ import {
   RECRUITER,
   REGISTER_PATH,
 } from '../../navigation/NavigationPath';
-
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
+import {
+  getLocalData,
+  removeLocalData,
+  storeLocalData,
+} from '../../utils/localStorage';
 export const Login = service => {
   const {callLoginService} = service();
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const [isLogged, setIsLogged] = useState(null);
   const dispatch = useDispatch();
   const [validation, setValidation] = useState({
     safeEmail: false,
@@ -24,6 +29,7 @@ export const Login = service => {
     password: '',
   });
   const [alert, setAlert] = useState(false);
+
   const changeemail = email => {
     let temp = validation;
     if (
@@ -61,13 +67,31 @@ export const Login = service => {
     // console.log(validation);
     setPassword(password);
   };
-
+  const passLogin = async () => {
+    let loginInfoToken = await getLocalData();
+    console.log('INIGETNYAAA', loginInfoToken);
+    // const loginInfo = isLogged;
+    if (loginInfoToken != null) {
+      const loginInfo = jwt_decode(loginInfoToken);
+      loginInfo.token = loginInfoToken;
+      dispatch(setLogin(loginInfo));
+      if (loginInfo.Role === 'user') {
+        goToScreen(APPLICANT.DASHBOARD, true);
+      }
+      if (loginInfo.Role === 'recruiter') {
+        goToScreen(RECRUITER.DASHBOARD, true);
+      }
+      if (loginInfo.Role === 'administrator') {
+        goToScreen(ADMINISTRATOR.DASHBOARD, true);
+      }
+    }
+  };
   const onAuthenticate = async () => {
     console.log('request to api : ', email, password);
     try {
       setLoading(true);
       const response = await callLoginService(email, password);
-
+      console.log('Sini kalo berani');
       setLoading(false);
       let loginInfo;
       console.log('Tokennya : ', jwt_decode(response.data.token));
@@ -76,6 +100,8 @@ export const Login = service => {
         loginInfo.token = response.data.token;
 
         dispatch(setLogin(loginInfo));
+        console.log('Ditunggu tokennya');
+        await storeLocalData(loginInfo.token);
         if (loginInfo.Role === 'user') {
           goToScreen(APPLICANT.DASHBOARD, true);
         }
@@ -93,8 +119,10 @@ export const Login = service => {
     }
   };
   return {
+    isLogged,
     email,
     password,
+    passLogin,
     changeemail,
     changePassword,
     onAuthenticate,

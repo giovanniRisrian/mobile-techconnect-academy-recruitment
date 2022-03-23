@@ -1,23 +1,22 @@
-import React, { useState } from "react";
-import { Alert } from "react-native";
-import { goToScreenWithParams } from "../../navigation/NavigationHelper";
-import { HOME_PATH, PROFILE_PATH } from "../../navigation/NavigationPath";
-import { useDispatch } from "react-redux";
-import { showLoading } from "../../stores/techconnectAcademy/TechconnectAcademyAction";
-import AwesomeAlert from "react-native-awesome-alerts";
-import { useSelector } from "react-redux";
-
-export const Vacancy = (service) => {
+import React, {useState} from 'react';
+import {Alert} from 'react-native';
+import {goToScreenWithParams} from '../../navigation/NavigationHelper';
+import {HOME_PATH, PROFILE_PATH} from '../../navigation/NavigationPath';
+import {useDispatch} from 'react-redux';
+import {showLoading} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import {useSelector} from 'react-redux';
+export const Vacancy = service => {
   const [list, setList] = useState([]);
   const [typeProgram, setTypeProgram] = useState([]);
-  const [types, setType] = useState("");
+  const [types, setType] = useState('');
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
-  let { getVacancyList, getVacancyId, applyProgram, getUserId, getType } =
+  let {getVacancyList, getVacancyId, applyProgram, getUserId, getType} =
     service();
   const isLoading = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLoading
+    state => state.TechconnectAcademyReducer.isLoading,
   );
 
   const allVacancy = async (name, type) => {
@@ -41,10 +40,10 @@ export const Vacancy = (service) => {
     }
   };
 
-  const searchByName = (text) => {
+  const searchByName = text => {
     if (text) {
       dispatch(showLoading(true));
-      allVacancy(text, "");
+      allVacancy(text, '');
       setSearch(text);
       dispatch(showLoading(false));
     } else {
@@ -55,7 +54,7 @@ export const Vacancy = (service) => {
     }
   };
 
-  const vacancyById = async (id) => {
+  const vacancyById = async id => {
     try {
       dispatch(showLoading(true));
       const response = await getVacancyId(id);
@@ -67,7 +66,7 @@ export const Vacancy = (service) => {
     }
   };
 
-  const getUserbyId = async (context) => {
+  const getUserbyId = async context => {
     try {
       let res = await getUserId(context);
       let data = res.data;
@@ -124,31 +123,31 @@ export const Vacancy = (service) => {
   const doApplyProgram = async (value, context) => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${context.token}` },
+        headers: {Authorization: `Bearer ${context.token}`},
       };
       let status = await getUserbyId(config);
       let res;
       if (status === true) {
         res = await applyProgram(value, config);
-        Alert.alert("Success", null, [
+        Alert.alert('Success', null, [
           {
-            text: "OK",
+            text: 'OK',
             onPress: () => goToScreenWithParams(HOME_PATH, context.id, true),
           },
         ]);
       } else {
-        Alert.alert("You must filled mandatory field", null, [
+        Alert.alert('You must filled mandatory field', null, [
           {
-            text: "OK",
+            text: 'OK',
             onPress: () => goToScreenWithParams(PROFILE_PATH, context.id, true),
           },
         ]);
       }
       return res;
     } catch (err) {
-      Alert.alert("You have been apply this program", null, [
+      Alert.alert('You have been apply this program', null, [
         {
-          text: "OK",
+          text: 'OK',
           onPress: () => null,
         },
       ]);
@@ -161,6 +160,7 @@ export const Vacancy = (service) => {
     list,
     vacancyById,
     doApplyProgram,
+    setList,
     search,
     searchByName,
     getTypeProgram,

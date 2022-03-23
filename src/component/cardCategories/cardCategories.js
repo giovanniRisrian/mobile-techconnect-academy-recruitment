@@ -7,13 +7,13 @@ import {
   Spacer,
   Text,
   Image,
-} from "native-base";
-import React from "react";
+} from 'native-base';
+import React from 'react';
 
-const CardCategories = ({ title, icons }) => {
+const CardCategories = ({title, icons}) => {
   return (
     <Pressable>
-      {({ isHovered, isFocused, isPressed }) => {
+      {({isHovered, isFocused, isPressed}) => {
         return (
           <Box
             marginRight={5}
@@ -24,10 +24,10 @@ const CardCategories = ({ title, icons }) => {
             shadow="3"
             bg={
               isPressed
-                ? "coolGray.200"
+                ? 'coolGray.200'
                 : isHovered
-                ? "coolGray.200"
-                : "coolGray.100"
+                ? 'coolGray.200'
+                : 'coolGray.100'
             }
             p="5"
             rounded="8"
@@ -37,11 +37,10 @@ const CardCategories = ({ title, icons }) => {
                   scale: isPressed ? 0.96 : 1,
                 },
               ],
-            }}
-          >
-            {title === "Program" ? (
+            }}>
+            {title === 'Program' ? (
               <Image
-                source={require("../../assets/icons/program.png")}
+                source={require('../../assets/icons/program.png')}
                 alt="icon-categories"
                 width="50px"
                 height="50px"
@@ -49,9 +48,9 @@ const CardCategories = ({ title, icons }) => {
             ) : (
               <></>
             )}
-            {title === "Training" ? (
+            {title === 'Training' ? (
               <Image
-                source={require("../../assets/icons/training.png")}
+                source={require('../../assets/icons/training.png')}
                 alt="icon-categories"
                 width="50px"
                 height="50px"
@@ -59,13 +58,13 @@ const CardCategories = ({ title, icons }) => {
             ) : (
               <></>
             )}
-            {title === "Certification" ? (
+            {title === 'Certification' ? (
               <Image
-                source={require("../../assets/icons/certification.png")}
+                source={require('../../assets/icons/certification.png')}
                 alt="icon-categories"
                 width="50px"
                 height="50px"
-                marginLeft='4'
+                marginLeft="4"
               />
             ) : (
               <></>
@@ -78,8 +77,7 @@ const CardCategories = ({ title, icons }) => {
                   fontSize={14}
                   fontWeight="medium"
                   textDecorationLine="underline"
-                  alignSelf="flex-start"
-                >
+                  alignSelf="flex-start">
                   {title}
                 </Text>
               ) : (
