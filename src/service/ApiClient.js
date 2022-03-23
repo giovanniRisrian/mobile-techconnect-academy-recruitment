@@ -130,6 +130,31 @@ const clientService = () => {
     }
   };
 
+  const getWithToken = async (url, header) => {
+    try {
+      let result = await client.get(url, header);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  const postwithToken = async (url, params, header) => {
+    try {
+      let result = await client.post(url, params, header);
+      return result.data;
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          console.log('Unauthorized');
+          throw error;
+        }
+      } else {
+        console.log('Error');
+      }
+    }
+  };
+
   return {
     get,
     post,
@@ -139,6 +164,8 @@ const clientService = () => {
     postFile,
     putFile,
     getWithAuth,
+    getWithToken,
+    postwithToken,
   };
 };
 

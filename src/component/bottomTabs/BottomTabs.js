@@ -18,6 +18,7 @@ import {
   RECRUITER,
   VACANY_PATH,
 } from '../../navigation/NavigationPath';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useDispatch, useSelector} from 'react-redux';
 const toHome = () => {
@@ -48,12 +49,18 @@ const toLogin = () => {
 const BottomTabs = () => {
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.buttonLeft} onPress={() => toHome()}>
-        <Text style={styles.text}>Home</Text>
+        <Text style={styles.text}>
+          {' '}
+          <Icon name="home" size={25} />
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => toVacany()}>
-        <Text style={styles.text}>Vacany</Text>
+        <Text style={styles.text}>
+          {' '}
+          <Icon name="briefcase-search" size={25} />
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -67,13 +74,33 @@ const BottomTabs = () => {
         onPress={() => {
           isLogin != null ? toProfile() : toLogin();
         }}>
-        <Text style={styles.text}>Profile</Text>
+        <Text style={styles.text}>
+          <Icon name="account-circle" size={25} />
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    borderTopStartRadius: 15,
+    borderBottomStartRadius: 15,
+    borderTopEndRadius: 15,
+    borderBottomEndRadius: 15,
+    backgroundColor: '#EEEEEE',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+
+    elevation: 9,
+  },
   dialogContentView: {
     flex: 1,
     flexDirection: 'column',
@@ -81,28 +108,24 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: 'white',
+    color: '#5F4E98',
+    marginTop: 10,
   },
 
   buttonLeft: {
     width: '25%',
     height: 50,
-    backgroundColor: '#631cc7',
-    borderTopLeftRadius: 15,
     borderColor: 'white',
   },
 
   button: {
     width: '25%',
     height: 50,
-    backgroundColor: '#631cc7',
     borderColor: 'white',
   },
   buttonRight: {
     width: '25%',
     height: 50,
-    backgroundColor: '#631cc7',
-    borderTopRightRadius: 15,
     borderColor: 'white',
   },
 });

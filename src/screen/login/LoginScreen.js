@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {
   Image,
@@ -26,8 +26,14 @@ const LoginScreen = ({login}) => {
     setAlert,
     validation,
     goToRegister,
+    isLogged,
+    passLogin,
   } = login();
+  useEffect(() => {
+    passLogin();
+  }, []);
 
+  console.log('ISLOGED ADALAH', isLogged);
   if (isLoading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

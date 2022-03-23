@@ -14,6 +14,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {removeLocalData, storeLocalData} from '../../utils/localStorage';
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const GoogleLogout = async () => {
@@ -26,10 +27,13 @@ const LogoutButton = () => {
       throw error;
     }
   };
-  const Logout = async () => {
+  const LogoutProccess = async () => {
     try {
       console.log('Masuik sinikah');
+      await removeLocalData();
       await GoogleLogout();
+
+      console.log('KEPENCENT');
       dispatch(setLogin(null));
       goToLogin();
     } catch (error) {
@@ -37,6 +41,9 @@ const LogoutButton = () => {
       dispatch(setLogin(null));
       goToLogin();
     }
+  };
+  const Logout = () => {
+    LogoutProccess();
   };
   return (
     <View>
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#2b2c36',
+    backgroundColor: '#5F4E98',
     alignItems: 'center',
     margin: 12,
     padding: 12,

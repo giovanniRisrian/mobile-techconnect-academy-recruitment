@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useEffect} from 'react';
 
 import md5 from 'blueimp-md5';
@@ -26,13 +26,16 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {storeLocalData} from '../../utils/localStorage';
 const GoogleLoginButton = (serviceLogin, serviceRegister) => {
   const dispatch = useDispatch();
   const {callLoginService} = serviceLogin();
   const {callRegisterService} = serviceRegister();
-
+  const [isLoading, setLoading] = useState(false);
   const onAuthenticate = async (fullname, email, password) => {
     const params = {fullname, email, password};
+
+    setLoading(true);
     try {
       const response = await callRegisterService(params);
 
@@ -43,7 +46,9 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
         registerInfo = jwt_decode(response.data.token);
         registerInfo.token = response.data.token;
 
+        await storeLocalData(response.data.token);
         dispatch(setLogin(registerInfo));
+        setLoading(false);
         if (registerInfo.Role === 'user') {
           goToScreen(APPLICANT.DASHBOARD, true);
         }
@@ -63,7 +68,9 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
           loginInfo = jwt_decode(response.data.token);
           loginInfo.token = response.data.token;
 
+          await storeLocalData(response.data.token);
           dispatch(setLogin(loginInfo));
+          setLoading(false);
           if (loginInfo.Role === 'user') {
             goToScreen(APPLICANT.DASHBOARD, true);
           }
@@ -76,6 +83,7 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
   };
@@ -113,7 +121,7 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
       console.error(error);
     }
   };
-  return {GoogleSingUp, GoogleLogout};
+  return {GoogleSingUp, GoogleLogout, isLoading};
 };
 
 export default GoogleLoginButton;

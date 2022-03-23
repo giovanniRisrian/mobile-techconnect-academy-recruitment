@@ -1,8 +1,10 @@
 import clientService from './ApiClient';
 
+import {API_URL} from '@env';
 const LoginService = () => {
   const callLoginService = async (email, password) => {
     try {
+      console.log(API_URL);
       console.log('ini Username : ', email);
       let data = await clientService().loginPost(
         '/login',

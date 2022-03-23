@@ -11,6 +11,7 @@ import {
   PROFILE_PATH,
   RECRUITER,
   REGISTER_PATH,
+  VACANCY_DETAIL_PATH,
   VACANY_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
@@ -29,11 +30,15 @@ import ProfileScreen from '../screen/applicant/profile/ProfileScreen';
 import HomeScreen from '../screen/home/HomeScreen';
 import VacanyScreen from '../screen/vacany/VacanyScreen';
 import BottomTabs from '../component/bottomTabs/BottomTabs';
+import {Vacancy} from '../screen/vacany/Vacancy';
+import VacancyService from '../service/VacancyService';
+import VacancyDetailScreen from '../screen/vacany/VacancyDetailScreen';
+
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
-  console.log('Info Loginnya gesss', isLogin);
+  // console.log('Info Loginnya gesss', isLogin);
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
@@ -67,7 +72,23 @@ const RootNavigator = () => {
           />
           <Stack.Screen name={PROFILE_PATH} component={ProfileScreen} />
           <Stack.Screen name={HOME_PATH} component={HomeScreen} />
-          <Stack.Screen name={VACANY_PATH} component={VacanyScreen} />
+          <Stack.Screen name={VACANY_PATH}>
+            {props => (
+              <VacanyScreen
+                {...props}
+                vacancy={() => Vacancy(VacancyService)}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name={VACANCY_DETAIL_PATH}>
+            {props => (
+              <VacancyDetailScreen
+                {...props}
+                vacancy={() => Vacancy(VacancyService)}
+              />
+            )}
+          </Stack.Screen>
 
           {/* <Stack.Screen name={REGISTER} component={RegisterScreen} /> */}
         </Stack.Group>

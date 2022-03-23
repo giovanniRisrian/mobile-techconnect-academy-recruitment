@@ -16,14 +16,18 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 const UpploadResumeButtonComponent = ({uploadResume}) => {
-  const {selectFile} = uploadResume();
+  const {selectFile, isLoading} = uploadResume();
   return (
     <View>
       <TouchableOpacity
-        style={styles.buttonStyle}
+        style={styles.button}
         activeOpacity={0.5}
         onPress={selectFile}>
-        <Text style={styles.buttonTextStyle}>Select File</Text>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={styles.text}>Select File</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

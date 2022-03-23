@@ -14,9 +14,10 @@ const UploadResumeButton = service => {
     getDataApplicantbyId,
   } = service();
   const [singleFile, setSingleFile] = useState(null);
-
+  const [isLoading, setLoading] = useState(false);
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   const doUpload = async file => {
+    setLoading(true);
     console.log('SIngle File : ', file);
     console.log(isLogin);
 
@@ -214,9 +215,11 @@ const UploadResumeButton = service => {
           Authorization: `Bearer ${isLogin.token}`,
         },
       });
+      setLoading(false);
       alert('Resume Uploaded and Information Inputed to Profile');
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   const selectFile = async () => {
@@ -238,7 +241,7 @@ const UploadResumeButton = service => {
       }
     }
   };
-  return {doUpload, selectFile};
+  return {doUpload, selectFile, isLoading};
 };
 
 export default UploadResumeButton;

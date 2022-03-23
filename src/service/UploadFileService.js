@@ -47,11 +47,16 @@ const UploadResumeService = () => {
     const response = await clientService().getWithAuth('/user', header);
     return response;
   };
+  const getJobReccomendationId = async header => {
+    const response = await clientService().getWithAuth('/user/jobrec', header);
+    return response;
+  };
   return {
     callUploadResumeService,
     postGetDataByListId,
     putUpdateProfile,
     getDataApplicantbyId,
+    getJobReccomendationId,
   };
 };
 
