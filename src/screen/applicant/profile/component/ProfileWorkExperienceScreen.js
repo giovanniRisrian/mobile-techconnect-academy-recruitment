@@ -39,7 +39,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // });
 
 const ProfileWorkExperienceScreen = ({ bloc }) => {
-  const [disabled, changeDisable] = useState(false);
+  const [disabled, changeDisable] = useState(true);
   const [initialValues, setInitial] = useState({
     WorkExperience: [
       {
@@ -77,7 +77,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
   };
 
   useEffect(() => {
-    getDataByID(userInfo.id, data, changeInitial);
+    // getDataByID(userInfo.id, data, changeInitial);
   }, []);
 
   useEffect(() => {

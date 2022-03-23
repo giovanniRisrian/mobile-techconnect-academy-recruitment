@@ -39,7 +39,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfilePersonalScreen = ({ bloc }) => {
-  const [disabled, changeDisable] = useState(false);
+  const [disabled, changeDisable] = useState(true);
   const [initialValues, changeInitial] = useState({
     Personal: {
       Name: "",
@@ -81,7 +81,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
   };
 
   useEffect(() => {
-    getDataByID(userInfo.id, data, changeInitial);
+    // getDataByID(userInfo.id, data, changeInitial);
   }, []);
 
   useEffect(() => {
@@ -260,18 +260,18 @@ const ProfilePersonalScreen = ({ bloc }) => {
                   <FormControl.Label alignSelf="center" mb={0}>
                     Birth Date
                   </FormControl.Label>
-                  {/* <Controller
-                  name=""
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <DateInput
-                      value={value}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      isReadOnly={disabled}
-                    />
-                  )}
-                /> */}
+                  <Controller
+                    name=""
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        value={value}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        isReadOnly={disabled}
+                      />
+                    )}
+                  />
                   <Input placeholder="Birth Date" variant="underlined" />
                   <FormControl.HelperText mt={0}>
                     <Text fontSize={"2xs"}>

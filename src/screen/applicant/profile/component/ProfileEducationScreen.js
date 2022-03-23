@@ -39,7 +39,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileEducationScreen = ({ bloc }) => {
-  const [disabled, changeDisable] = useState(false);
+  const [disabled, changeDisable] = useState(true);
   const [initialValues, setInitial] = useState({
     Education: [
       {
@@ -76,7 +76,7 @@ const ProfileEducationScreen = ({ bloc }) => {
   };
 
   useEffect(() => {
-    getDataByID(userInfo.id, data, changeInitial);
+    // getDataByID(userInfo.id, data, changeInitial);
   }, []);
 
   useEffect(() => {
