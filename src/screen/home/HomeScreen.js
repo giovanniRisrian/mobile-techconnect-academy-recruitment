@@ -17,16 +17,18 @@ import ReccomendationButton from '../../component/reccomendationButton/Reccomend
 import ListProgramApplyScreen from '../applicant/status/listProgramApply/ListProgramApplyScreen';
 import ListProgramApply from '../applicant/status/listProgramApply/ListProgramApply';
 import StatusService from '../../service/StatusService';
+import LogoutButton from '../../component/logoutButton/LogoutButton';
 const HomeScreen = () => {
   return (
     <View style={styles.program}>
       <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
-      <UpploadResumeButtonComponent
-        uploadResume={() => UploadResumeButton(UploadResumeService)}
-      />
       <ReccomendationButtonComponent
         reccomendationButton={() => ReccomendationButton(UploadResumeService)}
       />
+      <LogoutButton />
+      {/* <UpploadResumeButtonComponent
+        uploadResume={() => UploadResumeButton(UploadResumeService)}
+      /> */}
     </View>
   );
 };

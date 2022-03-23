@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {Button} from 'native-base';
 import DocumentPicker from 'react-native-document-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {goToLogin} from '../../navigation/NavigationHelper';
@@ -18,18 +19,13 @@ import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction
 const UpploadResumeButtonComponent = ({uploadResume}) => {
   const {selectFile, isLoading} = uploadResume();
   return (
-    <View>
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.5}
-        onPress={selectFile}>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={styles.text}>Select File</Text>
-        )}
-      </TouchableOpacity>
-    </View>
+    <Button
+      onPress={selectFile}
+      variant="subtle"
+      colorScheme="primary"
+      size="xs">
+      {isLoading ? <ActivityIndicator /> : 'Upload Resume'}
+    </Button>
   );
 };
 

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {API_URL} from '@env';
+import axios from "axios";
+import { API_URL } from "@env";
 
 const client = axios.create({
   baseURL: API_URL,
@@ -8,38 +8,38 @@ const client = axios.create({
 const clientService = () => {
   const loginPost = async (url, config, params) => {
     try {
-      console.log('apiurl : ', API_URL);
-      let result = await client.post(url, config, {auth: params});
-      console.log('resultnya :', result);
+      console.log("apiurl : ", API_URL);
+      let result = await client.post(url, config, { auth: params });
+      console.log("resultnya :", result);
       return result.data;
     } catch (error) {
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {
-          console.log('Unauthorized');
+          console.log("Unauthorized");
           throw error;
         }
       } else {
-        console.log('errornya : ', error);
-        console.log('Error');
+        console.log("errornya : ", error);
+        console.log("Error");
       }
     }
   };
   const registerPost = async (url, params) => {
     try {
       let result = await client.post(url, params);
-      console.log('resultnya :', result);
+      console.log("resultnya :", result);
       return result.data;
     } catch (error) {
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {
-          console.log('Unauthorized');
+          console.log("Unauthorized");
           throw error;
         }
       } else {
-        console.log('errornya : ', error);
-        console.log('Error');
+        console.log("errornya : ", error);
+        console.log("Error");
       }
     }
   };
@@ -65,11 +65,11 @@ const clientService = () => {
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
-          console.log('Unauthorized');
+          console.log("Unauthorized");
           throw error;
         }
       } else {
-        console.log('Error');
+        console.log("Error");
       }
     }
   };

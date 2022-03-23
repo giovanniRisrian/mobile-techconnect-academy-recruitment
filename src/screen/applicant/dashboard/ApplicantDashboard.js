@@ -5,7 +5,6 @@ const ApplicantDashboard = () => {
   return (
     <View>
       <Text>Welcome Applicant</Text>
-      <LogoutButton />
     </View>
   );
 };

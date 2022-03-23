@@ -28,7 +28,7 @@ import RecruiterDashboard from '../screen/recruiter/dashboard/RecruiterDashboard
 import RegisterScreen from '../screen/register/RegisterScreen';
 import {Register} from '../screen/register/Register';
 import RegisterService from '../service/RegisterService';
-import ProfileScreen from '../screen/applicant/profile/ProfileScreen';
+import ProfileScreen from '../screen/applicant/profile/component/ProfileScreen';
 import HomeScreen from '../screen/home/HomeScreen';
 import VacanyScreen from '../screen/vacany/VacanyScreen';
 import BottomTabs from '../component/bottomTabs/BottomTabs';

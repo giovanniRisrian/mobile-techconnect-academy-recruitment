@@ -62,13 +62,13 @@ const BottomTabs = () => {
           <Icon name="briefcase-search" size={25} />
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           isLogin != null ? toDashboard(isLogin.Role) : toLogin();
         }}>
         <Text style={styles.text}>Dashboard</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.buttonRight}
         onPress={() => {
@@ -113,18 +113,18 @@ const styles = StyleSheet.create({
   },
 
   buttonLeft: {
-    width: '25%',
+    width: '33%',
     height: 50,
     borderColor: 'white',
   },
 
   button: {
-    width: '25%',
+    width: '33%',
     height: 50,
     borderColor: 'white',
   },
   buttonRight: {
-    width: '25%',
+    width: '33%',
     height: 50,
     borderColor: 'white',
   },
