@@ -78,8 +78,7 @@ const ProfileEducationScreen = ({ bloc }) => {
 
   const onSubmit = (values) => {
     // function to submit
-    console.log("HEI INI MUNCUL GA", values);
-    // addProfile(values, file, data);
+    addProfile(values, file, userInfo);
     changeDisable(!disabled);
   };
 

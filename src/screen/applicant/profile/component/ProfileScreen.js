@@ -39,17 +39,17 @@ const ProfileScreen = () => {
     { key: "workexperience", title: "Work Experience" },
   ]);
 
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      // indicatorStyle={{ backgroundColor: "white" }}
-      style={{ backgroundColor: "pink" }}
-    />
-  );
+  // const renderTabBar = (props) => (
+  //   <TabBar
+  //     {...props}
+  //     // indicatorStyle={{ backgroundColor: "white" }}
+  //     style={{ backgroundColor: "pink" }}
+  //   />
+  // );
 
   return (
     <TabView
-      renderTabBar={renderTabBar}
+      // renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}

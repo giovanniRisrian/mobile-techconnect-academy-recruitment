@@ -83,8 +83,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
 
   const onSubmit = (values) => {
     // function to submit
-    // addProfile(values, file, data);
-    console.log("Ini muncul ga", values);
+    addProfile(values, file, userInfo);
     changeDisable(!disabled);
   };
 
@@ -154,7 +153,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         placeholder="Name"
                         variant="underlined"
-                        // error={Boolean(errors.Personal?.Name)}
+                        error={Boolean(errors.Personal?.Name)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -181,7 +180,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        // error={Boolean(errors.Personal?.Email)}
+                        error={Boolean(errors.Personal?.Email)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -210,7 +209,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        // error={Boolean(errors.Personal?.TelephoneNo)}
+                        error={Boolean(errors.Personal?.TelephoneNo)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -239,7 +238,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         onChange={onChange}
                         onBlur={onBlur}
                         isReadOnly={disabled}
-                        // error={Boolean(errors.Personal?.Gender)}
+                        error={Boolean(errors.Personal?.Gender)}
                       >
                         <Stack
                           direction={{
@@ -302,7 +301,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        // error={Boolean(errors.Personal?.Domicile)}
+                        error={Boolean(errors.Personal?.Domicile)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -331,7 +330,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        // error={Boolean(errors.Personal?.TotalWorkingExperience)}
+                        error={Boolean(errors.Personal?.TotalWorkingExperience)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -358,7 +357,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
-                        // error={Boolean(errors.Personal?.SalaryExpectation)}
+                        error={Boolean(errors.Personal?.SalaryExpectation)}
                         isReadOnly={disabled}
                       />
                     )}
@@ -401,7 +400,7 @@ const ProfilePersonalScreen = ({ bloc }) => {
                               value={value}
                               onChangeText={onChange}
                               onBlur={onBlur}
-                              // error={Boolean(errors.Personal?.SkillSet)}
+                              error={Boolean(errors.Personal?.SkillSet)}
                               isReadOnly={disabled}
                             />
                           )}

@@ -3,33 +3,30 @@ import dayjs from "dayjs";
 
 const Profile = (profileService) => {
   let { updateDataApplicant, getDataApplicantbyId } = profileService();
-  // let navigate = useNavigate();
-  const addProfile = async (values, file, context) => {
-    // // console.log("ini context", context);
-    // // console.log("handleApplicant", values);
 
+  const addProfile = async (values, file, context) => {
     values.Personal.TotalWorkingExperience =
       values.Personal.TotalWorkingExperience + "";
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${context.userInfo}`,
+          Authorization: `Bearer ${context.token}`,
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
         },
       };
-      let userInfo = jwt_decode(context.userInfo);
+      // let userInfo = jwt_decode(context.token);
       // console.log("Ini Values : ",values)
-      const formData = new FormData();
-      const jsonText = JSON.stringify(values);
-      const jsonPretendFile = new Blob([jsonText], {
-        type: "application/json",
-      });
-      formData.append("json", jsonPretendFile);
-      formData.append("file", file);
-      const response = await updateDataApplicant(formData, config);
+      // const formData = new FormData();
+      // const jsonText = JSON.stringify(values);
+      // const jsonPretendFile = new Blob([jsonText], {
+      //   type: "application/json",
+      // });
+      // formData.append("json", jsonPretendFile);
+      // formData.append("file", file);
+      const response = await updateDataApplicant(values, config);
       // navigate("/applicant/profile");
-      window.location.reload();
+      // window.location.reload();
       return response;
     } catch (err) {
       throw err;
@@ -46,7 +43,6 @@ const Profile = (profileService) => {
       const formData = new FormData();
       formData.append("id", id);
       const response = await getDataApplicantbyId(formData, config);
-      console.log("lets go response", response.data);
       let dataReceive = response.data;
 
       let mock = {

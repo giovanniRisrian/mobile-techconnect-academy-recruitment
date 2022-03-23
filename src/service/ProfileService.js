@@ -13,7 +13,11 @@ const ProfileService = () => {
 
   const updateDataApplicant = async (params, header) => {
     try {
-      let data = await clientService().put(`/applicant/update`, params, header);
+      let data = await clientService().put(
+        `/applicant/mobile/update`,
+        params,
+        header
+      );
       return data;
     } catch (e) {
       console.log(e);

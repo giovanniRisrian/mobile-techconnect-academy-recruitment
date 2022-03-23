@@ -61,9 +61,9 @@ const clientService = () => {
     }
   };
 
-  const put = async (url, params) => {
+  const put = async (url, params, header) => {
     try {
-      let result = await client.put(url, params);
+      let result = await client.put(url, params, header);
       console.log(result);
       return result.data;
     } catch (error) {
