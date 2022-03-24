@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,6 +14,7 @@ import {
   IconButton,
   Icon,
   ScrollView,
+  Text,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -149,9 +150,13 @@ const ProfileEducationScreen = ({bloc}) => {
                       </FormControl.Label>
                       <HStack justifyContent="space-evenly">
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Title
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].Title`}
                             control={control}
@@ -163,6 +168,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -174,9 +180,13 @@ const ProfileEducationScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Institution
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].Institution`}
                             control={control}
@@ -188,6 +198,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -201,9 +212,13 @@ const ProfileEducationScreen = ({bloc}) => {
                       </HStack>
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Year In
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].YearIn`}
                             control={control}
@@ -215,6 +230,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -226,9 +242,13 @@ const ProfileEducationScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Year Out
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].YearOut`}
                             control={control}
@@ -240,6 +260,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -253,9 +274,13 @@ const ProfileEducationScreen = ({bloc}) => {
                       </HStack>
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Major
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].Major`}
                             control={control}
@@ -267,6 +292,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -277,9 +303,13 @@ const ProfileEducationScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={1}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             GPA
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Education[${idx}].GPA`}
                             control={control}
@@ -291,6 +321,7 @@ const ProfileEducationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />

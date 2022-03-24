@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,6 +14,7 @@ import {
   IconButton,
   Icon,
   ScrollView,
+  Text,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -141,9 +142,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                       </FormControl.Label>
                       <HStack justifyContent="space-evenly">
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Organization Name
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Organization[${idx}].Organization`}
                             control={control}
@@ -155,6 +160,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -167,9 +173,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Scope
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Organization[${idx}].Scope`}
                             control={control}
@@ -181,6 +191,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -195,9 +206,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
 
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Duration in Year
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Organization[${idx}].Duration`}
                             control={control}
@@ -209,6 +224,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -219,9 +235,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Position
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Organization[${idx}].Position`}
                             control={control}
@@ -233,6 +253,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -246,9 +267,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
 
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="96%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Description
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`Organization[${idx}].Description`}
                             control={control}
@@ -262,6 +287,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />

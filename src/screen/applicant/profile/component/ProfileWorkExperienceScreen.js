@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,6 +14,7 @@ import {
   IconButton,
   Icon,
   ScrollView,
+  Text,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -259,9 +260,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                       </FormControl.Label>
                       <HStack justifyContent="space-evenly">
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Company Name
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].CompanyName`}
                             control={control}
@@ -273,6 +278,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -285,9 +291,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Position
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].Position`}
                             control={control}
@@ -299,6 +309,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -313,9 +324,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
 
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Level
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].Level`}
                             control={control}
@@ -327,6 +342,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -337,9 +353,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Industry
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].Industry`}
                             control={control}
@@ -351,6 +371,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
@@ -364,9 +385,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
 
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Start Date
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].YearIn`}
                             control={control}
@@ -375,6 +400,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 placeholder="Start Date"
                                 variant="underlined"
                                 value={dateIn ? dateIn : value}
+                                fontSize={'sm'}
                                 // value={
                                 //   idx === 0
                                 //     ? dateIn
@@ -437,9 +463,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                           </FormControl.HelperText>
                         </Box>
                         <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             End Date
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].YearOut`}
                             control={control}
@@ -451,6 +481,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChange={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                                 // onPressIn={
                                 //   idx === 0
                                 //     ? datePickerYearOut
@@ -478,9 +509,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
 
                       <HStack justifyContent="space-evenly" mt={3}>
                         <Box w="96%">
-                          <FormControl.Label alignSelf="center" mb={0}>
+                          <Text
+                            mb={0}
+                            marginLeft={2}
+                            fontWeight={'light'}
+                            fontSize={'xs'}>
                             Description
-                          </FormControl.Label>
+                          </Text>
                           <Controller
                             name={`WorkExperience[${idx}].Description`}
                             control={control}
@@ -494,6 +529,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
