@@ -361,57 +361,56 @@ const ProfileEducationScreen = ({bloc}) => {
               {disabled ? (
                 <Box />
               ) : (
-                <HStack
-                  space={4}
-                  alignItems="center"
-                  justifyContent="center"
-                  marginTop={1}>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={() =>
-                        EducationAppend({
-                          Title: '',
-                          Institution: '',
-                          Major: '',
-                          YearIn: '',
-                          YearOut: '',
-                          GPA: '',
-                        })
-                      }
-                      variant="subtle"
-                      colorScheme="primary"
-                      size="xs"
-                      disabled={EducationField.length >= 3}>
-                      Add
-                    </Button>
-                  </Box>
-                </HStack>
+                <Box>
+                  <HStack
+                    space={4}
+                    alignItems="center"
+                    justifyContent="center"
+                    marginTop={1}>
+                    <Box width={'50%'}>
+                      <Button
+                        onPress={() =>
+                          EducationAppend({
+                            Title: '',
+                            Institution: '',
+                            Major: '',
+                            YearIn: '',
+                            YearOut: '',
+                            GPA: '',
+                          })
+                        }
+                        variant="subtle"
+                        colorScheme="primary"
+                        size="xs"
+                        disabled={EducationField.length >= 3}>
+                        Add
+                      </Button>
+                    </Box>
+                  </HStack>
+                  <HStack justifyContent="center" mb={1} mt={5}>
+                    <Box width={'50%'}>
+                      <Button
+                        onPress={() => changeDisable(!disabled)}
+                        variant="subtle"
+                        size="xs"
+                        colorScheme="red">
+                        Cancel
+                      </Button>
+                    </Box>
+                    <Box width={'50%'}>
+                      <Button
+                        onPress={handleSubmit(onSubmit)}
+                        variant="subtle"
+                        size="xs"
+                        colorScheme="blue">
+                        Submit
+                      </Button>
+                    </Box>
+                  </HStack>
+                </Box>
               )}
               {/* Submit Cancel Button */}
-              {disabled ? (
-                <Box />
-              ) : (
-                <HStack justifyContent="center" mb={1} mt={5}>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={() => changeDisable(!disabled)}
-                      variant="subtle"
-                      size="xs"
-                      colorScheme="red">
-                      Cancel
-                    </Button>
-                  </Box>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={handleSubmit(onSubmit)}
-                      variant="subtle"
-                      size="xs"
-                      colorScheme="blue">
-                      Submit
-                    </Button>
-                  </Box>
-                </HStack>
-              )}
+
               {/* Submit Cancel Button */}
             </Center>
           </Box>
