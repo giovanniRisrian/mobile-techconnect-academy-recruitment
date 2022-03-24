@@ -3,6 +3,7 @@ import {goToScreen} from '../../navigation/NavigationHelper';
 import {
   ADMINISTRATOR,
   APPLICANT,
+  HOME_PATH,
   RECRUITER,
   REGISTER_PATH,
 } from '../../navigation/NavigationPath';
@@ -76,7 +77,7 @@ export const Login = service => {
       loginInfo.token = loginInfoToken;
       dispatch(setLogin(loginInfo));
       if (loginInfo.Role === 'user') {
-        goToScreen(APPLICANT.DASHBOARD, true);
+        goToScreen(HOME_PATH, true);
       }
       if (loginInfo.Role === 'recruiter') {
         goToScreen(RECRUITER.DASHBOARD, true);

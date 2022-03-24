@@ -24,6 +24,12 @@ const Profile = profileService => {
       // });
       // formData.append("json", jsonPretendFile);
       // formData.append("file", file);
+      let filepath =
+        values.Personal.ResumeFile.split(':')[0].split('_')[
+          values.Personal.ResumeFile.split(':')[0].split('_').length - 1
+        ];
+
+      values.Personal.ResumeFile = filepath;
       const response = await updateDataApplicant(values, config);
       // navigate("/applicant/profile");
       // window.location.reload();
@@ -47,7 +53,7 @@ const Profile = profileService => {
 
       let mock = {
         Personal: {
-          Name: 'zizki',
+          Name: '',
           Gender: '',
           BirthDate: new Date(),
           Domicile: '',

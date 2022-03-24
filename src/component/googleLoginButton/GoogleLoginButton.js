@@ -16,6 +16,7 @@ import {goToScreen} from '../../navigation/NavigationHelper';
 import {
   ADMINISTRATOR,
   APPLICANT,
+  HOME_PATH,
   RECRUITER,
   REGISTER_PATH,
 } from '../../navigation/NavigationPath';
@@ -50,7 +51,7 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
         dispatch(setLogin(registerInfo));
         setLoading(false);
         if (registerInfo.Role === 'user') {
-          goToScreen(APPLICANT.DASHBOARD, true);
+          goToScreen(HOME_PATH, true);
         }
         if (registerInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);
@@ -72,7 +73,7 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
           dispatch(setLogin(loginInfo));
           setLoading(false);
           if (loginInfo.Role === 'user') {
-            goToScreen(APPLICANT.DASHBOARD, true);
+            goToScreen(HOME_PATH, true);
           }
           if (loginInfo.Role === 'recruiter') {
             goToScreen(RECRUITER.DASHBOARD, true);
