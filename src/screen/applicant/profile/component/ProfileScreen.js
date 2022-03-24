@@ -69,7 +69,7 @@ const ProfileScreen = () => {
   return (
     <TabView
       lazy
-      renderLazyPlaceholder={_renderLazyPlaceholder}
+      // renderLazyPlaceholder={_renderLazyPlaceholder}
       renderTabBar={renderTabBar}
       navigationState={{index, routes}}
       renderScene={renderScene}

@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from "react";
+import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,7 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
-} from "react-native";
+} from 'react-native';
 
 import {
   Colors,
@@ -23,17 +23,19 @@ import {
   Header,
   LearnMoreLinks,
   ReloadInstructions,
-} from "react-native/Libraries/NewAppScreen";
-import { decode, encode } from "base-64";
+} from 'react-native/Libraries/NewAppScreen';
+import {decode, encode} from 'base-64';
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import RootNavigator from "./navigation/RootNavigator";
-import { Provider } from "react-redux";
-import configureStore from "./stores/store";
-import { NativeBaseProvider } from "native-base";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import RootNavigator from './navigation/RootNavigator';
+import {Provider} from 'react-redux';
+import configureStore from './stores/store';
+import {NativeBaseProvider} from 'native-base';
+import {LogBox} from 'react-native';
+
 const App = () => {
   const store = configureStore();
-
+  LogBox.ignoreLogs(['EventEmitter.removeListener']);
   if (!global.btoa) {
     global.btoa = encode;
   }
