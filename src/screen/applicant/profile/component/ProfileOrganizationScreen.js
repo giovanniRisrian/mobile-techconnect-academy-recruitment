@@ -38,7 +38,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileOrganizationScreen = ({bloc}) => {
-  const {addProfile, getDataByID} = bloc();
+  const {addProfile, getDataByID, checkOrganization, setCheckOrganization} =
+    bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
@@ -113,7 +114,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
               <HStack space={4} alignItems="center" marginTop={2}>
                 {disabled ? (
                   <Button
-                    onPress={() => changeDisable(!disabled)}
+                    onPress={() => {
+                      setCheckOrganization(' ');
+                      changeDisable(!disabled);
+                    }}
                     variant="subtle"
                     colorScheme="primary"
                     size="xs">
@@ -130,248 +134,272 @@ const ProfileOrganizationScreen = ({bloc}) => {
 
               {/* End of Edit & Upload Button */}
               {/* Start of Form */}
-              {OrganizationField.map((values, idx) => {
-                const handleDelete = () => {
-                  OrganizationRemove(idx);
-                };
-                return (
-                  <Box key={idx}>
-                    <FormControl mt="4">
-                      <FormControl.Label alignSelf="center" mb={3}>
-                        {`Organization #${idx + 1}`}
-                      </FormControl.Label>
-                      <HStack justifyContent="space-evenly">
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={2}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Organization Name
-                          </Text>
-                          <Controller
-                            name={`Organization[${idx}].Organization`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Organization"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+              {checkOrganization === '' ? (
+                <View>
+                  <Box>
+                    <Text>No data</Text>
+                  </Box>
+                </View>
+              ) : (
+                <View>
+                  {OrganizationField.map((values, idx) => {
+                    const handleDelete = () => {
+                      OrganizationRemove(idx);
+                    };
+                    return (
+                      <Box key={idx}>
+                        <FormControl mt="4">
+                          <FormControl.Label alignSelf="center" mb={3}>
+                            {`Organization #${idx + 1}`}
+                          </FormControl.Label>
+                          <HStack justifyContent="space-evenly">
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Organization Name
+                              </Text>
+                              <Controller
+                                name={`Organization[${idx}].Organization`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Organization"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Organization?.[idx]?.Organization
-                              ? errors?.Organization?.[idx]?.Organization
-                                  .message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={2}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Scope
-                          </Text>
-                          <Controller
-                            name={`Organization[${idx}].Scope`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Scope"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Organization?.[idx]?.Organization
+                                  ? errors?.Organization?.[idx]?.Organization
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Scope
+                              </Text>
+                              <Controller
+                                name={`Organization[${idx}].Scope`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Scope"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Organization?.[idx]?.Scope
-                              ? errors?.Organization?.[idx]?.Scope.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.Organization?.[idx]?.Scope
+                                  ? errors?.Organization?.[idx]?.Scope.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={2}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Duration in Year
-                          </Text>
-                          <Controller
-                            name={`Organization[${idx}].Duration`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Duration"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Duration in Year
+                              </Text>
+                              <Controller
+                                name={`Organization[${idx}].Duration`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Duration"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.Organization?.[idx]?.Duration
-                              ? errors?.Organization?.[idx]?.Duration.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={2}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Position
-                          </Text>
-                          <Controller
-                            name={`Organization[${idx}].Position`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Position"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Organization?.[idx]?.Duration
+                                  ? errors?.Organization?.[idx]?.Duration
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Position
+                              </Text>
+                              <Controller
+                                name={`Organization[${idx}].Position`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Position"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.Organization?.[idx]?.Position
-                              ? errors?.Organization?.[idx]?.Position.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.Organization?.[idx]?.Position
+                                  ? errors?.Organization?.[idx]?.Position
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="96%">
-                          <Text
-                            mb={0}
-                            marginLeft={2}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Description
-                          </Text>
-                          <Controller
-                            name={`Organization[${idx}].Description`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                multiline
-                                numberOfLines={3}
-                                placeholder="Description"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="96%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Description
+                              </Text>
+                              <Controller
+                                name={`Organization[${idx}].Description`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    multiline
+                                    numberOfLines={3}
+                                    placeholder="Description"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.Organization?.[idx]?.Description
-                              ? errors?.Organization?.[idx]?.Description.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.Organization?.[idx]?.Description
+                                  ? errors?.Organization?.[idx]?.Description
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      {idx === 0 ? (
-                        <Box />
-                      ) : (
-                        <Box>
-                          {disabled ? (
+                          {idx === 0 ? (
                             <Box />
                           ) : (
-                            <Button
-                              onPress={() => handleDelete()}
-                              variant="subtle"
-                              colorScheme="primary"
-                              size="xs">
-                              X
-                            </Button>
+                            <Box>
+                              {disabled ? (
+                                <Box />
+                              ) : (
+                                <Button
+                                  onPress={() => handleDelete()}
+                                  variant="subtle"
+                                  colorScheme="primary"
+                                  size="xs">
+                                  X
+                                </Button>
+                              )}
+                            </Box>
                           )}
-                        </Box>
-                      )}
-                    </FormControl>
-                    {/* End of Form */}
-                  </Box>
-                );
-              })}
+                        </FormControl>
+                        {/* End of Form */}
+                      </Box>
+                    );
+                  })}
 
-              {disabled ? (
-                <Box />
-              ) : (
-                <Box>
-                  <HStack
-                    space={4}
-                    alignItems="center"
-                    justifyContent="center"
-                    marginTop={1}>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={() =>
-                          OrganizationAppend({
-                            Organization: '',
-                            Scope: '',
-                            Duration: '',
-                            Description: '',
-                            Position: '',
-                          })
-                        }
-                        variant="subtle"
-                        colorScheme="primary"
-                        size="xs"
-                        disabled={OrganizationField.length >= 3}>
-                        Add
-                      </Button>
+                  {disabled ? (
+                    <Box />
+                  ) : (
+                    <Box>
+                      <HStack
+                        space={4}
+                        alignItems="center"
+                        justifyContent="center"
+                        marginTop={1}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() =>
+                              OrganizationAppend({
+                                Organization: '',
+                                Scope: '',
+                                Duration: '',
+                                Description: '',
+                                Position: '',
+                              })
+                            }
+                            variant="subtle"
+                            colorScheme="primary"
+                            size="xs"
+                            disabled={OrganizationField.length >= 3}>
+                            Add
+                          </Button>
+                        </Box>
+                      </HStack>
+                      <HStack justifyContent="center" mb={1} mt={5}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() => changeDisable(!disabled)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="red">
+                            Cancel
+                          </Button>
+                        </Box>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={handleSubmit(onSubmit)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="blue">
+                            Submit
+                          </Button>
+                        </Box>
+                      </HStack>
                     </Box>
-                  </HStack>
-                  <HStack justifyContent="center" mb={1} mt={5}>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={() => changeDisable(!disabled)}
-                        variant="subtle"
-                        size="xs"
-                        colorScheme="red">
-                        Cancel
-                      </Button>
-                    </Box>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={handleSubmit(onSubmit)}
-                        variant="subtle"
-                        size="xs"
-                        colorScheme="blue">
-                        Submit
-                      </Button>
-                    </Box>
-                  </HStack>
-                </Box>
+                  )}
+                </View>
               )}
+
               {/* Submit Cancel Button */}
 
               {/* Submit Cancel Button */}

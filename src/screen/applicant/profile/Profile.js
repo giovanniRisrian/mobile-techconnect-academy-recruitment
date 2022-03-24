@@ -2,10 +2,15 @@ import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import {useDispatch} from 'react-redux';
 import {showLoading} from '../../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {useState} from 'react';
 
 const Profile = profileService => {
   let {updateDataApplicant, getDataApplicantbyId} = profileService();
   const dispatch = useDispatch();
+  const [checkEducation, setCheckEducation] = useState();
+  const [checkOrganization, setCheckOrganization] = useState();
+  const [checkWork, setCheckWork] = useState();
+
   const addProfile = async (values, file, context) => {
     values.Personal.TotalWorkingExperience =
       values.Personal.TotalWorkingExperience + '';
@@ -119,7 +124,10 @@ const Profile = profileService => {
       mock.Organization = dataReceive.Organization;
       mock.ID = dataReceive.ID;
       mock.UserAccountID = dataReceive.UserAccountID;
-      // let combine =
+
+      setCheckEducation(mock.Education[0].Title);
+      setCheckOrganization(mock.Organization[0].Organization);
+      setCheckWork(mock.WorkExperience[0].CompanyName);
       changeInitial(mock);
       dispatch(showLoading(false));
       return response;
@@ -127,7 +135,16 @@ const Profile = profileService => {
       throw err;
     }
   };
-  return {addProfile, getDataByID};
+  return {
+    addProfile,
+    getDataByID,
+    checkEducation,
+    setCheckEducation,
+    checkOrganization,
+    setCheckOrganization,
+    checkWork,
+    setCheckWork,
+  };
 };
 
 export default Profile;

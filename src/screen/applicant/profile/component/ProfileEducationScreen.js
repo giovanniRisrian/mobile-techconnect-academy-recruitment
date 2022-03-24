@@ -45,7 +45,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileEducationScreen = ({bloc}) => {
-  const {addProfile, getDataByID} = bloc();
+  const {addProfile, getDataByID, checkEducation, setCheckEducation} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
@@ -64,7 +64,7 @@ const ProfileEducationScreen = ({bloc}) => {
       },
     ],
   });
-
+  console.log('checkEducation', checkEducation, '1CheckAGAIN');
   const {
     control,
     handleSubmit,
@@ -121,7 +121,10 @@ const ProfileEducationScreen = ({bloc}) => {
               <HStack space={4} alignItems="center" marginTop={2}>
                 {disabled ? (
                   <Button
-                    onPress={() => changeDisable(!disabled)}
+                    onPress={() => {
+                      setCheckEducation(' ');
+                      changeDisable(!disabled);
+                    }}
                     variant="subtle"
                     colorScheme="primary"
                     size="xs">
@@ -138,280 +141,300 @@ const ProfileEducationScreen = ({bloc}) => {
 
               {/* End of Edit & Upload Button */}
               {/* Start of Form */}
-              {EducationField.map((values, idx) => {
-                const handleDelete = () => {
-                  EducationRemove(idx);
-                };
-                return (
-                  <Box key={idx}>
-                    <FormControl mt="4">
-                      <FormControl.Label alignSelf="center" mb={3}>
-                        {`Education #${idx + 1}`}
-                      </FormControl.Label>
-                      <HStack justifyContent="space-evenly">
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Title
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].Title`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Title"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+              {checkEducation === '' ? (
+                <View>
+                  <Box>
+                    <Text>No data</Text>
+                  </Box>
+                </View>
+              ) : (
+                <View>
+                  {EducationField.map((values, idx) => {
+                    const handleDelete = () => {
+                      EducationRemove(idx);
+                    };
+                    return (
+                      <Box key={idx}>
+                        <FormControl mt="4">
+                          <FormControl.Label alignSelf="center" mb={3}>
+                            {`Education #${idx + 1}`}
+                          </FormControl.Label>
+                          <HStack justifyContent="space-evenly">
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Title
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].Title`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Title"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.Title
-                              ? errors?.Education?.[idx]?.Title.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Institution
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].Institution`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Institution"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.Title
+                                  ? errors?.Education?.[idx]?.Title.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Institution
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].Institution`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Institution"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.Institution
-                              ? errors?.Education?.[idx]?.Institution.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Year In
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].YearIn`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Year In"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.Institution
+                                  ? errors?.Education?.[idx]?.Institution
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Year In
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].YearIn`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Year In"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.YearIn
-                              ? errors?.Education?.[idx]?.YearIn.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Year Out
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].YearOut`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Year Out"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.YearIn
+                                  ? errors?.Education?.[idx]?.YearIn.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Year Out
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].YearOut`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Year Out"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.YearOut
-                              ? errors?.Education?.[idx]?.YearOut.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            Major
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].Major`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Major"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.YearOut
+                                  ? errors?.Education?.[idx]?.YearOut.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Major
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].Major`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Major"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.Major
-                              ? errors?.Education?.[idx]?.Major.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            mb={0}
-                            marginLeft={1}
-                            fontWeight={'light'}
-                            fontSize={'xs'}>
-                            GPA
-                          </Text>
-                          <Controller
-                            name={`Education[${idx}].GPA`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="GPA"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                fontSize={'sm'}
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.Major
+                                  ? errors?.Education?.[idx]?.Major.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={1}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                GPA
+                              </Text>
+                              <Controller
+                                name={`Education[${idx}].GPA`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="GPA"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.Education?.[idx]?.GPA
-                              ? errors?.Education?.[idx]?.GPA.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.Education?.[idx]?.GPA
+                                  ? errors?.Education?.[idx]?.GPA.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      {/* Start of Edit & Upload Button */}
-                      {idx === 0 ? (
-                        <Box />
-                      ) : (
-                        <Box>
-                          {disabled ? (
+                          {/* Start of Edit & Upload Button */}
+                          {idx === 0 ? (
                             <Box />
                           ) : (
-                            <Button
-                              onPress={() => handleDelete()}
-                              variant="subtle"
-                              colorScheme="primary"
-                              size="xs">
-                              X
-                            </Button>
+                            <Box>
+                              {disabled ? (
+                                <Box />
+                              ) : (
+                                <Button
+                                  onPress={() => handleDelete()}
+                                  variant="subtle"
+                                  colorScheme="primary"
+                                  size="xs">
+                                  X
+                                </Button>
+                              )}
+                            </Box>
                           )}
+                        </FormControl>
+                        {/* End of Form */}
+                      </Box>
+                    );
+                  })}
+
+                  {disabled ? (
+                    <Box />
+                  ) : (
+                    <Box>
+                      <HStack
+                        space={4}
+                        alignItems="center"
+                        justifyContent="center"
+                        marginTop={1}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() =>
+                              EducationAppend({
+                                Title: '',
+                                Institution: '',
+                                Major: '',
+                                YearIn: '',
+                                YearOut: '',
+                                GPA: '',
+                              })
+                            }
+                            variant="subtle"
+                            colorScheme="primary"
+                            size="xs"
+                            disabled={EducationField.length >= 3}>
+                            Add
+                          </Button>
                         </Box>
-                      )}
-                    </FormControl>
-                    {/* End of Form */}
-                  </Box>
-                );
-              })}
-
-              {disabled ? (
-                <Box />
-              ) : (
-                <Box>
-                  <HStack
-                    space={4}
-                    alignItems="center"
-                    justifyContent="center"
-                    marginTop={1}>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={() =>
-                          EducationAppend({
-                            Title: '',
-                            Institution: '',
-                            Major: '',
-                            YearIn: '',
-                            YearOut: '',
-                            GPA: '',
-                          })
-                        }
-                        variant="subtle"
-                        colorScheme="primary"
-                        size="xs"
-                        disabled={EducationField.length >= 3}>
-                        Add
-                      </Button>
+                      </HStack>
+                      <HStack justifyContent="center" mb={1} mt={5}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() => changeDisable(!disabled)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="red">
+                            Cancel
+                          </Button>
+                        </Box>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={handleSubmit(onSubmit)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="blue">
+                            Submit
+                          </Button>
+                        </Box>
+                      </HStack>
                     </Box>
-                  </HStack>
-                  <HStack justifyContent="center" mb={1} mt={5}>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={() => changeDisable(!disabled)}
-                        variant="subtle"
-                        size="xs"
-                        colorScheme="red">
-                        Cancel
-                      </Button>
-                    </Box>
-                    <Box width={'50%'}>
-                      <Button
-                        onPress={handleSubmit(onSubmit)}
-                        variant="subtle"
-                        size="xs"
-                        colorScheme="blue">
-                        Submit
-                      </Button>
-                    </Box>
-                  </HStack>
-                </Box>
+                  )}
+                </View>
               )}
-              {/* Submit Cancel Button */}
-
-              {/* Submit Cancel Button */}
             </Center>
           </Box>
         </ScrollView>
