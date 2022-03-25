@@ -5,14 +5,15 @@ import {
   APPLICANT,
   LOGIN_PATH,
   RECRUITER,
+  VACANY_PATH,
 } from '../../navigation/NavigationPath';
 
-import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {setLogin, setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
 export const Register = service => {
-  const {callRegisterService} = service();
+  const {callRegisterService, getDataApplicantbyId} = service();
   const [fullname, setFullname] = useState('');
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
@@ -88,13 +89,18 @@ export const Register = service => {
       let registerInfo;
       console.log(response);
       console.log('Tokennya : ', jwt_decode(response.data.token));
+      const config = {
+        headers: {Authorization: `Bearer ${response.data.token}`},
+      };
       if (response) {
         registerInfo = jwt_decode(response.data.token);
         registerInfo.token = response.data.token;
 
+        const resp2 = await getDataApplicantbyId(config);
+        dispatch(setProfile(resp2.data));
         dispatch(setLogin(registerInfo));
         if (registerInfo.Role === 'user') {
-          goToScreen(APPLICANT.DASHBOARD, true);
+          goToScreen(VACANY_PATH, true);
         }
         if (registerInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);

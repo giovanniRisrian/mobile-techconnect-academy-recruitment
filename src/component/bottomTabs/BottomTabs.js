@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,13 +19,18 @@ import {
   VACANY_PATH,
 } from '../../navigation/NavigationPath';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+// import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-const toHome = () => {
+import {setTab} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {SET_TAB} from '../../utils/constants';
+const toHome = setNowTab => {
+  setTab(HOME_PATH);
+  setNowTab(HOME_PATH);
   goToScreen(HOME_PATH, false);
 };
-
-const toVacany = () => {
+const toVacany = setNowTab => {
+  setTab(VACANY_PATH);
+  setNowTab(VACANY_PATH);
   goToScreen(VACANY_PATH, true);
 };
 
@@ -40,26 +45,47 @@ const toDashboard = role => {
     goToScreen(ADMINISTRATOR.DASHBOARD, false);
   }
 };
-const toProfile = () => {
+const toProfile = setNowTab => {
+  setTab(PROFILE_PATH);
+  setNowTab(PROFILE_PATH);
   goToScreen(PROFILE_PATH, false);
 };
 const toLogin = () => {
   goToLogin();
 };
 const BottomTabs = () => {
+  const [nowTab, setNowTab] = useState(
+    useSelector(state => state.TechconnectAcademyReducer.nowTab),
+  );
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  // const nowTab = useSelector(state => state.TechconnectAcademyReducer.nowTab);
+  const active = '#6a00ff';
+  const pasive = '#2b2c36';
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.buttonLeft} onPress={() => toHome()}>
+      <TouchableOpacity
+        style={styles.buttonLeft}
+        onPress={() => toHome(setNowTab)}>
         <Text style={styles.text}>
           {' '}
-          <Icon name="home" size={25} />
+          <Icon
+            name="home"
+            size={25}
+            color={nowTab === HOME_PATH ? active : pasive}
+          />
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => toVacany()}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => toVacany(setNowTab)}>
         <Text style={styles.text}>
           {' '}
-          <Icon name="briefcase-search" size={25} />
+          <Icon
+            name="briefcase-search"
+            size={25}
+            color={nowTab === VACANY_PATH ? active : pasive}
+          />
         </Text>
       </TouchableOpacity>
       {/* <TouchableOpacity
@@ -72,10 +98,14 @@ const BottomTabs = () => {
       <TouchableOpacity
         style={styles.buttonRight}
         onPress={() => {
-          isLogin != null ? toProfile() : toLogin();
+          isLogin != null ? toProfile(setNowTab) : toLogin();
         }}>
         <Text style={styles.text}>
-          <Icon name="account-circle" size={25} />
+          <Icon
+            name="account-circle"
+            size={25}
+            color={nowTab === PROFILE_PATH ? active : pasive}
+          />
         </Text>
       </TouchableOpacity>
     </View>

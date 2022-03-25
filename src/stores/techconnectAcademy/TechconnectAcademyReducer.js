@@ -1,3 +1,4 @@
+import {VACANY_PATH} from '../../navigation/NavigationPath';
 import {
   ADD_TODO,
   CHANGE_TYPE,
@@ -6,12 +7,16 @@ import {
   DELETE_TODO,
   TOGGLE_COMPLETE,
   SET_LOGIN,
+  SET_PROFILE,
+  SET_TAB,
 } from '../../utils/constants';
 
 const initialState = {
   isLoading: false,
   isLogin: null,
+  userProfile: null,
   loginToken: '',
+  nowTab: VACANY_PATH,
 };
 
 const TechconnectAcademyReducer = (state = initialState, action) => {
@@ -20,6 +25,18 @@ const TechconnectAcademyReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogin: action.payload,
+      };
+    }
+    case SET_PROFILE: {
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    }
+    case SET_TAB: {
+      return {
+        ...state,
+        nowTab: action.payload,
       };
     }
     case SHOW_LOADING: {

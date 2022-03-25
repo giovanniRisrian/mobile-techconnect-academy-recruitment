@@ -146,16 +146,19 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     color: 'white',
   },
+  
   input: {
     textAlign: 'center',
-    height: 40,
-    margin: 12,
+    height: 60,
+    // margin: 12,
+    marginLeft: 12,
+    marginRight: 12,
     borderBottomWidth: 7,
     borderColor: '#631cc7',
     padding: 10,
-    backgroundColor: '#181a5c',
-    color: 'white',
-    borderRadius: 50,
+    backgroundColor: '#f2f2f2',
+    // color: 'white',
+    borderRadius: 10,
   },
 });
 

@@ -12,14 +12,17 @@ export const Vacancy = service => {
   const [types, setType] = useState('');
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
-
+  const [name, setName] = useState('');
   let {getVacancyList, getVacancyId, applyProgram, getUserId, getType} =
     service();
   const isLoading = useSelector(
     state => state.TechconnectAcademyReducer.isLoading,
   );
-
+  const userProfile = useSelector(
+    state => state.TechconnectAcademyReducer.userProfile,
+  );
   const allVacancy = async (name, type) => {
+    setName(userProfile.Personal.Name.split(' ')[0]);
     try {
       dispatch(showLoading(true));
       const response = await getVacancyList(name, type);
@@ -168,5 +171,6 @@ export const Vacancy = service => {
     typeProgram,
     setType,
     isLoading,
+    name,
   };
 };

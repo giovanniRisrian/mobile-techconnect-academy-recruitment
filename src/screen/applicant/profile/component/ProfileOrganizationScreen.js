@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,47 +14,44 @@ import {
   IconButton,
   Icon,
   ScrollView,
-} from "native-base";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
+} from 'native-base';
+import * as Yup from 'yup';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import jwt_decode from 'jwt-decode';
+import {useSelector} from 'react-redux';
+import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
+import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
+import UploadResumeService from '../../../../service/UploadFileService';
 
-// const validationSchema = Yup.object().shape({
-//   Education: Yup.array().of(
-//     Yup.object().shape({
-//       Title: Yup.string().required("This field is required"),
-//       Institution: Yup.string().required("This field is required"),
-//       Major: Yup.string().required("This field is required"),
-//       YearIn: Yup.string()
-//         .required("This field is required")
-//         .min(4, "Year in must be 4 character")
-//         .max(4, "Year in must be 4 character"),
-//       YearOut: Yup.string()
-//         .required("This field is required")
-//         .min(4, "Year out must be 4 character")
-//         .max(4, "Year in must be 4 character"),
-//       GPA: Yup.string().required("This field is required"),
-//     })
-//   ),
-// });
+const validationSchema = Yup.object().shape({
+  Organization: Yup.array().of(
+    Yup.object().shape({
+      Organization: Yup.string().required('This field is required'),
+      Scope: Yup.string().required('This field is required'),
+      Duration: Yup.string().required('This field is required'),
+      Description: Yup.string().required('This field is required'),
+      Position: Yup.string().required('This field is required'),
+    }),
+  ),
+});
 
-const ProfileOrganizationScreen = ({ bloc }) => {
-  const { addProfile, getDataByID } = bloc();
+const ProfileOrganizationScreen = ({bloc}) => {
+  const {addProfile, getDataByID} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLogin
+    state => state.TechconnectAcademyReducer.isLogin,
   );
   const [disabled, changeDisable] = useState(true);
+  const isLoading = useSelector(state => state.ProfileReducer.isLoading);
   const [initialValues, changeInitial] = useState({
     Organization: [
       {
-        Organization: "",
-        Scope: "",
-        Duration: "",
-        Description: "",
-        Position: "",
+        Organization: '',
+        Scope: '',
+        Duration: '',
+        Description: '',
+        Position: '',
       },
     ],
   });
@@ -63,9 +60,9 @@ const ProfileOrganizationScreen = ({ bloc }) => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
-    // resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
   });
 
@@ -73,9 +70,9 @@ const ProfileOrganizationScreen = ({ bloc }) => {
     fields: OrganizationField,
     append: OrganizationAppend,
     remove: OrganizationRemove,
-  } = useFieldArray({ control, name: "Organization" });
+  } = useFieldArray({control, name: 'Organization'});
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
     changeDisable(!disabled);
@@ -89,276 +86,276 @@ const ProfileOrganizationScreen = ({ bloc }) => {
     reset(initialValues);
   }, [initialValues]);
 
-  return (
-    <SafeAreaView>
-      <ScrollView>
-        <Box marginTop={5}>
-          {/* Start of Avatar */}
-          <Center>
-            <Avatar
-              bg="grey.900"
-              alignSelf="center"
-              size="2xl"
-              source={require("../../../../assets/images/avatar.png")}
-            ></Avatar>
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Please wait</Text>
+        <ActivityIndicator />
+      </View>
+    );
+  } else {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <Box marginTop={5}>
+            {/* Start of Avatar */}
+            <Center>
+              <Avatar
+                bg="grey.900"
+                alignSelf="center"
+                size="2xl"
+                source={require('../../../../assets/images/avatar.png')}></Avatar>
 
-            {/* End of Avatar */}
-            {/* Start of Edit & Upload Button */}
+              {/* End of Avatar */}
+              {/* Start of Edit & Upload Button */}
 
-            <HStack space={4} alignItems="center" marginTop={2}>
-              {disabled ? (
-                <Button
-                  onPress={() => changeDisable(!disabled)}
-                  variant="subtle"
-                  colorScheme="primary"
-                  size="xs"
-                >
-                  Edit Profile
-                </Button>
-              ) : null}
-              <Button
-                onPress={() => console.log("Upload CV")}
-                variant="subtle"
-                colorScheme="primary"
-                size="xs"
-              >
-                Upload CV
-              </Button>
-              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
-            </HStack>
-
-            {/* End of Edit & Upload Button */}
-            {/* Start of Form */}
-            {OrganizationField.map((values, idx) => {
-              const handleDelete = () => {
-                OrganizationRemove(idx);
-              };
-              return (
-                <Box key={idx}>
-                  <FormControl mt="4">
-                    <FormControl.Label alignSelf="center" mb={3}>
-                      {`Organization #${idx + 1}`}
-                    </FormControl.Label>
-                    <HStack justifyContent="space-evenly">
-                      <Box w="48%">
-                        <FormControl.Label alignSelf="center" mb={0}>
-                          Organization Name
-                        </FormControl.Label>
-                        <Controller
-                          name={`Organization[${idx}].Organization`}
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                              placeholder="Organization"
-                              variant="underlined"
-                              value={value}
-                              onChangeText={onChange}
-                              onBlur={onBlur}
-                              isReadOnly={disabled}
-                            />
-                          )}
-                        />
-
-                        {/* <FormControl.HelperText>
-                        {errors?.Education?.[idx]?.Title
-                          ? errors?.Education?.[idx]?.Title.message
-                          : ""}
-                      </FormControl.HelperText> */}
-                      </Box>
-                      <Box w="48%">
-                        <FormControl.Label alignSelf="center" mb={0}>
-                          Scope
-                        </FormControl.Label>
-                        <Controller
-                          name={`Organization[${idx}].Scope`}
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                              placeholder="Scope"
-                              variant="underlined"
-                              value={value}
-                              onChangeText={onChange}
-                              onBlur={onBlur}
-                              isReadOnly={disabled}
-                            />
-                          )}
-                        />
-
-                        {/* <FormControl.HelperText>
-                        {errors?.Education?.[idx]?.Institution
-                          ? errors?.Education?.[idx]?.Institution.message
-                          : ""}
-                      </FormControl.HelperText> */}
-                      </Box>
-                    </HStack>
-
-                    <HStack justifyContent="space-evenly" mt={3}>
-                      <Box w="48%">
-                        <FormControl.Label alignSelf="center" mb={0}>
-                          Duration in Year
-                        </FormControl.Label>
-                        <Controller
-                          name={`Organization[${idx}].Duration`}
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                              placeholder="Duration"
-                              variant="underlined"
-                              value={value}
-                              onChangeText={onChange}
-                              onBlur={onBlur}
-                              isReadOnly={disabled}
-                            />
-                          )}
-                        />
-                        {/* <FormControl.HelperText>
-                        {errors?.Education?.[idx]?.Major
-                          ? errors?.Education?.[idx]?.Major.message
-                          : ""}
-                      </FormControl.HelperText> */}
-                      </Box>
-                      <Box w="48%">
-                        <FormControl.Label alignSelf="center" mb={0}>
-                          Position
-                        </FormControl.Label>
-                        <Controller
-                          name={`Organization[${idx}].Position`}
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                              placeholder="Position"
-                              variant="underlined"
-                              value={value}
-                              onChangeText={onChange}
-                              onBlur={onBlur}
-                              isReadOnly={disabled}
-                            />
-                          )}
-                        />
-                        {/* <FormControl.HelperText>
-                        {errors?.Education?.[idx]?.GPA
-                          ? errors?.Education?.[idx]?.GPA.message
-                          : ""}
-                      </FormControl.HelperText> */}
-                      </Box>
-                    </HStack>
-
-                    <HStack justifyContent="space-evenly" mt={3}>
-                      <Box w="96%">
-                        <FormControl.Label alignSelf="center" mb={0}>
-                          Description
-                        </FormControl.Label>
-                        <Controller
-                          name={`Organization[${idx}].Description`}
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Input
-                              multiline
-                              numberOfLines={3}
-                              placeholder="Description"
-                              variant="underlined"
-                              value={value}
-                              onChangeText={onChange}
-                              onBlur={onBlur}
-                              isReadOnly={disabled}
-                            />
-                          )}
-                        />
-                        {/* <FormControl.HelperText>
-                        {errors?.Education?.[idx]?.Major
-                          ? errors?.Education?.[idx]?.Major.message
-                          : ""}
-                      </FormControl.HelperText> */}
-                      </Box>
-                    </HStack>
-
-                    {idx === 0 ? (
-                      <Box />
-                    ) : (
-                      <Box>
-                        {disabled ? (
-                          <Box />
-                        ) : (
-                          <Button
-                            onPress={() => handleDelete()}
-                            variant="subtle"
-                            colorScheme="primary"
-                            size="xs"
-                          >
-                            X
-                          </Button>
-                        )}
-                      </Box>
-                    )}
-                  </FormControl>
-                  {/* End of Form */}
-                </Box>
-              );
-            })}
-
-            {disabled ? (
-              <Box />
-            ) : (
-              <HStack
-                space={4}
-                alignItems="center"
-                justifyContent="center"
-                marginTop={1}
-              >
-                <Box width={"50%"}>
-                  <Button
-                    onPress={() =>
-                      OrganizationAppend({
-                        Organization: "",
-                        Scope: "",
-                        Duration: "",
-                        Description: "",
-                        Position: "",
-                      })
-                    }
-                    variant="subtle"
-                    colorScheme="primary"
-                    size="xs"
-                    disabled={OrganizationField.length >= 3}
-                  >
-                    Add
-                  </Button>
-                </Box>
-              </HStack>
-            )}
-            {/* Submit Cancel Button */}
-            {disabled ? (
-              <Box />
-            ) : (
-              <HStack justifyContent="center" mb={1} mt={5}>
-                <Box width={"50%"}>
+              <HStack space={4} alignItems="center" marginTop={2}>
+                {disabled ? (
                   <Button
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
-                    size="xs"
-                    colorScheme="red"
-                  >
-                    Cancel
+                    colorScheme="primary"
+                    size="xs">
+                    Edit Profile
                   </Button>
-                </Box>
-                <Box width={"50%"}>
-                  <Button
-                    onPress={handleSubmit(onSubmit)}
-                    variant="subtle"
-                    size="xs"
-                    colorScheme="blue"
-                  >
-                    Submit
-                  </Button>
-                </Box>
+                ) : (
+                  <UpploadResumeButtonComponent
+                    uploadResume={() => UploadResumeButton(UploadResumeService)}
+                  />
+                )}
+
+                {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
               </HStack>
-            )}
-            {/* Submit Cancel Button */}
-          </Center>
-        </Box>
-      </ScrollView>
-    </SafeAreaView>
-  );
+
+              {/* End of Edit & Upload Button */}
+              {/* Start of Form */}
+              {OrganizationField.map((values, idx) => {
+                const handleDelete = () => {
+                  OrganizationRemove(idx);
+                };
+                return (
+                  <Box key={idx}>
+                    <FormControl mt="4">
+                      <FormControl.Label alignSelf="center" mb={3}>
+                        {`Organization #${idx + 1}`}
+                      </FormControl.Label>
+                      <HStack justifyContent="space-evenly">
+                        <Box w="48%">
+                          <FormControl.Label alignSelf="center" mb={0}>
+                            Organization Name
+                          </FormControl.Label>
+                          <Controller
+                            name={`Organization[${idx}].Organization`}
+                            control={control}
+                            render={({field: {onChange, onBlur, value}}) => (
+                              <Input
+                                placeholder="Organization"
+                                variant="underlined"
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                isReadOnly={disabled}
+                              />
+                            )}
+                          />
+
+                          <FormControl.HelperText>
+                            {errors?.Organization?.[idx]?.Organization
+                              ? errors?.Organization?.[idx]?.Organization
+                                  .message
+                              : ''}
+                          </FormControl.HelperText>
+                        </Box>
+                        <Box w="48%">
+                          <FormControl.Label alignSelf="center" mb={0}>
+                            Scope
+                          </FormControl.Label>
+                          <Controller
+                            name={`Organization[${idx}].Scope`}
+                            control={control}
+                            render={({field: {onChange, onBlur, value}}) => (
+                              <Input
+                                placeholder="Scope"
+                                variant="underlined"
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                isReadOnly={disabled}
+                              />
+                            )}
+                          />
+
+                          <FormControl.HelperText>
+                            {errors?.Organization?.[idx]?.Scope
+                              ? errors?.Organization?.[idx]?.Scope.message
+                              : ''}
+                          </FormControl.HelperText>
+                        </Box>
+                      </HStack>
+
+                      <HStack justifyContent="space-evenly" mt={3}>
+                        <Box w="48%">
+                          <FormControl.Label alignSelf="center" mb={0}>
+                            Duration in Year
+                          </FormControl.Label>
+                          <Controller
+                            name={`Organization[${idx}].Duration`}
+                            control={control}
+                            render={({field: {onChange, onBlur, value}}) => (
+                              <Input
+                                placeholder="Duration"
+                                variant="underlined"
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                isReadOnly={disabled}
+                              />
+                            )}
+                          />
+                          <FormControl.HelperText>
+                            {errors?.Organization?.[idx]?.Duration
+                              ? errors?.Organization?.[idx]?.Duration.message
+                              : ''}
+                          </FormControl.HelperText>
+                        </Box>
+                        <Box w="48%">
+                          <FormControl.Label alignSelf="center" mb={0}>
+                            Position
+                          </FormControl.Label>
+                          <Controller
+                            name={`Organization[${idx}].Position`}
+                            control={control}
+                            render={({field: {onChange, onBlur, value}}) => (
+                              <Input
+                                placeholder="Position"
+                                variant="underlined"
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                isReadOnly={disabled}
+                              />
+                            )}
+                          />
+                          <FormControl.HelperText>
+                            {errors?.Organization?.[idx]?.Position
+                              ? errors?.Organization?.[idx]?.Position.message
+                              : ''}
+                          </FormControl.HelperText>
+                        </Box>
+                      </HStack>
+
+                      <HStack justifyContent="space-evenly" mt={3}>
+                        <Box w="96%">
+                          <FormControl.Label alignSelf="center" mb={0}>
+                            Description
+                          </FormControl.Label>
+                          <Controller
+                            name={`Organization[${idx}].Description`}
+                            control={control}
+                            render={({field: {onChange, onBlur, value}}) => (
+                              <Input
+                                multiline
+                                numberOfLines={3}
+                                placeholder="Description"
+                                variant="underlined"
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                isReadOnly={disabled}
+                              />
+                            )}
+                          />
+                          <FormControl.HelperText>
+                            {errors?.Organization?.[idx]?.Description
+                              ? errors?.Organization?.[idx]?.Description.message
+                              : ''}
+                          </FormControl.HelperText>
+                        </Box>
+                      </HStack>
+
+                      {idx === 0 ? (
+                        <Box />
+                      ) : (
+                        <Box>
+                          {disabled ? (
+                            <Box />
+                          ) : (
+                            <Button
+                              onPress={() => handleDelete()}
+                              variant="subtle"
+                              colorScheme="primary"
+                              size="xs">
+                              X
+                            </Button>
+                          )}
+                        </Box>
+                      )}
+                    </FormControl>
+                    {/* End of Form */}
+                  </Box>
+                );
+              })}
+
+              {disabled ? (
+                <Box />
+              ) : (
+                <HStack
+                  space={4}
+                  alignItems="center"
+                  justifyContent="center"
+                  marginTop={1}>
+                  <Box width={'50%'}>
+                    <Button
+                      onPress={() =>
+                        OrganizationAppend({
+                          Organization: '',
+                          Scope: '',
+                          Duration: '',
+                          Description: '',
+                          Position: '',
+                        })
+                      }
+                      variant="subtle"
+                      colorScheme="primary"
+                      size="xs"
+                      disabled={OrganizationField.length >= 3}>
+                      Add
+                    </Button>
+                  </Box>
+                </HStack>
+              )}
+              {/* Submit Cancel Button */}
+              {disabled ? (
+                <Box />
+              ) : (
+                <HStack justifyContent="center" mb={1} mt={5}>
+                  <Box width={'50%'}>
+                    <Button
+                      onPress={() => changeDisable(!disabled)}
+                      variant="subtle"
+                      size="xs"
+                      colorScheme="red">
+                      Cancel
+                    </Button>
+                  </Box>
+                  <Box width={'50%'}>
+                    <Button
+                      onPress={handleSubmit(onSubmit)}
+                      variant="subtle"
+                      size="xs"
+                      colorScheme="blue">
+                      Submit
+                    </Button>
+                  </Box>
+                </HStack>
+              )}
+              {/* Submit Cancel Button */}
+            </Center>
+          </Box>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 };
 
 export default ProfileOrganizationScreen;

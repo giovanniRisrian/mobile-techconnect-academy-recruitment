@@ -4,7 +4,14 @@ import ProfileEducationScreen from './ProfileEducationScreen';
 import ProfileOrganizationScreen from './ProfileOrganizationScreen';
 import ProfileWorkExperienceScreen from './ProfileWorkExperienceScreen';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {SafeAreaView, useWindowDimensions,Text} from 'react-native';
+import {
+  SafeAreaView,
+  useWindowDimensions,
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import {ScrollView} from 'native-base';
 import Profile from '../Profile';
 import ProfileService from '../../../../service/ProfileService';
@@ -41,15 +48,28 @@ const ProfileScreen = () => {
   const renderTabBar = props => (
     <TabBar
       renderLabel={({route, focused, color}) => (
-        <Text style={{fontSize: 13, color}}>{route.title}</Text>
+        <Text
+          style={{
+            fontSize: 13,
+            color,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+          }}>
+          {route.title}
+        </Text>
       )}
       {...props}
       // indicatorStyle={{ backgroundColor: "white" }}
       // style={{ backgroundColor: "pink" }}
     />
   );
+
+  const _renderLazyPlaceholder = ({route}) => <LazyPlaceholder route={route} />;
+
   return (
     <TabView
+      lazy
+      // renderLazyPlaceholder={_renderLazyPlaceholder}
       renderTabBar={renderTabBar}
       navigationState={{index, routes}}
       renderScene={renderScene}
@@ -58,4 +78,19 @@ const ProfileScreen = () => {
     />
   );
 };
+
+const LazyPlaceholder = ({route}) => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <Text>Please wait</Text>
+    <ActivityIndicator />
+  </View>
+);
+
+// const styles = StyleSheet.create({
+//   scene: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
 export default ProfileScreen;

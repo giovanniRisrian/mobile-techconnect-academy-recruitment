@@ -6,8 +6,12 @@ import {
   HOME_PATH,
   RECRUITER,
   REGISTER_PATH,
+  VACANY_PATH,
 } from '../../navigation/NavigationPath';
-import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setLogin,
+  setProfile,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +21,7 @@ import {
   storeLocalData,
 } from '../../utils/localStorage';
 export const Login = service => {
-  const {callLoginService} = service();
+  const {callLoginService, getDataApplicantbyId} = service();
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -73,11 +77,16 @@ export const Login = service => {
     console.log('INIGETNYAAA', loginInfoToken);
     // const loginInfo = isLogged;
     if (loginInfoToken != null) {
+      const config = {
+        headers: {Authorization: `Bearer ${loginInfoToken}`},
+      };
       const loginInfo = jwt_decode(loginInfoToken);
       loginInfo.token = loginInfoToken;
+      const resp2 = await getDataApplicantbyId(config);
+      dispatch(setProfile(resp2.data));
       dispatch(setLogin(loginInfo));
       if (loginInfo.Role === 'user') {
-        goToScreen(HOME_PATH, true);
+        goToScreen(VACANY_PATH, true);
       }
       if (loginInfo.Role === 'recruiter') {
         goToScreen(RECRUITER.DASHBOARD, true);
@@ -96,11 +105,17 @@ export const Login = service => {
       setLoading(false);
       let loginInfo;
       console.log('Tokennya : ', jwt_decode(response.data.token));
+      const config = {
+        headers: {Authorization: `Bearer ${response.data.token}`},
+      };
       if (response) {
         loginInfo = jwt_decode(response.data.token);
         loginInfo.token = response.data.token;
 
         dispatch(setLogin(loginInfo));
+        const resp2 = await getDataApplicantbyId(config);
+        dispatch(setProfile(resp2.data));
+        console.log('Ini Data Didapatkan');
         console.log('Ditunggu tokennya');
         await storeLocalData(loginInfo.token);
         if (loginInfo.Role === 'user') {

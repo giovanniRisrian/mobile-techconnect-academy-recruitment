@@ -27,6 +27,7 @@ const VacanyScreen = ({vacancy, route}) => {
     typeProgram,
     setType,
     isLoading,
+    name,
   } = vacancy();
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const VacanyScreen = ({vacancy, route}) => {
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView style={styles.contentTitle}>
           <Text style={styles.title}>
-            Find Your{'\n'}
+            Hello {name}, {'\n'}Find Your{'\n'}
             <Text style={styles.spanTitle}>Dream Career</Text>
           </Text>
           <View style={styles.searchSection}>

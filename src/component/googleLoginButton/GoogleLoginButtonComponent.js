@@ -13,6 +13,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import LinearGradient from 'react-native-linear-gradient';
 import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 const GoogleLoginButtonComponent = ({googleLogin}) => {
   const dispatch = useDispatch();
@@ -36,13 +37,20 @@ const GoogleLoginButtonComponent = ({googleLogin}) => {
   };
   return (
     <View>
-      <TouchableOpacity style={styles.button} onPress={() => loginGoogle()}>
-        {!isLoading ? (
-          <Text style={styles.text}>Login With Google</Text>
-        ) : (
-          <ActivityIndicator />
-        )}
-      </TouchableOpacity>
+      <LinearGradient
+        style={styles.button}
+        colors={['#7643EC', '#83489E']}
+        onPress={() => loginGoogle()}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        <TouchableOpacity onPress={() => loginGoogle()}>
+          {!isLoading ? (
+            <Text style={styles.text}>Login With Google</Text>
+          ) : (
+            <ActivityIndicator />
+          )}
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   );
 };

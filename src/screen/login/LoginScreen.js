@@ -63,9 +63,10 @@ const LoginScreen = ({login}) => {
           source={require('../../assets/images/TCA.png')}
           style={styles.image}
         />
+
         <TextInput
           style={styles.input}
-          placeholder="email"
+          placeholder="Email"
           placeholderTextColor="#637085"
           onChangeText={changeemail}
           value={email}></TextInput>
@@ -88,15 +89,17 @@ const LoginScreen = ({login}) => {
           onPress={() => onAuthenticate()}>
           <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
+
+        <GoogleLoginButtonComponent
+          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
+        />
+
         <Text style={styles.title}>
           Belum memiliki akun?{' '}
           <Text style={{color: 'blue'}} onPress={() => goToRegister()}>
             Daftar
           </Text>
         </Text>
-        <GoogleLoginButtonComponent
-          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
-        />
       </SafeAreaView>
     );
   }
@@ -142,14 +145,16 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
-    height: 40,
-    margin: 12,
+    height: 60,
+    // margin: 12,
+    marginLeft: 12,
+    marginRight: 12,
     borderBottomWidth: 7,
     borderColor: '#631cc7',
     padding: 10,
-    backgroundColor: '#181a5c',
-    color: 'white',
-    borderRadius: 50,
+    backgroundColor: '#f2f2f2',
+    // color: 'white',
+    borderRadius: 10,
   },
 });
 
