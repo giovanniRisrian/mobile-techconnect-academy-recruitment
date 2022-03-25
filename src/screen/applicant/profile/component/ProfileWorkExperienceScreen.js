@@ -253,7 +253,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkWork === '' ? (
                 <View>
-                  <Box>
+                  <Box marginY={'1/3'}>
                     <Text>No data</Text>
                   </Box>
                 </View>

@@ -136,7 +136,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkOrganization === '' ? (
                 <View>
-                  <Box>
+                  <Box marginY={'1/3'}>
                     <Text>No data</Text>
                   </Box>
                 </View>

@@ -143,7 +143,7 @@ const ProfileEducationScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkEducation === '' ? (
                 <View>
-                  <Box>
+                  <Box marginY={'1/3'}>
                     <Text>No data</Text>
                   </Box>
                 </View>
