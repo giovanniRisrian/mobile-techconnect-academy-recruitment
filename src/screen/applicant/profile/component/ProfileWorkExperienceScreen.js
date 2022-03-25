@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,6 +14,7 @@ import {
   IconButton,
   Icon,
   ScrollView,
+  Text,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -41,7 +42,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfileWorkExperienceScreen = ({bloc}) => {
-  const {addProfile, getDataByID} = bloc();
+  const {addProfile, getDataByID, checkWork, setCheckWork} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
@@ -230,7 +231,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
               <HStack space={4} alignItems="center" marginTop={2}>
                 {disabled ? (
                   <Button
-                    onPress={() => changeDisable(!disabled)}
+                    onPress={() => {
+                      setCheckWork(' ');
+                      changeDisable(!disabled);
+                    }}
                     variant="subtle"
                     colorScheme="primary"
                     size="xs">
@@ -247,343 +251,410 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
 
               {/* End of Edit & Upload Button */}
               {/* Start of Form */}
-              {WorkExperienceField.map((values, idx) => {
-                const handleDelete = () => {
-                  WorkExperienceRemove(idx);
-                };
-                return (
-                  <Box key={idx}>
-                    <FormControl mt="4">
-                      <FormControl.Label alignSelf="center" mb={3}>
-                        {`Work Experience #${idx + 1}`}
-                      </FormControl.Label>
-                      <HStack justifyContent="space-evenly">
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Company Name
+              {checkWork === '' ? (
+                <View>
+                  <Box marginY={'1/3'}>
+                    <Text>No data</Text>
+                  </Box>
+                </View>
+              ) : (
+                <View>
+                  {WorkExperienceField.map((values, idx) => {
+                    const handleDelete = () => {
+                      WorkExperienceRemove(idx);
+                    };
+                    return (
+                      <Box key={idx}>
+                        <FormControl mt="4">
+                          <FormControl.Label alignSelf="center" mb={3}>
+                            {`Work Experience #${idx + 1}`}
                           </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].CompanyName`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Company Name"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
+                          <HStack justifyContent="space-evenly">
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Company Name
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].CompanyName`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Company Name"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.CompanyName
-                              ? errors?.WorkExperience?.[idx]?.CompanyName
-                                  .message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Position
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].Position`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Position"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.CompanyName
+                                  ? errors?.WorkExperience?.[idx]?.CompanyName
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Position
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].Position`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Position"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
 
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.Position
-                              ? errors?.WorkExperience?.[idx]?.Position.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.Position
+                                  ? errors?.WorkExperience?.[idx]?.Position
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Level
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].Level`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Level"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Level
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].Level`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Level"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.Level
-                              ? errors?.WorkExperience?.[idx]?.Level.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Industry
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].Industry`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Industry"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.Level
+                                  ? errors?.WorkExperience?.[idx]?.Level.message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Industry
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].Industry`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Industry"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.Industry
-                              ? errors?.WorkExperience?.[idx]?.Industry.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.Industry
+                                  ? errors?.WorkExperience?.[idx]?.Industry
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Start Date
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].YearIn`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="Start Date"
-                                variant="underlined"
-                                value={dateIn ? dateIn : value}
-                                // value={
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Start Date
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].YearIn`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="Start Date"
+                                    variant="underlined"
+                                    value={dateIn ? dateIn : value}
+                                    fontSize={'sm'}
+                                    // value={
+                                    //   idx === 0
+                                    //     ? dateIn
+                                    //       ? dateIn
+                                    //       : value
+                                    //     : idx === 1
+                                    //     ? dateIn1
+                                    //       ? dateIn1
+                                    //       : value
+                                    //     : dateIn2
+                                    //     ? dateIn2
+                                    //     : value
+                                    // }
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    onPressIn={() =>
+                                      setShowDatePickerYearIn(true)
+                                    }
+                                    // onPressIn={
+                                    //   idx === 0
+                                    //     ? datePickerYearIn
+                                    //     : idx === 1
+                                    //     ? datePickerYearIn1
+                                    //     : datePickerYearIn2
+                                    // }
+                                  />
+                                )}
+                              />
+                              <DatePicker
+                                // isVisible={
                                 //   idx === 0
-                                //     ? dateIn
-                                //       ? dateIn
-                                //       : value
+                                //     ? showDatePickerYearIn
                                 //     : idx === 1
-                                //     ? dateIn1
-                                //       ? dateIn1
-                                //       : value
-                                //     : dateIn2
-                                //     ? dateIn2
-                                //     : value
+                                //     ? showDatePickerYearIn1
+                                //     : showDatePickerYearIn2
                                 // }
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                onPressIn={() => setShowDatePickerYearIn(true)}
-                                // onPressIn={
+                                isVisible={showDatePickerYearIn}
+                                mode={'single'}
+                                // onCancel={
                                 //   idx === 0
-                                //     ? datePickerYearIn
+                                //     ? cancelDatePickerYearIn
                                 //     : idx === 1
-                                //     ? datePickerYearIn1
-                                //     : datePickerYearIn2
+                                //     ? cancelDatePickerYearIn1
+                                //     : cancelDatePickerYearIn2
                                 // }
-                              />
-                            )}
-                          />
-                          <DatePicker
-                            // isVisible={
-                            //   idx === 0
-                            //     ? showDatePickerYearIn
-                            //     : idx === 1
-                            //     ? showDatePickerYearIn1
-                            //     : showDatePickerYearIn2
-                            // }
-                            isVisible={showDatePickerYearIn}
-                            mode={'single'}
-                            // onCancel={
-                            //   idx === 0
-                            //     ? cancelDatePickerYearIn
-                            //     : idx === 1
-                            //     ? cancelDatePickerYearIn1
-                            //     : cancelDatePickerYearIn2
-                            // }
-                            onCancel={() => setShowDatePickerYearIn(false)}
-                            // onConfirm={
-                            //   idx === 0
-                            //     ? onConfirmYearIn
-                            //     : idx === 1
-                            //     ? onConfirmYearIn1
-                            //     : onConfirmYearIn2
-                            // }
-                            onConfirm={onConfirmYearIn}
-                          />
-
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.YearIn
-                              ? errors?.WorkExperience?.[idx]?.YearIn.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                        <Box w="48%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            End Date
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].YearOut`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                placeholder="End Date"
-                                variant="underlined"
-                                value={dateOut ? dateOut : value}
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
-                                // onPressIn={
+                                onCancel={() => setShowDatePickerYearIn(false)}
+                                // onConfirm={
                                 //   idx === 0
-                                //     ? datePickerYearOut
+                                //     ? onConfirmYearIn
                                 //     : idx === 1
-                                //     ? datePickerYearOut1
-                                //     : datePickerYearOut2
+                                //     ? onConfirmYearIn1
+                                //     : onConfirmYearIn2
                                 // }
-                                onPressIn={() => setShowDatePickerYearOut(true)}
+                                onConfirm={onConfirmYearIn}
                               />
-                            )}
-                          />
-                          <DatePicker
-                            isVisible={showDatePickerYearOut}
-                            mode={'single'}
-                            onCancel={() => setShowDatePickerYearOut(false)}
-                            onConfirm={onConfirmYearOut}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.YearOut
-                              ? errors?.WorkExperience?.[idx]?.YearOut.message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
 
-                      <HStack justifyContent="space-evenly" mt={3}>
-                        <Box w="96%">
-                          <FormControl.Label alignSelf="center" mb={0}>
-                            Description
-                          </FormControl.Label>
-                          <Controller
-                            name={`WorkExperience[${idx}].Description`}
-                            control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
-                              <Input
-                                multiline
-                                numberOfLines={3}
-                                placeholder="Description"
-                                variant="underlined"
-                                value={value}
-                                onChangeText={onChange}
-                                onBlur={onBlur}
-                                isReadOnly={disabled}
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.YearIn
+                                  ? errors?.WorkExperience?.[idx]?.YearIn
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                            <Box w="48%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                End Date
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].YearOut`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    placeholder="End Date"
+                                    variant="underlined"
+                                    value={dateOut ? dateOut : value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                    // onPressIn={
+                                    //   idx === 0
+                                    //     ? datePickerYearOut
+                                    //     : idx === 1
+                                    //     ? datePickerYearOut1
+                                    //     : datePickerYearOut2
+                                    // }
+                                    onPressIn={() =>
+                                      setShowDatePickerYearOut(true)
+                                    }
+                                  />
+                                )}
                               />
-                            )}
-                          />
-                          <FormControl.HelperText>
-                            {errors?.WorkExperience?.[idx]?.Description
-                              ? errors?.WorkExperience?.[idx]?.Description
-                                  .message
-                              : ''}
-                          </FormControl.HelperText>
-                        </Box>
-                      </HStack>
+                              <DatePicker
+                                isVisible={showDatePickerYearOut}
+                                mode={'single'}
+                                onCancel={() => setShowDatePickerYearOut(false)}
+                                onConfirm={onConfirmYearOut}
+                              />
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.YearOut
+                                  ? errors?.WorkExperience?.[idx]?.YearOut
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
 
-                      {idx === 0 ? (
-                        <Box />
-                      ) : (
-                        <Box>
-                          {disabled ? (
+                          <HStack justifyContent="space-evenly" mt={3}>
+                            <Box w="96%">
+                              <Text
+                                mb={0}
+                                marginLeft={2}
+                                fontWeight={'light'}
+                                fontSize={'xs'}>
+                                Description
+                              </Text>
+                              <Controller
+                                name={`WorkExperience[${idx}].Description`}
+                                control={control}
+                                render={({
+                                  field: {onChange, onBlur, value},
+                                }) => (
+                                  <Input
+                                    multiline
+                                    numberOfLines={3}
+                                    placeholder="Description"
+                                    variant="underlined"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    isReadOnly={disabled}
+                                    fontSize={'sm'}
+                                  />
+                                )}
+                              />
+                              <FormControl.HelperText>
+                                {errors?.WorkExperience?.[idx]?.Description
+                                  ? errors?.WorkExperience?.[idx]?.Description
+                                      .message
+                                  : ''}
+                              </FormControl.HelperText>
+                            </Box>
+                          </HStack>
+
+                          {idx === 0 ? (
                             <Box />
                           ) : (
-                            <Button
-                              onPress={() => handleDelete()}
-                              variant="subtle"
-                              colorScheme="primary"
-                              size="xs">
-                              X
-                            </Button>
+                            <Box>
+                              {disabled ? (
+                                <Box />
+                              ) : (
+                                <Button
+                                  onPress={() => handleDelete()}
+                                  variant="subtle"
+                                  colorScheme="primary"
+                                  size="xs">
+                                  X
+                                </Button>
+                              )}
+                            </Box>
                           )}
-                        </Box>
-                      )}
-                    </FormControl>
-                    {/* End of Form */}
-                  </Box>
-                );
-              })}
+                        </FormControl>
+                        {/* End of Form */}
+                      </Box>
+                    );
+                  })}
 
-              {disabled ? (
-                <Box />
-              ) : (
-                <HStack
-                  space={4}
-                  alignItems="center"
-                  justifyContent="center"
-                  marginTop={1}>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={() =>
-                        WorkExperienceAppend({
-                          CompanyName: '',
-                          Position: '',
-                          Level: '',
-                          Industry: '',
-                          YearIn: '',
-                          YearOut: '',
-                          Description: '',
-                        })
-                      }
-                      variant="subtle"
-                      colorScheme="primary"
-                      size="xs"
-                      disabled={WorkExperienceField.length >= 3}>
-                      Add
-                    </Button>
-                  </Box>
-                </HStack>
+                  {disabled ? (
+                    <Box />
+                  ) : (
+                    <Box>
+                      <HStack
+                        space={4}
+                        alignItems="center"
+                        justifyContent="center"
+                        marginTop={1}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() =>
+                              WorkExperienceAppend({
+                                CompanyName: '',
+                                Position: '',
+                                Level: '',
+                                Industry: '',
+                                YearIn: '',
+                                YearOut: '',
+                                Description: '',
+                              })
+                            }
+                            variant="subtle"
+                            colorScheme="primary"
+                            size="xs"
+                            disabled={WorkExperienceField.length >= 3}>
+                            Add
+                          </Button>
+                        </Box>
+                      </HStack>
+                      <HStack justifyContent="center" mb={1} mt={5}>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={() => changeDisable(!disabled)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="red">
+                            Cancel
+                          </Button>
+                        </Box>
+                        <Box width={'50%'}>
+                          <Button
+                            onPress={handleSubmit(onSubmit)}
+                            variant="subtle"
+                            size="xs"
+                            colorScheme="blue">
+                            Submit
+                          </Button>
+                        </Box>
+                      </HStack>
+                    </Box>
+                  )}
+                </View>
               )}
+
               {/* Submit Cancel Button */}
-              {disabled ? (
-                <Box />
-              ) : (
-                <HStack justifyContent="center" mb={1} mt={5}>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={() => changeDisable(!disabled)}
-                      variant="subtle"
-                      size="xs"
-                      colorScheme="red">
-                      Cancel
-                    </Button>
-                  </Box>
-                  <Box width={'50%'}>
-                    <Button
-                      onPress={handleSubmit(onSubmit)}
-                      variant="subtle"
-                      size="xs"
-                      colorScheme="blue">
-                      Submit
-                    </Button>
-                  </Box>
-                </HStack>
-              )}
+
               {/* Submit Cancel Button */}
             </Center>
           </Box>

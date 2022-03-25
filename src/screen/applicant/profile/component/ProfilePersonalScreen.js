@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
   Avatar,
   Box,
@@ -15,6 +15,7 @@ import {
   Icon,
   ScrollView,
   Select,
+  Text,
 } from 'native-base';
 import * as Yup from 'yup';
 import {Controller, useFieldArray, useForm} from 'react-hook-form';
@@ -154,9 +155,13 @@ const ProfilePersonalScreen = ({bloc}) => {
               <FormControl mt="5">
                 <HStack justifyContent="space-evenly">
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Name
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.Name"
                       control={control}
@@ -169,6 +174,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           variant="underlined"
                           error={Boolean(errors.Personal?.Name)}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}
                     />
@@ -181,9 +187,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                     </FormControl.HelperText>
                   </Box>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Email
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.Email"
                       control={control}
@@ -196,6 +206,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           value={value}
                           error={Boolean(errors.Personal?.Email)}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}
                     />
@@ -210,9 +221,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                 </HStack>
                 <HStack justifyContent="space-evenly" mt={2}>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Phone Number
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.TelephoneNo"
                       control={control}
@@ -225,6 +240,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           value={value}
                           error={Boolean(errors.Personal?.TelephoneNo)}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}
                     />
@@ -238,9 +254,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                     </FormControl.HelperText>
                   </Box>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Gender
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.Gender"
                       control={control}
@@ -252,6 +272,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           variant="underlined"
                           accessibilityLabel="Gender"
                           placeholder="Gender"
+                          fontSize={'sm'}
                           // _selectedItem={{
                           //   bg: 'teal.600',
                           //   endIcon: <CheckIcon size="2" />,
@@ -273,9 +294,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                 </HStack>
                 <HStack justifyContent="space-evenly" mt={2}>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Birth Date
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.BirthDate"
                       control={control}
@@ -287,6 +312,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           onChange={onChange}
                           onBlur={onBlur}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                           onPressIn={() => setShowDatePicker(true)}
                         />
                       )}
@@ -307,9 +333,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                     </FormControl.HelperText>
                   </Box>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Domicile
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.Domicile"
                       control={control}
@@ -322,6 +352,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.Domicile)}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}
                     />
@@ -336,9 +367,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                 </HStack>
                 <HStack justifyContent="space-evenly" mt={2}>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Working Experience
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.TotalWorkingExperience"
                       control={control}
@@ -353,6 +388,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                             errors.Personal?.TotalWorkingExperience,
                           )}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}
                     />
@@ -365,9 +401,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                     </FormControl.HelperText>
                   </Box>
                   <Box w="48%">
-                    <FormControl.Label alignSelf="center" mb={0}>
+                    <Text
+                      mb={0}
+                      marginLeft={2}
+                      fontWeight={'light'}
+                      fontSize={'xs'}>
                       Salary Expectation
-                    </FormControl.Label>
+                    </Text>
                     <Controller
                       name="Personal.SalaryExpectation"
                       control={control}
@@ -380,6 +420,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.SalaryExpectation)}
                           isReadOnly={disabled}
+                          fontSize={'sm'}
                         />
                       )}></Controller>
 
@@ -393,9 +434,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                   </Box>
                 </HStack>
                 <Box w="100%">
-                  <FormControl.Label alignSelf="center" mb={0}>
+                  <Text
+                    mb={0}
+                    marginLeft={2}
+                    fontWeight={'light'}
+                    fontSize={'xs'}>
                     Skill Set
-                  </FormControl.Label>
+                  </Text>
                   <HStack
                     justifyContent="flex-start"
                     mt={2}
@@ -421,6 +466,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                                 onBlur={onBlur}
                                 error={Boolean(errors.Personal?.SkillSet)}
                                 isReadOnly={disabled}
+                                fontSize={'sm'}
                               />
                             )}
                           />
