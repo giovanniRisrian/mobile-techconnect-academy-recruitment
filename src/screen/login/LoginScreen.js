@@ -31,6 +31,7 @@ const LoginScreen = ({login}) => {
   } = login();
   useEffect(() => {
     passLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log('ISLOGED ADALAH', isLogged);

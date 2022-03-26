@@ -4,7 +4,7 @@ import ProfileEducationScreen from './ProfileEducationScreen';
 import ProfileOrganizationScreen from './ProfileOrganizationScreen';
 import ProfileWorkExperienceScreen from './ProfileWorkExperienceScreen';
 import {TabBar, TabView} from 'react-native-tab-view';
-import {SafeAreaView, useWindowDimensions,Text} from 'react-native';
+import {SafeAreaView, useWindowDimensions, Text} from 'react-native';
 import {ScrollView} from 'native-base';
 import Profile from '../Profile';
 import ProfileService from '../../../../service/ProfileService';

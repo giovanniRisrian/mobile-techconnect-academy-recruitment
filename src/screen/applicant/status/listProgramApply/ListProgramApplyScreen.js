@@ -17,20 +17,25 @@ const ListProgramApplyScreen = ({bloc}) => {
   const {list, getListAppliedProgram, goToDetailStatus, navigate, loading} =
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  console.log('ini list program info');
+  console.log(list.ProgramInfo);
 
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // ProgramPosts ganti jadi ProgramInfo
+  // value.ProgramName jadi value.Program.ProgramName
   let listAppliedProgram =
-    list?.ProgramPosts &&
-    list.ProgramPosts.map((value, idx) => {
+    list?.ProgramInfo &&
+    list.ProgramInfo.map((value, idx) => {
       return (
         <SafeAreaView key={idx} style={styles.containerProgram}>
           <View>
-            <Text style={styles.programName}>{value.ProgramName}</Text>
+            <Text style={styles.programName}>{value.Program.ProgramName}</Text>
             <TouchableOpacity
               style={styles.buttonDetails}
-              onPress={() => goToDetailStatus({programId: value.ID})}>
+              onPress={() => goToDetailStatus({programId: value.Program.ID})}>
               <Text style={styles.details}>Details</Text>
             </TouchableOpacity>
           </View>
