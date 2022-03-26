@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,12 +15,12 @@ import {
   IconButton,
   Icon,
   ScrollView,
-} from "native-base";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
+} from 'native-base';
+import * as Yup from 'yup';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import jwt_decode from 'jwt-decode';
+import {useSelector} from 'react-redux';
 
 // const validationSchema = Yup.object().shape({
 //   Education: Yup.array().of(
@@ -40,23 +41,23 @@ import { useSelector } from "react-redux";
 //   ),
 // });
 
-const ProfileWorkExperienceScreen = ({ bloc }) => {
-  const { addProfile, getDataByID } = bloc();
+const ProfileWorkExperienceScreen = ({bloc}) => {
+  const {addProfile, getDataByID} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLogin
+    state => state.TechconnectAcademyReducer.isLogin,
   );
   const [disabled, changeDisable] = useState(true);
   const [initialValues, changeInitial] = useState({
     WorkExperience: [
       {
-        CompanyName: "",
-        Position: "",
-        Level: "",
-        Industry: "",
-        YearIn: "",
-        YearOut: "",
-        Description: "",
+        CompanyName: '',
+        Position: '',
+        Level: '',
+        Industry: '',
+        YearIn: '',
+        YearOut: '',
+        Description: '',
       },
     ],
   });
@@ -65,7 +66,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     // resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
@@ -75,9 +76,9 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
     fields: WorkExperienceField,
     append: WorkExperienceAppend,
     remove: WorkExperienceRemove,
-  } = useFieldArray({ control, name: "WorkExperience" });
+  } = useFieldArray({control, name: 'WorkExperience'});
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
     changeDisable(!disabled);
@@ -101,8 +102,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
               bg="grey.900"
               alignSelf="center"
               size="2xl"
-              source={require("../../../../assets/images/avatar.png")}
-            ></Avatar>
+              source={require('../../../../assets/images/avatar.png')}></Avatar>
 
             {/* End of Avatar */}
             {/* Start of Edit & Upload Button */}
@@ -113,20 +113,26 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                   onPress={() => changeDisable(!disabled)}
                   variant="subtle"
                   colorScheme="primary"
-                  size="xs"
-                >
+                  size="xs">
                   Edit Profile
                 </Button>
               ) : null}
+              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
+            </HStack>
+            <HStack space={2} alignItems="center">
+              <Stack mt={3} space={4} w="50%" maxW="300px" h="50%">
+                <Input size="xs" placeholder="xs Input" />
+              </Stack>
               <Button
-                onPress={() => console.log("Upload CV")}
+                mt={3}
+                space={4}
+                h="50%"
+                onPress={() => console.log('Upload CV')}
                 variant="subtle"
                 colorScheme="primary"
-                size="xs"
-              >
-                Upload CV
+                size="xs">
+                Insert LinkedIn Profile
               </Button>
-              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
             </HStack>
 
             {/* End of Edit & Upload Button */}
@@ -149,7 +155,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].CompanyName`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Company Name"
                               variant="underlined"
@@ -174,7 +180,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].Position`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Position"
                               variant="underlined"
@@ -202,7 +208,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].Level`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Level"
                               variant="underlined"
@@ -226,7 +232,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].Industry`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Industry"
                               variant="underlined"
@@ -253,7 +259,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].YearIn`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Start Date"
                               variant="underlined"
@@ -277,7 +283,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`WorkExperience[${idx}].YearOut`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="End Date"
                               variant="underlined"
@@ -304,7 +310,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                         <Controller
                           name={`Organization[${idx}].Description`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               multiline
                               numberOfLines={3}
@@ -336,8 +342,7 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                             onPress={() => handleDelete()}
                             variant="subtle"
                             colorScheme="primary"
-                            size="xs"
-                          >
+                            size="xs">
                             X
                           </Button>
                         )}
@@ -356,26 +361,24 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
                 space={4}
                 alignItems="center"
                 justifyContent="center"
-                marginTop={1}
-              >
-                <Box width={"50%"}>
+                marginTop={1}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() =>
                       WorkExperienceAppend({
-                        CompanyName: "",
-                        Position: "",
-                        Level: "",
-                        Industry: "",
-                        YearIn: "",
-                        YearOut: "",
-                        Description: "",
+                        CompanyName: '',
+                        Position: '',
+                        Level: '',
+                        Industry: '',
+                        YearIn: '',
+                        YearOut: '',
+                        Description: '',
                       })
                     }
                     variant="subtle"
                     colorScheme="primary"
                     size="xs"
-                    disabled={WorkExperienceField.length >= 3}
-                  >
+                    disabled={WorkExperienceField.length >= 3}>
                     Add
                   </Button>
                 </Box>
@@ -386,23 +389,21 @@ const ProfileWorkExperienceScreen = ({ bloc }) => {
               <Box />
             ) : (
               <HStack justifyContent="center" mb={1} mt={5}>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="red"
-                  >
+                    colorScheme="red">
                     Cancel
                   </Button>
                 </Box>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={handleSubmit(onSubmit)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="blue"
-                  >
+                    colorScheme="blue">
                     Submit
                   </Button>
                 </Box>

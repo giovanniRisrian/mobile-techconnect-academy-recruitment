@@ -120,6 +120,9 @@ const ProfileOrganizationScreen = ({bloc}) => {
                   Edit Profile
                 </Button>
               ) : null}
+              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
+            </HStack>
+            <HStack space={2} alignItems="center">
               <Stack mt={3} space={4} w="50%" maxW="300px" h="50%">
                 <Input size="xs" placeholder="xs Input" />
               </Stack>
@@ -133,7 +136,6 @@ const ProfileOrganizationScreen = ({bloc}) => {
                 size="xs">
                 Insert LinkedIn Profile
               </Button>
-              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
             </HStack>
 
             {/* End of Edit & Upload Button */}

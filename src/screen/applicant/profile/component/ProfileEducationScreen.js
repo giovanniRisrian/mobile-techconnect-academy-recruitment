@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView} from 'react-native';
 import {
   Avatar,
   Box,
@@ -14,48 +15,48 @@ import {
   IconButton,
   Icon,
   ScrollView,
-} from "native-base";
-import * as Yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import jwt_decode from "jwt-decode";
-import { useSelector } from "react-redux";
+} from 'native-base';
+import * as Yup from 'yup';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import jwt_decode from 'jwt-decode';
+import {useSelector} from 'react-redux';
 
 const validationSchema = Yup.object().shape({
   Education: Yup.array().of(
     Yup.object().shape({
-      Title: Yup.string().required("This field is required"),
-      Institution: Yup.string().required("This field is required"),
-      Major: Yup.string().required("This field is required"),
+      Title: Yup.string().required('This field is required'),
+      Institution: Yup.string().required('This field is required'),
+      Major: Yup.string().required('This field is required'),
       YearIn: Yup.string()
-        .required("This field is required")
-        .min(4, "Year in must be 4 character")
-        .max(4, "Year in must be 4 character"),
+        .required('This field is required')
+        .min(4, 'Year in must be 4 character')
+        .max(4, 'Year in must be 4 character'),
       YearOut: Yup.string()
-        .required("This field is required")
-        .min(4, "Year out must be 4 character")
-        .max(4, "Year in must be 4 character"),
-      GPA: Yup.string().required("This field is required"),
-    })
+        .required('This field is required')
+        .min(4, 'Year out must be 4 character')
+        .max(4, 'Year in must be 4 character'),
+      GPA: Yup.string().required('This field is required'),
+    }),
   ),
 });
 
-const ProfileEducationScreen = ({ bloc }) => {
-  const { addProfile, getDataByID } = bloc();
+const ProfileEducationScreen = ({bloc}) => {
+  const {addProfile, getDataByID} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
-    (state) => state.TechconnectAcademyReducer.isLogin
+    state => state.TechconnectAcademyReducer.isLogin,
   );
   const [disabled, changeDisable] = useState(true);
   const [initialValues, changeInitial] = useState({
     Education: [
       {
-        Title: "",
-        Institution: "",
-        Major: "",
-        YearIn: "",
-        YearOut: "",
-        GPA: "",
+        Title: '',
+        Institution: '',
+        Major: '',
+        YearIn: '',
+        YearOut: '',
+        GPA: '',
       },
     ],
   });
@@ -64,7 +65,7 @@ const ProfileEducationScreen = ({ bloc }) => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues: initialValues,
@@ -74,9 +75,9 @@ const ProfileEducationScreen = ({ bloc }) => {
     fields: EducationField,
     append: EducationAppend,
     remove: EducationRemove,
-  } = useFieldArray({ control, name: "Education" });
+  } = useFieldArray({control, name: 'Education'});
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
     changeDisable(!disabled);
@@ -100,8 +101,7 @@ const ProfileEducationScreen = ({ bloc }) => {
               bg="grey.900"
               alignSelf="center"
               size="2xl"
-              source={require("../../../../assets/images/avatar.png")}
-            ></Avatar>
+              source={require('../../../../assets/images/avatar.png')}></Avatar>
 
             {/* End of Avatar */}
             {/* Start of Edit & Upload Button */}
@@ -112,20 +112,26 @@ const ProfileEducationScreen = ({ bloc }) => {
                   onPress={() => changeDisable(!disabled)}
                   variant="subtle"
                   colorScheme="primary"
-                  size="xs"
-                >
+                  size="xs">
                   Edit Profile
                 </Button>
               ) : null}
+              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
+            </HStack>
+            <HStack space={2} alignItems="center">
+              <Stack mt={3} space={4} w="50%" maxW="300px" h="50%">
+                <Input size="xs" placeholder="xs Input" />
+              </Stack>
               <Button
-                onPress={() => console.log("Upload CV")}
+                mt={3}
+                space={4}
+                h="50%"
+                onPress={() => console.log('Upload CV')}
                 variant="subtle"
                 colorScheme="primary"
-                size="xs"
-              >
-                Upload CV
+                size="xs">
+                Insert LinkedIn Profile
               </Button>
-              {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
             </HStack>
 
             {/* End of Edit & Upload Button */}
@@ -148,7 +154,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].Title`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Title"
                               variant="underlined"
@@ -163,7 +169,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.Title
                             ? errors?.Education?.[idx]?.Title.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                       <Box w="48%">
@@ -173,7 +179,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].Institution`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Institution"
                               variant="underlined"
@@ -188,7 +194,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.Institution
                             ? errors?.Education?.[idx]?.Institution.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                     </HStack>
@@ -200,7 +206,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].YearIn`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Year In"
                               variant="underlined"
@@ -215,7 +221,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.YearIn
                             ? errors?.Education?.[idx]?.YearIn.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                       <Box w="48%">
@@ -225,7 +231,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].YearOut`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Year Out"
                               variant="underlined"
@@ -240,7 +246,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.YearOut
                             ? errors?.Education?.[idx]?.YearOut.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                     </HStack>
@@ -252,7 +258,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].Major`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="Major"
                               variant="underlined"
@@ -266,7 +272,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.Major
                             ? errors?.Education?.[idx]?.Major.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                       <Box w="48%">
@@ -276,7 +282,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <Controller
                           name={`Education[${idx}].GPA`}
                           control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
+                          render={({field: {onChange, onBlur, value}}) => (
                             <Input
                               placeholder="GPA"
                               variant="underlined"
@@ -291,7 +297,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                         <FormControl.HelperText>
                           {errors?.Education?.[idx]?.GPA
                             ? errors?.Education?.[idx]?.GPA.message
-                            : ""}
+                            : ''}
                         </FormControl.HelperText>
                       </Box>
                     </HStack>
@@ -308,8 +314,7 @@ const ProfileEducationScreen = ({ bloc }) => {
                             onPress={() => handleDelete()}
                             variant="subtle"
                             colorScheme="primary"
-                            size="xs"
-                          >
+                            size="xs">
                             X
                           </Button>
                         )}
@@ -328,25 +333,23 @@ const ProfileEducationScreen = ({ bloc }) => {
                 space={4}
                 alignItems="center"
                 justifyContent="center"
-                marginTop={1}
-              >
-                <Box width={"50%"}>
+                marginTop={1}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() =>
                       EducationAppend({
-                        Title: "",
-                        Institution: "",
-                        Major: "",
-                        YearIn: "",
-                        YearOut: "",
-                        GPA: "",
+                        Title: '',
+                        Institution: '',
+                        Major: '',
+                        YearIn: '',
+                        YearOut: '',
+                        GPA: '',
                       })
                     }
                     variant="subtle"
                     colorScheme="primary"
                     size="xs"
-                    disabled={EducationField.length >= 3}
-                  >
+                    disabled={EducationField.length >= 3}>
                     Add
                   </Button>
                 </Box>
@@ -357,23 +360,21 @@ const ProfileEducationScreen = ({ bloc }) => {
               <Box />
             ) : (
               <HStack justifyContent="center" mb={1} mt={5}>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="red"
-                  >
+                    colorScheme="red">
                     Cancel
                   </Button>
                 </Box>
-                <Box width={"50%"}>
+                <Box width={'50%'}>
                   <Button
                     onPress={handleSubmit(onSubmit)}
                     variant="subtle"
                     size="xs"
-                    colorScheme="blue"
-                  >
+                    colorScheme="blue">
                     Submit
                   </Button>
                 </Box>
