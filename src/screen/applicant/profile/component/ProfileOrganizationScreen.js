@@ -24,6 +24,7 @@ import {Controller, useFieldArray, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import jwt_decode from 'jwt-decode';
 import {useSelector} from 'react-redux';
+import LinkedInButton from '../../../../component/linkedInButton/linkedInComponent';
 
 // const validationSchema = Yup.object().shape({
 //   Education: Yup.array().of(
@@ -119,23 +120,15 @@ const ProfileOrganizationScreen = ({bloc}) => {
                   size="xs">
                   Edit Profile
                 </Button>
-              ) : null}
+              ) : (
+                <View>
+                  <LinkedInButton />
+                  {/*<UpploadResumeButtonComponent
+                    uploadResume={() => UploadResumeButton(UploadResumeService)}
+              />*/}
+                </View>
+              )}
               {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
-            </HStack>
-            <HStack space={2} alignItems="center">
-              <Stack mt={3} space={4} w="50%" maxW="300px" h="50%">
-                <Input size="xs" placeholder="xs Input" />
-              </Stack>
-              <Button
-                mt={3}
-                space={4}
-                h="50%"
-                onPress={() => console.log('Upload CV')}
-                variant="subtle"
-                colorScheme="primary"
-                size="xs">
-                Insert LinkedIn Profile
-              </Button>
             </HStack>
 
             {/* End of Edit & Upload Button */}

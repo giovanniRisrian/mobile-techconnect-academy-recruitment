@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {
   Avatar,
   Box,
@@ -25,6 +25,7 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
+import LinkedInButton from '../../../../component/linkedInButton/linkedInComponent';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -124,9 +125,12 @@ const ProfilePersonalScreen = ({bloc}) => {
                   Edit Profile
                 </Button>
               ) : (
-                <UpploadResumeButtonComponent
-                  uploadResume={() => UploadResumeButton(UploadResumeService)}
-                />
+                <View>
+                  <LinkedInButton />
+                  {/*<UpploadResumeButtonComponent
+                    uploadResume={() => UploadResumeButton(UploadResumeService)}
+              />*/}
+                </View>
               )}
 
               {/* <Button
@@ -138,21 +142,6 @@ const ProfilePersonalScreen = ({bloc}) => {
                 Upload CV
               </Button> */}
               {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
-            </HStack>
-            <HStack space={2} alignItems="center">
-              <Stack mt={3} space={4} w="50%" maxW="300px" h="50%">
-                <Input size="xs" placeholder="xs Input" />
-              </Stack>
-              <Button
-                mt={3}
-                space={4}
-                h="50%"
-                onPress={() => console.log('Upload CV')}
-                variant="subtle"
-                colorScheme="primary"
-                size="xs">
-                Insert LinkedIn Profile
-              </Button>
             </HStack>
 
             {/* End of Edit & Upload Button */}
