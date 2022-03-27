@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginHorizontal: 10,
-    borderTopStartRadius: 15,
-    borderBottomStartRadius: 15,
-    borderTopEndRadius: 15,
-    borderBottomEndRadius: 15,
+    borderTopStartRadius: 10,
+    borderBottomStartRadius: 10,
+    borderTopEndRadius: 10,
+    borderBottomEndRadius: 10,
     backgroundColor: '#EEEEEE',
     shadowColor: '#000',
     shadowOffset: {
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5.46,
 
     elevation: 9,
+    width:'auto'
   },
   dialogContentView: {
     flex: 1,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   buttonLeft: {
-    width: '33%',
+    width: '33.3%',
     height: 50,
     borderColor: 'white',
   },
