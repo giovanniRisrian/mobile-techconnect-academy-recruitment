@@ -72,7 +72,7 @@ const VacancyDetailScreen = ({vacancy, route}) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => confirmationApply()}>
-          <Text style={styles.textApply}>Apply for job</Text>
+          <Text style={styles.textApply}>Apply</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

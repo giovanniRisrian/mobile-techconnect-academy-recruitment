@@ -71,49 +71,76 @@ export const Vacancy = service => {
       let res = await getUserId(context);
       let data = res.data;
       let counter = 0;
+      let arrayNotFill = [];
       if (data.Personal.Name) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Name")
       }
       if (data.Personal.Email) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Email")
       }
       if (data.Personal.Domicile) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Domicile")
       }
       if (data.Personal.TelephoneNo) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Phone")
       }
       if (data.Personal.BirthDate) {
         counter += 1;
+      }else{
+        arrayNotFill.push("BirthDate")
       }
       if (data.Personal.Gender) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Gender")
       }
       if (data.SkillSet[0].Skill) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Skill")
       }
       if (data.Education[0].Title) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education Title")
       }
       if (data.Education[0].Major) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education Major")
       }
       if (data.Education[0].Institution) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education Institution")
       }
       if (data.Education[0].YearIn) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education Year In")
       }
       if (data.Education[0].YearOut) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education Year Out")
       }
       if (data.Education[0].GPA) {
         counter += 1;
+      }else{
+        arrayNotFill.push("Education GPA")
       }
       if (counter >= 13) {
         return true;
       } else {
-        return false;
+        return {status:false, notFill:arrayNotFill};
       }
     } catch (err) {
       throw err;
@@ -136,7 +163,7 @@ export const Vacancy = service => {
           },
         ]);
       } else {
-        Alert.alert('You must filled mandatory field', null, [
+        Alert.alert(`You must filled mandatory field`, `Unfilled fields are ${status?.notFill}`, [
           {
             text: 'OK',
             onPress: () => goToScreenWithParams(PROFILE_PATH, context.id, true),
