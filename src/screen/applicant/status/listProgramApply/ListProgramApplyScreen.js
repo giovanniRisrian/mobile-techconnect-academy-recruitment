@@ -56,18 +56,14 @@ const ListProgramApplyScreen = ({bloc}) => {
           <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
         </View>
       ) : (
-        <View>
-          <Text style={styles.oops}>OOPS!!!</Text>
+        <View style={styles.viewProgram}>
           <Text style={styles.dontHaveProgram}>You don't have any</Text>
           <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
           <Image
             style={styles.image}
-            source={require('../../../../assets/images/emptyJobApplied.png')}
+            source={require('../../../../assets/images/Nodata-pana.png')}
             alt="splash-screen"
           />
-          <TouchableOpacity style={styles.button} onPress={() => toVacany()}>
-            <Text style={styles.text}> Go To Program List </Text>
-          </TouchableOpacity>
         </View>
       )}
     </SafeAreaView>
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
   image: {
     width: null,
     resizeMode: 'contain',
-    height: 300,
+    height: 400,
   },
   listAppliedProgram: {
     marginTop: 20,
@@ -105,20 +101,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   dontHaveProgram: {
-    fontFamily: 'Montserrat',
-    fontSize: 36,
+    fontFamily: 'monospace',
+    fontSize: 28,
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center',
-    color: '#CE49BF',
+    color: '#5F4E98',
+  },
+  viewProgram: {
+    marginTop: 30,
   },
   oops: {
     fontFamily: 'Montserrat',
-    fontSize: 36,
+    fontSize: 28,
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center',
-    color: '#E60965',
+    color: '#5F4E98',
   },
   programApplied: {
     fontFamily: 'Montserrat',
