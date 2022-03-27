@@ -37,7 +37,6 @@ const ProfileScreen = () => {
   };
 
   const layout = useWindowDimensions();
-
   const [index, setIndex] = useState(0);
   const [routes] = React.useState([
     {key: 'personal', title: 'Personal'},
@@ -59,8 +58,6 @@ const ProfileScreen = () => {
         </Text>
       )}
       {...props}
-      // indicatorStyle={{ backgroundColor: "white" }}
-      // style={{ backgroundColor: "pink" }}
     />
   );
 
@@ -86,11 +83,4 @@ const LazyPlaceholder = ({route}) => (
   </View>
 );
 
-// const styles = StyleSheet.create({
-//   scene: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 export default ProfileScreen;

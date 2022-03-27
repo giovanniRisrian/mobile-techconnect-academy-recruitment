@@ -102,11 +102,6 @@ const ProfileOrganizationScreen = ({bloc}) => {
           <Box marginTop={5}>
             {/* Start of Avatar */}
             <Center>
-              <Avatar
-                bg="grey.900"
-                alignSelf="center"
-                size="2xl"
-                source={require('../../../../assets/images/avatar.png')}></Avatar>
 
               {/* End of Avatar */}
               {/* Start of Edit & Upload Button */}
@@ -124,9 +119,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                     Edit Profile
                   </Button>
                 ) : (
-                  <UpploadResumeButtonComponent
-                    uploadResume={() => UploadResumeButton(UploadResumeService)}
-                  />
+                  <Text></Text>
+                  // <UpploadResumeButtonComponent
+                  //   uploadResume={() => UploadResumeButton(UploadResumeService)}
+                  // />
                 )}
 
                 {/* <IconButton icon={<Icon as name="" />}></IconButton> */}

@@ -71,8 +71,7 @@ export const Vacancy = service => {
 
   const getUserbyId = async context => {
     try {
-      let res = await getUserId(context);
-      let data = res.data;
+      let data = userProfile;
       let counter = 0;
       if (data.Personal.Name) {
         counter += 1;

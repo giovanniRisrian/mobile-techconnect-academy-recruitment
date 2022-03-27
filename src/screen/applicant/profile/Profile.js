@@ -1,16 +1,24 @@
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
-import {useDispatch} from 'react-redux';
-import {showLoading} from '../../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setProfile,
+  showLoading,
+} from '../../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {useState} from 'react';
+import {goToScreen} from '../../../navigation/NavigationHelper';
+import {PROFILE_PATH} from '../../../navigation/NavigationPath';
 
 const Profile = profileService => {
   let {updateDataApplicant, getDataApplicantbyId} = profileService();
   const dispatch = useDispatch();
   const [checkEducation, setCheckEducation] = useState();
-  const [checkOrganization, setCheckOrganization] = useState();
-  const [checkWork, setCheckWork] = useState();
-
+  const [checkOrganization, setCheckOrganization] = useState(null);
+  const [checkWork, setCheckWork] = useState(null);
+  const [changePhoto, setChangePhoto] = useState(false);
+  const userProfile = useSelector(
+    state => state.TechconnectAcademyReducer.userProfile,
+  );
   const addProfile = async (values, file, context) => {
     values.Personal.TotalWorkingExperience =
       values.Personal.TotalWorkingExperience + '';
@@ -22,15 +30,6 @@ const Profile = profileService => {
           'Content-Type': 'multipart/form-data',
         },
       };
-      // let userInfo = jwt_decode(context.token);
-      // console.log("Ini Values : ",values)
-      // const formData = new FormData();
-      // const jsonText = JSON.stringify(values);
-      // const jsonPretendFile = new Blob([jsonText], {
-      //   type: "application/json",
-      // });
-      // formData.append("json", jsonPretendFile);
-      // formData.append("file", file);
       let filepath =
         values.Personal.ResumeFile.split(':')[0].split('_')[
           values.Personal.ResumeFile.split(':')[0].split('_').length - 1
@@ -39,9 +38,11 @@ const Profile = profileService => {
       values.Personal.ResumeFile = filepath;
       dispatch(showLoading(true));
       const response = await updateDataApplicant(values, config);
+
+      const response2 = await getDataApplicantbyId(null, config);
+      dispatch(setProfile(response2.data));
       dispatch(showLoading(false));
-      // navigate("/applicant/profile");
-      // window.location.reload();
+      goToScreen(PROFILE_PATH, true);
       return response;
     } catch (err) {
       throw err;
@@ -58,10 +59,13 @@ const Profile = profileService => {
       const formData = new FormData();
       formData.append('id', id);
       dispatch(showLoading(true));
-      const response = await getDataApplicantbyId(formData, config);
-
-      let dataReceive = response.data;
-
+      let dataReceive;
+      if (userProfile) {
+        dataReceive = userProfile;
+      } else {
+        const response = await getDataApplicantbyId(formData, config);
+        dataReceive = response.data;
+      }
       let mock = {
         Personal: {
           Name: '',
@@ -109,15 +113,10 @@ const Profile = profileService => {
           },
         ],
       };
-
-      // console.log("resp:",dataReceive)
-      // console.log("mock:",mock)
       mock.Personal = dataReceive.Personal;
       mock.Personal.BirthDate = dayjs(dataReceive.Personal.BirthDate).format(
         'YYYY-MM-DD',
       );
-
-      // console.log(mock.Personal.BirthDate)
       mock.Education = dataReceive.Education;
       mock.SkillSet = dataReceive.SkillSet;
       mock.WorkExperience = dataReceive.WorkExperience;
@@ -131,13 +130,49 @@ const Profile = profileService => {
       mock.ID = dataReceive.ID;
       mock.UserAccountID = dataReceive.UserAccountID;
 
+      for (let i = 0; i < mock.WorkExperience.length; i++) {
+        if (
+          mock.WorkExperience[i].YearIn == '0001-01-01T07:07:12+07:07' ||
+          mock.WorkExperience[i].YearIn == '1-01-01' ||
+          mock.WorkExperience[i].YearOut == null
+        ) {
+          mock.WorkExperience[i].YearIn = null;
+        } else {
+          mock.WorkExperience[i].YearIn = dataReceive.WorkExperience[
+            i
+          ].YearIn.toString()
+            .split(':')[0]
+            .split('T')[0];
+        }
+      }
+
+      for (let i = 0; i < mock.WorkExperience.length; i++) {
+        if (
+          mock.WorkExperience[i].YearOut == '0001-01-01T07:07:12+07:07' ||
+          mock.WorkExperience[i].YearOut == '1-01-01' ||
+          mock.WorkExperience[i].YearOut == null
+        ) {
+          mock.WorkExperience[i].YearOut = null;
+        } else {
+          mock.WorkExperience[i].YearOut = dataReceive.WorkExperience[
+            i
+          ].YearOut.toString()
+            .split(':')[0]
+            .split('T')[0];
+        }
+      }
       setCheckEducation(mock.Education[0].Title);
       setCheckOrganization(mock.Organization[0].Organization);
       setCheckWork(mock.WorkExperience[0].CompanyName);
       changeInitial(mock);
+
+      console.log('==========================', mock.WorkExperience);
+      console.log('++++++++++++++++++++++++++', dataReceive.WorkExperience);
+
       dispatch(showLoading(false));
-      return response;
+      // return response;
     } catch (err) {
+      // console
       throw err;
     }
   };
@@ -150,6 +185,8 @@ const Profile = profileService => {
     setCheckOrganization,
     checkWork,
     setCheckWork,
+    setChangePhoto,
+    changePhoto,
   };
 };
 

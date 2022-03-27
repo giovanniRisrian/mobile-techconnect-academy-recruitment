@@ -119,7 +119,7 @@ export const Login = service => {
         console.log('Ditunggu tokennya');
         await storeLocalData(loginInfo.token);
         if (loginInfo.Role === 'user') {
-          goToScreen(APPLICANT.DASHBOARD, true);
+          goToScreen(VACANY_PATH, true);
         }
         if (loginInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);

@@ -58,58 +58,58 @@ const VacanyScreen = ({vacancy, route}) => {
   };
 
   return (
-    <NativeBaseProvider>
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView style={styles.contentTitle}>
-          <Text style={styles.title}>
-            Hello {name}, {'\n'}Find Your{'\n'}
-            <Text style={styles.spanTitle}>Dream Career</Text>
-          </Text>
-          <View style={styles.searchSection}>
-            <Ionicons name="ios-search" size={20} style={styles.searchIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Seach"
-              underlineColorAndroid="transparent"
-              onChangeText={text => searchByName(text)}
-              value={search}
+    // <NativeBaseProvider>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView style={styles.contentTitle}>
+        <Text style={styles.title}>
+          Hello {name}, {'\n'}Find Your{'\n'}
+          <Text style={styles.spanTitle}>Dream Career</Text>
+        </Text>
+        <View style={styles.searchSection}>
+          <Ionicons name="ios-search" size={20} style={styles.searchIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Seach"
+            underlineColorAndroid="transparent"
+            onChangeText={text => searchByName(text)}
+            value={search}
+          />
+        </View>
+        <Text style={styles.textCategories}>Based on categories</Text>
+        <FlatList
+          data={typeProgram}
+          keyExtractor={typeProgram => typeProgram.ID}
+          renderItem={typeItem}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </KeyboardAvoidingView>
+
+      <View style={{flex: 1, marginLeft: 20}}>
+        {search && list?.ProgramList.length === 0 ? (
+          <View
+            style={{
+              justifyContent: 'center',
+              flex: 1,
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../assets/images/nodata.png')}
+              alt="no-data"
+              style={{marginBottom: 20}}
             />
           </View>
-          <Text style={styles.textCategories}>Based on categories</Text>
-          <FlatList
-            data={typeProgram}
-            keyExtractor={typeProgram => typeProgram.ID}
-            renderItem={typeItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
+        ) : (
+          <VacancyList
+            programs={list?.ProgramList}
+            vacancyId={vacancyById}
+            apply={doApplyProgram}
+            loading={isLoading}
           />
-        </KeyboardAvoidingView>
-
-        <View style={{flex: 1, marginLeft: 20}}>
-          {search && list?.ProgramList.length === 0 ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                flex: 1,
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('../../assets/images/nodata.png')}
-                alt="no-data"
-                style={{marginBottom: 20}}
-              />
-            </View>
-          ) : (
-            <VacancyList
-              programs={list?.ProgramList}
-              vacancyId={vacancyById}
-              apply={doApplyProgram}
-              loading={isLoading}
-            />
-          )}
-        </View>
-      </SafeAreaView>
-    </NativeBaseProvider>
+        )}
+      </View>
+    </SafeAreaView>
+    // </NativeBaseProvider>
   );
 };
 

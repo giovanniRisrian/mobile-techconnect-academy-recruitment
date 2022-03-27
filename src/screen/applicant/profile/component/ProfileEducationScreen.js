@@ -109,12 +109,6 @@ const ProfileEducationScreen = ({bloc}) => {
           <Box marginTop={5}>
             {/* Start of Avatar */}
             <Center>
-              <Avatar
-                bg="grey.900"
-                alignSelf="center"
-                size="2xl"
-                source={require('../../../../assets/images/avatar.png')}></Avatar>
-
               {/* End of Avatar */}
               {/* Start of Edit & Upload Button */}
 
@@ -131,9 +125,10 @@ const ProfileEducationScreen = ({bloc}) => {
                     Edit Profile
                   </Button>
                 ) : (
-                  <UpploadResumeButtonComponent
-                    uploadResume={() => UploadResumeButton(UploadResumeService)}
-                  />
+                  // <UpploadResumeButtonComponent
+                  //   uploadResume={() => UploadResumeButton(UploadResumeService)}
+                  // />
+                  <Text></Text>
                 )}
 
                 {/* <IconButton icon={<Icon as name="" />}></IconButton> */}

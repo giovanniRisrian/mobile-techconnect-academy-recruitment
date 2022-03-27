@@ -13,7 +13,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {setLogin, setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {removeLocalData, storeLocalData} from '../../utils/localStorage';
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -30,14 +30,17 @@ const LogoutButton = () => {
   const LogoutProccess = async () => {
     try {
       console.log('Masuik sinikah');
+
       await removeLocalData();
       await GoogleLogout();
 
       console.log('KEPENCENT');
+      dispatch(setProfile(null));
       dispatch(setLogin(null));
       goToLogin();
     } catch (error) {
       console.log('eh masuk sinikah');
+      dispatch(setProfile(null));
       dispatch(setLogin(null));
       goToLogin();
     }

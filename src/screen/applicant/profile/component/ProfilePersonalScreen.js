@@ -27,6 +27,8 @@ import UploadResumeButton from '../../../../component/uploadButton/UploadResumeB
 import UploadResumeService from '../../../../service/UploadFileService';
 import DatePicker from 'react-native-neat-date-picker';
 import dayjs from 'dayjs';
+import UploadPictureButton from '../../../../component/uploadPicture/UploadPictureButton';
+import UpploadPictureButtonComponent from '../../../../component/uploadPicture/UploadPictureComponent';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -47,7 +49,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProfilePersonalScreen = ({bloc}) => {
-  const {addProfile, getDataByID} = bloc();
+  const {addProfile, getDataByID, setChangePhoto, changePhoto} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
@@ -124,16 +126,33 @@ const ProfilePersonalScreen = ({bloc}) => {
           <Box marginTop={5}>
             {/* Start of Avatar */}
             <Center>
-              <Avatar
-                bg="grey.900"
-                alignSelf="center"
-                size="2xl"
-                source={require('../../../../assets/images/avatar.png')}></Avatar>
-
-              {/* End of Avatar */}
-              {/* Start of Edit & Upload Button */}
+              {initialValues.Personal.PhotoFile ? (
+                <Avatar
+                  bg="grey.900"
+                  alignSelf="center"
+                  size="2xl"
+                  source={{
+                    uri: `data:image/jpeg/png/jpg;base64,${initialValues.Personal.PhotoFile}`,
+                  }}></Avatar>
+              ) : (
+                <Avatar
+                  bg="grey.900"
+                  alignSelf="center"
+                  size="2xl"
+                  source={require('../../../../assets/images/avatar.png')}></Avatar>
+              )}
 
               <HStack space={4} alignItems="center" marginTop={2}>
+                {disabled ? (
+                  <UpploadPictureButtonComponent
+                    uploadPicture={() =>
+                      UploadPictureButton(UploadResumeService)
+                    }
+                  />
+                ) : (
+                  <View></View>
+                )}
+
                 {disabled ? (
                   <Button
                     onPress={() => changeDisable(!disabled)}

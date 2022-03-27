@@ -31,7 +31,7 @@ const toHome = setNowTab => {
 const toVacany = setNowTab => {
   setTab(VACANY_PATH);
   setNowTab(VACANY_PATH);
-  goToScreen(VACANY_PATH, true);
+  goToScreen(VACANY_PATH, false);
 };
 
 const toDashboard = role => {

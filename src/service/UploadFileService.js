@@ -26,6 +26,35 @@ const UploadResumeService = () => {
       throw error;
     }
   };
+
+  const callUploadPictureService = async (params, header) => {
+    try {
+      const resp = await fetch(
+        'http://10.0.2.2:8181/api/applicant/mobile/update/picture',
+        {
+          method: 'put',
+          headers: header,
+          body: params,
+        },
+      )
+        .then(response => response.json())
+        .then(response => {
+          //   console.log(response);
+          return response;
+        })
+        .catch(function (error) {
+          console.log(
+            'There has been a problem with your fetch operation: ' +
+              error.message,
+          );
+          throw error;
+        });
+      return resp;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
   const postGetDataByListId = async (params, header) => {
     const response = await clientService().postFile(
       '/program/list',
@@ -57,6 +86,7 @@ const UploadResumeService = () => {
     putUpdateProfile,
     getDataApplicantbyId,
     getJobReccomendationId,
+    callUploadPictureService,
   };
 };
 
