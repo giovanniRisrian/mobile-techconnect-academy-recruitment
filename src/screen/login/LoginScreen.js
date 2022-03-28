@@ -14,6 +14,8 @@ import GoogleLoginButton from '../../component/googleLoginButton/GoogleLoginButt
 import GoogleLoginButtonComponent from '../../component/googleLoginButton/GoogleLoginButtonComponent';
 import LoginService from '../../service/LoginService';
 import RegisterService from '../../service/RegisterService';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const LoginScreen = ({login}) => {
   const {
     email,
@@ -78,6 +80,7 @@ const LoginScreen = ({login}) => {
           placeholderTextColor="#637085"
           value={password}
           placeholder="Password"></TextInput>
+
         <Text style={styles.warning}>{validation.password}</Text>
         <TouchableOpacity
           disabled={!(validation.safeEmail && validation.safePassword)}
@@ -93,7 +96,6 @@ const LoginScreen = ({login}) => {
         <GoogleLoginButtonComponent
           googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
         />
-
         <Text style={styles.title}>
           Belum memiliki akun?{' '}
           <Text style={{color: 'blue'}} onPress={() => goToRegister()}>
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
   image: {height: 256, width: 256, alignSelf: 'center'},
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ECE1EE',
     justifyContent: 'center',
   },
   text: {
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
   warning: {
     marginLeft: 12,
     color: 'red',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
   button: {
     backgroundColor: '#631cc7',

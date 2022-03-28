@@ -102,7 +102,6 @@ const ProfileOrganizationScreen = ({bloc}) => {
           <Box marginTop={5}>
             {/* Start of Avatar */}
             <Center>
-
               {/* End of Avatar */}
               {/* Start of Edit & Upload Button */}
 

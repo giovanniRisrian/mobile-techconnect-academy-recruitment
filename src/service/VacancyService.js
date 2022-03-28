@@ -20,14 +20,17 @@ const VacancyService = () => {
     }
   };
   const applyProgram = async (params, header) => {
+
+  
     try {
-      let data = await clientService().postwithToken(
-        `/program_applicant/apply`,
+      let data = await clientService().postWitAuth(
+        '/program_applicant/apply',
         params,
         header,
       );
       return data;
     } catch (err) {
+      console.log('err program',err);
       throw err;
     }
   };

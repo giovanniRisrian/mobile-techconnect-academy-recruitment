@@ -18,7 +18,7 @@ import {
   WEB_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import LoginScreen from '../screen/login/LoginScreen';
 import {Login} from '../screen/login/Login';
@@ -101,8 +101,7 @@ const RootNavigator = () => {
           {/* <Stack.Screen name={REGISTER} component={RegisterScreen} /> */}
         </Stack.Group>
       </Stack.Navigator>
-      {isLogin ? <BottomTabs /> : <Text></Text>}
-      {/* {isLogin ? <BottomTabs /> : <Text></Text>} */}
+      {isLogin ? <BottomTabs /> : <View></View>}
     </NavigationContainer>
   );
 };

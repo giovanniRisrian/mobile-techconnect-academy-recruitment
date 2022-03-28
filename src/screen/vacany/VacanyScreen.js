@@ -41,7 +41,7 @@ const VacanyScreen = ({vacancy, route}) => {
   }, []);
 
   const programTypeName = text => {
-    allVacancy('', text.toLowerCase());
+    allVacancy('', text);
     setType(text);
   };
 
@@ -103,7 +103,7 @@ const VacanyScreen = ({vacancy, route}) => {
           <VacancyList
             programs={list?.ProgramList}
             vacancyId={vacancyById}
-            apply={doApplyProgram}
+            doApplyProgram={doApplyProgram}
             loading={isLoading}
           />
         )}

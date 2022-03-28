@@ -12,10 +12,9 @@ import {
   Linking,
 } from 'react-native';
 import React, {useState} from 'react';
-
-import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
+
+const VacancyInfoModal = ({program, isVisible, setVisible, doApplyProgram}) => {
   const data = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   const [isBrowsing, setBrowsing] = useState(false);
   let dataApply = {
@@ -23,6 +22,10 @@ const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
     ApplicantId: data?.id,
   };
 
+  const handleClickBackBrowser = () => {
+    setBrowsing(false);
+    setVisible(!isVisible);
+  };
   const openURL = async url => {
     // const isSupported = await Linking.canOpenURL(url);
     // if (isSupported) {
@@ -30,13 +33,10 @@ const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
     // } else {
     //   Alert.alert(`Don't know how to open this url: ${url}`);
     // }
+
     setBrowsing(true);
   };
 
-  const handleClickBackBrowser = () => {
-    setBrowsing(false);
-    setVisible(!isVisible);
-  };
   const confirmationApply = () => {
     Alert.alert('Are you sure apply this program?', '', [
       {
@@ -49,10 +49,10 @@ const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
   };
 
   const applytoProgram = () => {
-    if (program.ProgramTypeName === 'certification') {
+    if (program.ProgramTypeName === 'Certification') {
       openURL(program.LinkCertification);
     } else {
-      openURL(program.LinkCertification);
+      doApplyProgram(dataApply, data);
     }
   };
   return (
@@ -67,6 +67,12 @@ const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.title}>{program.ProgramName}</Text>
+            <Text style={styles.locations}>
+              <Text style={{color: '#5F4E98', marginTop: 2}}>
+                <Icon name="tag" size={18} />
+              </Text>
+              {program?.ProgramTypeName?.toUpperCase()}
+            </Text>
             <Text style={styles.locations}>
               <Icons name="location" size={20} color="#5F4E98" />
               <Text> {program.ProgramLocation?.Address}</Text>
@@ -105,21 +111,16 @@ const VacancyInfoModal = ({program, isVisible, setVisible, applyProgram}) => {
               <TouchableOpacity
                 style={styles.buttonApply}
                 onPress={() => confirmationApply()}>
-                <Text style={styles.textButton}>Apply for job</Text>
+                <Text style={styles.textButton}>Apply</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       ) : (
-        // <WebView
-        //   source={{uri: 'https://www.google.com/'}}
-        //   style={{flex: 1, marginTop: 5}}
-        // />
-
         <BeautyWebView
           visible={isBrowsing} // Required for open and close
           onPressClose={handleClickBackBrowser} // Required for closing the modal
-          url={'https://github.com/'}
+          url={program.LinkCertification}
           extraMenuItems={[
             {
               title: 'Extra Item',
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 120,
+    marginTop: 100,
   },
   modalView: {
     backgroundColor: '#EEEEEE',
