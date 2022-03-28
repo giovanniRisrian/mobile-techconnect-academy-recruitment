@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
-import {goToScreenWithParams} from '../../navigation/NavigationHelper';
-import {HOME_PATH, PROFILE_PATH} from '../../navigation/NavigationPath';
+import {goToScreen, goToScreenWithParams} from '../../navigation/NavigationHelper';
+import {HOME_PATH, PROFILE_PATH, VACANY_PATH} from '../../navigation/NavigationPath';
 import {useDispatch} from 'react-redux';
 import {showLoading} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {useSelector} from 'react-redux';
+
 export const Vacancy = service => {
   const [list, setList] = useState([]);
   const [typeProgram, setTypeProgram] = useState([]);
@@ -148,14 +149,20 @@ export const Vacancy = service => {
   };
 
   const doApplyProgram = async (value, context) => {
+   
     try {
       const config = {
         headers: {Authorization: `Bearer ${context.token}`},
       };
-      let status = await getUserbyId(config);
       let res;
+      let status = await getUserbyId(config);
       if (status === true) {
+        // console.log("hasilnya applynya",value);
+        // console.log("contextnyaa",context);
+        // console.log("contextnyaa",config);
+
         res = await applyProgram(value, config);
+        console.log('hasilnyaaa',res);
         Alert.alert('Success', null, [
           {
             text: 'OK',
@@ -170,14 +177,15 @@ export const Vacancy = service => {
           },
         ]);
       }
+
       return res;
     } catch (err) {
-      Alert.alert('You have been apply this program', null, [
-        {
-          text: 'OK',
-          onPress: () => null,
-        },
-      ]);
+        Alert.alert('Error', 'You have been apply this program', [
+          {
+            text: 'OK',
+            onPress: () =>goToScreen(VACANY_PATH, true),
+          },
+        ]);
       throw err;
     }
   };

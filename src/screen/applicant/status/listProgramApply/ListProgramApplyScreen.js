@@ -17,17 +17,17 @@ const ListProgramApplyScreen = ({bloc}) => {
   const {list, getListAppliedProgram, goToDetailStatus, navigate, loading} =
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
-
+  // console.log('list apply',list.ProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
   }, []);
   let listAppliedProgram =
-    list?.ProgramPosts &&
-    list.ProgramPosts.map((value, idx) => {
+    list?.ProgramInfo &&
+    list.ProgramInfo.map((value, idx) => {
       return (
         <SafeAreaView key={idx} style={styles.containerProgram}>
           <View>
-            <Text style={styles.programName}>{value.ProgramName}</Text>
+            <Text style={styles.programName}>{value.Program.ProgramName}</Text>
             <TouchableOpacity
               style={styles.buttonDetails}
               onPress={() => goToDetailStatus({programId: value.ID})}>

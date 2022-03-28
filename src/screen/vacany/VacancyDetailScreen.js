@@ -15,7 +15,6 @@ const VacancyDetailScreen = ({vacancy, route}) => {
   const {vacancyById, list, doApplyProgram} = vacancy();
   const data = useSelector(state => state.TechconnectAcademyReducer.isLogin);
 
-  console.log(list);
   let dataApply = {
     ProgramId: route.params,
     ApplicantId: data.id,
