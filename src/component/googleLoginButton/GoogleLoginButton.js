@@ -19,10 +19,14 @@ import {
   HOME_PATH,
   RECRUITER,
   REGISTER_PATH,
+  VACANY_PATH,
 } from '../../navigation/NavigationPath';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {setLogin} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setLogin,
+  setProfile,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {
   GoogleSignin,
   statusCodes,
@@ -30,28 +34,32 @@ import {
 import {storeLocalData} from '../../utils/localStorage';
 const GoogleLoginButton = (serviceLogin, serviceRegister) => {
   const dispatch = useDispatch();
-  const {callLoginService} = serviceLogin();
+  const {callLoginService, getDataApplicantbyId} = serviceLogin();
   const {callRegisterService} = serviceRegister();
   const [isLoading, setLoading] = useState(false);
   const onAuthenticate = async (fullname, email, password) => {
     const params = {fullname, email, password};
-
+    console.log('KALO PARAMNYA INISIH', params);
     setLoading(true);
     try {
       const response = await callRegisterService(params);
-
       let registerInfo;
+      const config = {
+        headers: {Authorization: `Bearer ${response.data.token}`},
+      };
       console.log(response);
       console.log('Tokennya : ', jwt_decode(response.data.token));
       if (response) {
         registerInfo = jwt_decode(response.data.token);
         registerInfo.token = response.data.token;
 
+        const resp2 = await getDataApplicantbyId(config);
+        dispatch(setProfile(resp2.data));
         await storeLocalData(response.data.token);
         dispatch(setLogin(registerInfo));
         setLoading(false);
         if (registerInfo.Role === 'user') {
-          goToScreen(HOME_PATH, true);
+          goToScreen(VACANY_PATH, true);
         }
         if (registerInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);
@@ -65,15 +73,22 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
         const response = await callLoginService(email, password);
         let loginInfo;
         console.log('Tokennya : ', jwt_decode(response.data.token));
+        const config = {
+          headers: {Authorization: `Bearer ${response.data.token}`},
+        };
         if (response) {
           loginInfo = jwt_decode(response.data.token);
           loginInfo.token = response.data.token;
 
           await storeLocalData(response.data.token);
+
+          const resp2 = await getDataApplicantbyId(config);
+          dispatch(setProfile(resp2.data));
           dispatch(setLogin(loginInfo));
+          // console.log('INI RESPONNYA YAG GES TYAA', resp2.data);
           setLoading(false);
           if (loginInfo.Role === 'user') {
-            goToScreen(HOME_PATH, true);
+            goToScreen(VACANY_PATH, true);
           }
           if (loginInfo.Role === 'recruiter') {
             goToScreen(RECRUITER.DASHBOARD, true);
@@ -93,9 +108,8 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
     try {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signIn().then(result => {
-        console.log(result.user);
         const user = result.user;
-        console.log('MD5NYA :', md5(user.id));
+        console.log('INI ADALAH NAME NYA :', user.name);
         onAuthenticate(user.name, user.email, md5(user.id));
       });
     } catch (error) {

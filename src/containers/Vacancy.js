@@ -7,7 +7,9 @@ import {
   Animated,
   ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icons from 'react-native-vector-icons/Ionicons';
+import dayjs from 'dayjs';
 
 const VacancyItem = ({
   program,
@@ -25,10 +27,20 @@ const VacancyItem = ({
         <TouchableOpacity onPress={onShowModal}>
           <Text style={styles.title}>{program?.ProgramName}</Text>
           <Text style={styles.location}>
-            <Text style={{color: '#5F4E98'}}>
-              <Icon name="location-pin" size={18} />
+            <Text style={{color: '#5F4E98', marginTop: 2}}>
+              <Icon name="tag" size={18} />
             </Text>
-            {program?.ProgramLocation?.Address}
+            {program?.ProgramTypeName?.toUpperCase()}
+          </Text>
+          <Text style={styles.location}>
+            <Icons name="ios-calendar" size={20} color="#5F4E98" />
+            <Text>
+              {' '}
+              {dayjs(program.ProgramActivity?.OpenDate).format(
+                'DD/MM/YYYY',
+              )} -{' '}
+              {dayjs(program.ProgramActivity?.CloseDate).format('DD/MM/YYYY')}
+            </Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -56,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 15,
-    height: 80,
+    height: 100,
   },
   title: {
     fontSize: 19,
@@ -64,6 +76,8 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 16,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

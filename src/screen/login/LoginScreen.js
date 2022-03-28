@@ -14,6 +14,8 @@ import GoogleLoginButton from '../../component/googleLoginButton/GoogleLoginButt
 import GoogleLoginButtonComponent from '../../component/googleLoginButton/GoogleLoginButtonComponent';
 import LoginService from '../../service/LoginService';
 import RegisterService from '../../service/RegisterService';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const LoginScreen = ({login}) => {
   const {
     email,
@@ -31,6 +33,7 @@ const LoginScreen = ({login}) => {
   } = login();
   useEffect(() => {
     passLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log('ISLOGED ADALAH', isLogged);
@@ -63,9 +66,10 @@ const LoginScreen = ({login}) => {
           source={require('../../assets/images/TCA.png')}
           style={styles.image}
         />
+
         <TextInput
           style={styles.input}
-          placeholder="email"
+          placeholder="Email"
           placeholderTextColor="#637085"
           onChangeText={changeemail}
           value={email}></TextInput>
@@ -77,6 +81,7 @@ const LoginScreen = ({login}) => {
           placeholderTextColor="#637085"
           value={password}
           placeholder="Password"></TextInput>
+
         <Text style={styles.warning}>{validation.password}</Text>
         <TouchableOpacity
           disabled={!(validation.safeEmail && validation.safePassword)}
@@ -88,15 +93,16 @@ const LoginScreen = ({login}) => {
           onPress={() => onAuthenticate()}>
           <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
+
+        <GoogleLoginButtonComponent
+          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
+        />
         <Text style={styles.title}>
           Belum memiliki akun?{' '}
           <Text style={{color: 'blue'}} onPress={() => goToRegister()}>
             Daftar
           </Text>
         </Text>
-        <GoogleLoginButtonComponent
-          googleLogin={() => GoogleLoginButton(LoginService, RegisterService)}
-        />
       </SafeAreaView>
     );
   }
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
   image: {height: 256, width: 256, alignSelf: 'center'},
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ECE1EE',
     justifyContent: 'center',
   },
   text: {
@@ -121,7 +127,7 @@ const styles = StyleSheet.create({
   warning: {
     marginLeft: 12,
     color: 'red',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
   button: {
     backgroundColor: '#631cc7',
@@ -142,14 +148,16 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'center',
-    height: 40,
-    margin: 12,
+    height: 60,
+    // margin: 12,
+    marginLeft: 12,
+    marginRight: 12,
     borderBottomWidth: 7,
     borderColor: '#631cc7',
     padding: 10,
-    backgroundColor: '#181a5c',
-    color: 'white',
-    borderRadius: 50,
+    backgroundColor: '#f2f2f2',
+    // color: 'white',
+    borderRadius: 10,
   },
 });
 

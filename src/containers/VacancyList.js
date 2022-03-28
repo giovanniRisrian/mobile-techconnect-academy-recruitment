@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native';
 import VacancyInfoModal from './ModalVacancy';
 import VacancyItem from './Vacancy';
 
-const VacancyList = ({programs, vacancyId, apply, loading}) => {
+const VacancyList = ({programs, vacancyId, doApplyProgram, loading}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalInfo, setModalInfo] = useState({});
 
@@ -24,7 +24,7 @@ const VacancyList = ({programs, vacancyId, apply, loading}) => {
     <SafeAreaView>
       <VacancyInfoModal
         program={modalInfo}
-        applyProgram={apply}
+        doApplyProgram={doApplyProgram}
         setVisible={setModalVisible}
         isVisible={modalVisible}
       />
