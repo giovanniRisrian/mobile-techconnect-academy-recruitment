@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, View, ActivityIndicator} from 'react-native';
 import {
@@ -29,6 +30,7 @@ import dayjs from 'dayjs';
 import UploadPictureButton from '../../../../component/uploadPicture/UploadPictureButton';
 import UpploadPictureButtonComponent from '../../../../component/uploadPicture/UploadPictureComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinkedInButton from '../../../../component/linkedInButton/linkedInComponent';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -142,11 +144,17 @@ const ProfilePersonalScreen = ({bloc}) => {
                     uri: `data:image/jpeg/png/jpg;base64,${initialValues.Personal.PhotoFile}`,
                   }}></Avatar>
               ) : (
-                <Avatar
-                  bg="grey.900"
-                  alignSelf="center"
-                  size="2xl"
-                  source={require('../../../../assets/images/avatar.png')}></Avatar>
+                <View>
+                  <Avatar
+                    bg="grey.900"
+                    alignSelf="center"
+                    size="2xl"
+                    source={require('../../../../assets/images/avatar.png')}></Avatar>
+
+                  {/*<UpploadResumeButtonComponent
+                    uploadResume={() => UploadResumeButton(UploadResumeService)}
+              />*/}
+                </View>
               )}
 
               <HStack space={4} alignItems="center" marginTop={2}>
@@ -172,9 +180,14 @@ const ProfilePersonalScreen = ({bloc}) => {
                     Edit Profile
                   </Button>
                 ) : (
-                  <UpploadResumeButtonComponent
-                    uploadResume={() => UploadResumeButton(UploadResumeService)}
-                  />
+                  <HStack space={2}>
+                    <LinkedInButton />
+                    <UpploadResumeButtonComponent
+                      uploadResume={() =>
+                        UploadResumeButton(UploadResumeService)
+                      }
+                    />
+                  </HStack>
                 )}
               </HStack>
 

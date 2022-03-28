@@ -1,6 +1,8 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Fragment, useContext, useEffect} from 'react';
+import {goToLogin, goToScreen} from '../../../../navigation/NavigationHelper';
+import {VACANY_PATH} from '../../../../navigation/NavigationPath';
 import jwt_decode from 'jwt-decode';
 import {
   Image,
@@ -20,7 +22,10 @@ const ListProgramApplyScreen = ({bloc}) => {
   // console.log('list apply',list.ProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // ProgramPosts ganti jadi ProgramInfo
+  // value.ProgramName jadi value.Program.ProgramName
   let listAppliedProgram =
     list?.ProgramInfo &&
     list.ProgramInfo.map((value, idx) => {
@@ -30,7 +35,7 @@ const ListProgramApplyScreen = ({bloc}) => {
             <Text style={styles.programName}>{value.Program.ProgramName}</Text>
             <TouchableOpacity
               style={styles.buttonDetails}
-              onPress={() => goToDetailStatus({programId: value.ID})}>
+              onPress={() => goToDetailStatus({programId: value.Program.ID})}>
               <Text style={styles.details}>Details</Text>
             </TouchableOpacity>
           </View>
@@ -39,14 +44,45 @@ const ListProgramApplyScreen = ({bloc}) => {
     });
   return (
     <SafeAreaView style={styles.program}>
-      <Text style={styles.programApplied}>Program</Text>
-      <Text style={styles.programApplied}>Applied</Text>
-      <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
+      {list?.ProgramInfo !== null ? (
+        <View>
+          <Text style={styles.programApplied}>Program</Text>
+          <Text style={styles.programApplied}>Applied</Text>
+          <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
+        </View>
+      ) : (
+        <View style={styles.viewProgram}>
+          <Text style={styles.dontHaveProgram}>You don't have any</Text>
+          <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
+          <Image
+            style={styles.image}
+            source={require('../../../../assets/images/Nodata-pana.png')}
+            alt="splash-screen"
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  text: {
+    textAlign: 'center',
+    color: 'white',
+  },
+  button: {
+    backgroundColor: '#E60965',
+    alignItems: 'center',
+    margin: 12,
+    padding: 12,
+    borderRadius: 50,
+    color: 'white',
+  },
+  image: {
+    width: null,
+    resizeMode: 'contain',
+    height: 400,
+  },
   listAppliedProgram: {
     marginTop: 20,
   },
@@ -58,6 +94,25 @@ const styles = StyleSheet.create({
   details: {
     color: '#FFFFFF',
     alignSelf: 'center',
+  },
+  dontHaveProgram: {
+    fontFamily: 'monospace',
+    fontSize: 28,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    color: '#5F4E98',
+  },
+  viewProgram: {
+    marginTop: 30,
+  },
+  oops: {
+    fontFamily: 'Montserrat',
+    fontSize: 28,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    color: '#5F4E98',
   },
   programApplied: {
     fontFamily: 'Montserrat',
