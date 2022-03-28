@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Text,
 } from 'native-base';
@@ -26,6 +25,7 @@ import UploadResumeButton from '../../../../component/uploadButton/UploadResumeB
 import UploadResumeService from '../../../../service/UploadFileService';
 import DatePicker from 'react-native-neat-date-picker';
 import dayjs from 'dayjs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   WorkExperience: Yup.array().of(
@@ -132,6 +132,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
   };
 
   const onChangeDate = (values, idx) => {};
+
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
+    changeDisable(!disabled);
+  };
+
   const onSubmit = values => {
     for (let x = 0; x < values.WorkExperience.length; x++) {
       if (tempDatePickerYearIn[x] != null) {
@@ -186,6 +193,9 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                     }}
                     variant="subtle"
                     colorScheme="primary"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }
                     size="xs">
                     Edit Profile
                   </Button>
@@ -544,6 +554,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                             variant="subtle"
                             colorScheme="primary"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="plus-circle"
+                                size={15}
+                                color={'#06b6d4'}
+                              />
+                            }
                             disabled={WorkExperienceField.length >= 3}>
                             Add
                           </Button>
@@ -552,9 +569,16 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                       <HStack justifyContent="center" mb={1} mt={5}>
                         <Box width={'50%'}>
                           <Button
-                            onPress={() => changeDisable(!disabled)}
+                            onPress={onCancel}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-cancel"
+                                size={15}
+                                color={'#ef4444'}
+                              />
+                            }
                             colorScheme="red">
                             Cancel
                           </Button>
@@ -564,6 +588,13 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                             onPress={handleSubmit(onSubmit)}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-check"
+                                size={15}
+                                color={'#3b82f6'}
+                              />
+                            }
                             colorScheme="blue">
                             Submit
                           </Button>

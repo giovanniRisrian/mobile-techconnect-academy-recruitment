@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Text,
 } from 'native-base';
@@ -24,6 +23,7 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   Organization: Yup.array().of(
@@ -74,6 +74,12 @@ const ProfileOrganizationScreen = ({bloc}) => {
     remove: OrganizationRemove,
   } = useFieldArray({control, name: 'Organization'});
 
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
+    changeDisable(!disabled);
+  };
+
   const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
@@ -114,6 +120,9 @@ const ProfileOrganizationScreen = ({bloc}) => {
                     }}
                     variant="subtle"
                     colorScheme="primary"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }
                     size="xs">
                     Edit Profile
                   </Button>
@@ -370,6 +379,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                             variant="subtle"
                             colorScheme="primary"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="plus-circle"
+                                size={15}
+                                color={'#06b6d4'}
+                              />
+                            }
                             disabled={OrganizationField.length >= 3}>
                             Add
                           </Button>
@@ -378,9 +394,16 @@ const ProfileOrganizationScreen = ({bloc}) => {
                       <HStack justifyContent="center" mb={1} mt={5}>
                         <Box width={'50%'}>
                           <Button
-                            onPress={() => changeDisable(!disabled)}
+                            onPress={onCancel}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-cancel"
+                                size={15}
+                                color={'#ef4444'}
+                              />
+                            }
                             colorScheme="red">
                             Cancel
                           </Button>
@@ -390,6 +413,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                             onPress={handleSubmit(onSubmit)}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-check"
+                                size={15}
+                                color={'#3b82f6'}
+                              />
+                            }
                             colorScheme="blue">
                             Submit
                           </Button>

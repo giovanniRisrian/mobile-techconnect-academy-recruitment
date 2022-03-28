@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Text,
 } from 'native-base';
@@ -24,8 +23,7 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
-import {goToScreenWithParams} from '../../../../navigation/NavigationHelper';
-import {PROFILE_PATH} from '../../../../navigation/NavigationPath';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   Education: Yup.array().of(
@@ -85,6 +83,7 @@ const ProfileEducationScreen = ({bloc}) => {
 
   const onCancel = () => {
     // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
     changeDisable(!disabled);
   };
 
@@ -128,6 +127,9 @@ const ProfileEducationScreen = ({bloc}) => {
                     }}
                     variant="subtle"
                     colorScheme="primary"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }
                     size="xs">
                     Edit Profile
                   </Button>
@@ -409,6 +411,13 @@ const ProfileEducationScreen = ({bloc}) => {
                             variant="subtle"
                             colorScheme="primary"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="plus-circle"
+                                size={15}
+                                color={'#06b6d4'}
+                              />
+                            }
                             disabled={EducationField.length >= 3}>
                             Add
                           </Button>
@@ -420,6 +429,13 @@ const ProfileEducationScreen = ({bloc}) => {
                             onPress={onCancel}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-cancel"
+                                size={15}
+                                color={'#ef4444'}
+                              />
+                            }
                             colorScheme="red">
                             Cancel
                           </Button>
@@ -429,6 +445,13 @@ const ProfileEducationScreen = ({bloc}) => {
                             onPress={handleSubmit(onSubmit)}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-check"
+                                size={15}
+                                color={'#3b82f6'}
+                              />
+                            }
                             colorScheme="blue">
                             Submit
                           </Button>

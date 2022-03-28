@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Select,
   Text,
@@ -29,6 +28,7 @@ import DatePicker from 'react-native-neat-date-picker';
 import dayjs from 'dayjs';
 import UploadPictureButton from '../../../../component/uploadPicture/UploadPictureButton';
 import UpploadPictureButtonComponent from '../../../../component/uploadPicture/UploadPictureComponent';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -97,6 +97,13 @@ const ProfilePersonalScreen = ({bloc}) => {
     setShowDatePicker(false);
     setBirthdate(date.dateString);
   };
+
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
+    changeDisable(!disabled);
+  };
+
   const onSubmit = values => {
     // function to submit
     values.Personal.BirthDate = dayjs(birthdate).format('YYYY-MM-DD');
@@ -158,7 +165,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
                     colorScheme="primary"
-                    size="xs">
+                    size="xs"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }>
                     Edit Profile
                   </Button>
                 ) : (
@@ -467,7 +477,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                   <HStack
                     justifyContent="flex-start"
                     mt={2}
-                    marginLeft={3}
+                    marginLeft={1}
                     space="2"
                     flexWrap="wrap">
                     {SkillSetField.map((SkillSet, index) => {
@@ -476,7 +486,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                         SkillSetRemove(index);
                       };
                       return (
-                        <Box key={index} minWidth="30%">
+                        <Box key={index} minWidth="47%" mt={1}>
                           <Controller
                             name={`SkillSet[${index}].Skill`}
                             control={control}
@@ -537,7 +547,14 @@ const ProfilePersonalScreen = ({bloc}) => {
                           variant="subtle"
                           colorScheme="primary"
                           size="xs"
-                          disabled={SkillSetField.length >= 9}>
+                          leftIcon={
+                            <Icon
+                              name="plus-circle"
+                              size={15}
+                              color={'#06b6d4'}
+                            />
+                          }
+                          disabled={SkillSetField.length >= 10}>
                           Add Skill
                         </Button>
                       </Box>
@@ -552,9 +569,16 @@ const ProfilePersonalScreen = ({bloc}) => {
                   <HStack justifyContent="center" mb={1} mt={5}>
                     <Box width={'50%'}>
                       <Button
-                        onPress={() => changeDisable(!disabled)}
+                        onPress={onCancel}
                         variant="subtle"
                         size="xs"
+                        leftIcon={
+                          <Icon
+                            name="account-cancel"
+                            size={15}
+                            color={'#ef4444'}
+                          />
+                        }
                         colorScheme="red">
                         Cancel
                       </Button>
@@ -564,6 +588,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                         onPress={handleSubmit(onSubmit)}
                         variant="subtle"
                         size="xs"
+                        leftIcon={
+                          <Icon
+                            name="account-check"
+                            size={15}
+                            color={'#3b82f6'}
+                          />
+                        }
                         colorScheme="blue">
                         Submit
                       </Button>

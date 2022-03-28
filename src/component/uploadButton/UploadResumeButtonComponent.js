@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Button} from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DocumentPicker from 'react-native-document-picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {goToLogin} from '../../navigation/NavigationHelper';
@@ -23,7 +24,8 @@ const UpploadResumeButtonComponent = ({uploadResume}) => {
       onPress={selectFile}
       variant="subtle"
       colorScheme="primary"
-      size="xs">
+      size="xs"
+      leftIcon={<Icon name="file-upload" size={15} color={'#06b6d4'} />}>
       {isLoading ? <ActivityIndicator /> : 'Upload Resume'}
     </Button>
   );

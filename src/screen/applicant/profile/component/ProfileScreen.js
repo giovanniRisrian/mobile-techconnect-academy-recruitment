@@ -79,7 +79,8 @@ const ProfileScreen = ({route}) => {
           {route.title}
         </Text>
       )}
-      style={{backgroundColor: 'pink'}}
+      style={{backgroundColor: '#5F4E98'}}
+      indicatorStyle={{backgroundColor: 'white'}}
       {...props}
     />
   );
