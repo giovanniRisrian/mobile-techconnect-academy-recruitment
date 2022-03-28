@@ -57,6 +57,7 @@ const BottomTabs = () => {
   const [nowTab, setNowTab] = useState(
     useSelector(state => state.TechconnectAcademyReducer.nowTab),
   );
+  
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   // const nowTab = useSelector(state => state.TechconnectAcademyReducer.nowTab);
   const active = '#6a00ff';

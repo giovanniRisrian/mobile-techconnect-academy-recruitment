@@ -166,8 +166,8 @@ const Profile = profileService => {
       setCheckWork(mock.WorkExperience[0].CompanyName);
       changeInitial(mock);
 
-      console.log('==========================', mock.WorkExperience);
-      console.log('++++++++++++++++++++++++++', dataReceive.WorkExperience);
+      console.log('==========================', mock.Personal.BirthDate);
+      // console.log('++++++++++++++++++++++++++', dataReceive.WorkExperience);
 
       dispatch(showLoading(false));
       // return response;

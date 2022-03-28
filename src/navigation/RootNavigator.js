@@ -15,6 +15,7 @@ import {
   SPLASH_PATH,
   VACANCY_DETAIL_PATH,
   VACANY_PATH,
+  WEB_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
 import {Text} from 'react-native';
@@ -39,6 +40,7 @@ import SplashScreen from '../screen/splash/SplashScreen';
 import StatusRecruitmentScreen from '../screen/applicant/status/statusRecruitment/StatusRecruitmentScreen';
 import StatusRecruitment from '../screen/applicant/status/statusRecruitment/StatusRecruitment';
 import StatusService from '../service/StatusService';
+import WebScreen from '../screen/web/WebScreen';
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
@@ -84,6 +86,7 @@ const RootNavigator = () => {
             name={ADMINISTRATOR.DASHBOARD}
             component={AdministratorDashboard}
           />
+          <Stack.Screen name={WEB_PATH} component={WebScreen} />
           <Stack.Screen name={PROFILE_PATH} component={ProfileScreen} />
           <Stack.Screen name={HOME_PATH} component={HomeScreen} />
           <Stack.Screen name={VACANY_PATH}>

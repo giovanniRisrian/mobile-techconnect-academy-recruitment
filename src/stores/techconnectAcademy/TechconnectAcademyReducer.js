@@ -9,11 +9,13 @@ import {
   SET_LOGIN,
   SET_PROFILE,
   SET_TAB,
+  SET_BROWSING,
 } from '../../utils/constants';
 
 const initialState = {
   isLoading: false,
   isLogin: null,
+  isBrowsing: false,
   userProfile: null,
   loginToken: '',
   nowTab: VACANY_PATH,
@@ -25,6 +27,12 @@ const TechconnectAcademyReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogin: action.payload,
+      };
+    }
+    case SET_BROWSING: {
+      return {
+        ...state,
+        isBrowsing: action.payload,
       };
     }
     case SET_PROFILE: {

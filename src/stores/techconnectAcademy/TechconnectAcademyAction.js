@@ -31,3 +31,10 @@ export function showLoading(loading) {
     payload: loading,
   };
 }
+
+export function setBrowsing(condition) {
+  return {
+    type: SHOW_LOADING,
+    payload: condition,
+  };
+}

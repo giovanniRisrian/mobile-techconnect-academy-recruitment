@@ -19,6 +19,8 @@ target 'TechConnectAcademyRecruitment' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'TechConnectAcademyRecruitmentTests' do
     inherit! :complete
     # Pods for testing
