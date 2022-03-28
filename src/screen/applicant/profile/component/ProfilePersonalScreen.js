@@ -121,7 +121,7 @@ const ProfilePersonalScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
@@ -190,7 +190,8 @@ const ProfilePersonalScreen = ({bloc}) => {
                           onBlur={onBlur}
                           value={value}
                           placeholder="Name"
-                          variant="underlined"
+                          variant="filled"
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Name)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -219,10 +220,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Email"
-                          variant="underlined"
+                          variant="filled"
                           onChangeText={onChange}
                           onBlur={onBlur}
                           value={value}
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Email)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -253,10 +255,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Phone Number"
-                          variant="underlined"
+                          variant="filled"
                           onChangeText={onChange}
                           onBlur={onBlur}
                           value={value}
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.TelephoneNo)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -288,14 +291,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                           selectedValue={value}
                           error={Boolean(errors.Personal?.TelephoneNo)}
                           isDisabled={disabled}
-                          variant="underlined"
+                          variant="filled"
                           accessibilityLabel="Gender"
                           placeholder="Gender"
                           fontSize={'sm'}
-                          // _selectedItem={{
-                          //   bg: 'teal.600',
-                          //   endIcon: <CheckIcon size="2" />,
-                          // }}
+                          backgroundColor={'#f2eef3'}
                           onValueChange={onChange}>
                           <Select.Item label="Male" value="male" />
                           <Select.Item label="Female" value="female" />
@@ -326,10 +326,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Birth Date"
-                          variant="underlined"
+                          variant="filled"
                           value={birthdate ? birthdate : value}
                           onChange={onChange}
                           onBlur={onBlur}
+                          backgroundColor={'#f2eef3'}
                           isReadOnly={disabled}
                           fontSize={'sm'}
                           onPressIn={() => setShowDatePicker(true)}
@@ -365,9 +366,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Domicile"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.Domicile)}
                           isReadOnly={disabled}
@@ -399,9 +401,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Working Experience"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(
                             errors.Personal?.TotalWorkingExperience,
@@ -433,9 +436,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Salary Expectation"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.SalaryExpectation)}
                           isReadOnly={disabled}
@@ -479,9 +483,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                             render={({field: {onChange, onBlur, value}}) => (
                               <Input
                                 placeholder="Skill"
-                                variant="underlined"
+                                variant="filled"
                                 value={value}
                                 onChangeText={onChange}
+                                backgroundColor={'#f2eef3'}
                                 onBlur={onBlur}
                                 error={Boolean(errors.Personal?.SkillSet)}
                                 isReadOnly={disabled}

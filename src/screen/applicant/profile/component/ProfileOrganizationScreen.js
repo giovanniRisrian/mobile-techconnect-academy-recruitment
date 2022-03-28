@@ -97,12 +97,11 @@ const ProfileOrganizationScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
             <Center>
-
               {/* End of Avatar */}
               {/* Start of Edit & Upload Button */}
 
@@ -132,7 +131,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkOrganization === '' ? (
                 <View>
-                  <Box marginY={'1/3'}>
+                  <Box marginY={'3/5'}>
                     <Text>No data</Text>
                   </Box>
                 </View>
@@ -165,9 +164,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Organization"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -198,9 +198,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Scope"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -233,9 +234,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Duration"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -265,9 +267,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Position"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -302,8 +305,9 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                     multiline
                                     numberOfLines={3}
                                     placeholder="Description"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}

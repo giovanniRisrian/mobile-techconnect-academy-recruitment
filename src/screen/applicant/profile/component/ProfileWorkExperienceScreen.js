@@ -64,17 +64,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     null,
     null,
   ]);
-  // const [showDatePickerYearIn1, setShowDatePickerYearIn1] = useState(false);
-  // const [showDatePickerYearIn2, setShowDatePickerYearIn2] = useState(false);
+
   const [showDatePickerYearOut, setShowDatePickerYearOut] = useState(false);
-  // const [showDatePickerYearOut1, setShowDatePickerYearOut1] = useState(false);
-  // const [showDatePickerYearOut2, setShowDatePickerYearOut2] = useState(false);
   const [dateIn, setDateIn] = useState('');
-  // const [dateIn1, setDateIn1] = useState('');
-  // const [dateIn2, setDateIn2] = useState('');
   const [dateOut, setDateOut] = useState('');
-  // const [dateOut1, setDateOut1] = useState('');
-  // const [dateOut2, setDateOut2] = useState('');
   const [nowIndex, setNowIndex] = useState('');
   const [initialValues, changeInitial] = useState({
     WorkExperience: [
@@ -106,55 +99,6 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     remove: WorkExperienceRemove,
   } = useFieldArray({control, name: 'WorkExperience'});
 
-  // const valueReturnYearIn = (idx, value) => {
-  //   if (idx === 0) {
-  //     if (dateIn) {
-  //       return dateIn;
-  //     } else {
-  //       return value;
-  //     }
-  //   }
-  //   if (idx === 1) {
-  //     if (dateIn1) {
-  //       return dateIn1;
-  //     } else {
-  //       return value;
-  //     }
-  //   }
-  //   if (idx === 2) {
-  //     if (dateIn2) {
-  //       return dateIn2;
-  //     } else {
-  //       return value;
-  //     }
-  //   }
-  // };
-
-  // Year In
-  const datePickerYearIn = () => {
-    setShowDatePickerYearIn(true);
-  };
-
-  // const datePickerYearIn1 = () => {
-  //   setShowDatePickerYearIn1(true);
-  // };
-
-  // const datePickerYearIn2 = () => {
-  //   setShowDatePickerYearIn2(true);
-  // };
-
-  const cancelDatePickerYearIn = () => {
-    setShowDatePickerYearIn(false);
-  };
-
-  // const cancelDatePickerYearIn1 = () => {
-  //   setShowDatePickerYearIn1(false);
-  // };
-
-  // const cancelDatePickerYearIn2 = () => {
-  //   setShowDatePickerYearIn2(false);
-  // };
-
   const onConfirmYearIn = (date, index) => {
     // console.log(date);
     console.log(index);
@@ -174,29 +118,6 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     console.log('DATEIN adalah', dateIn);
   };
 
-  // const onConfirmYearIn1 = date => {
-  //   setShowDatePickerYearIn1(false);
-  //   setDateIn1(date.dateString);
-  // };
-
-  // const onConfirmYearIn2 = date => {
-  //   setShowDatePickerYearIn2(false);
-  //   setDateIn2(date.dateString);
-  // };
-
-  // Year Out
-  const datePickerYearOut = () => {
-    setShowDatePickerYearOut(true);
-  };
-
-  // const datePickerYearOut1 = () => {
-  //   setShowDatePickerYearOut1(true);
-  // };
-
-  // const datePickerYearOut2 = () => {
-  //   setShowDatePickerYearOut2(true);
-  // };
-
   const onConfirmYearOut = date => {
     let index = nowIndex;
     let temp = tempDatePickerYearOut;
@@ -210,23 +131,8 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     setDateOut(date.dateString);
   };
 
-  // const onConfirmYearOut1 = date => {
-  //   setShowDatePickerYearOut2(false);
-  //   setDateOut2(date.dateString);
-  // };
-
-  // const onConfirmYearOut2 = date => {
-  //   setShowDatePickerYearOut2(false);
-  //   setDateOut2(date.dateString);
-  // };
-
   const onChangeDate = (values, idx) => {};
   const onSubmit = values => {
-    // function to submit
-    // values.WorkExperience[0].YearIn = dayjs(dateIn).format('YYYY-MM-DD');
-    // values.WorkExperience[0].YearOut = dayjs(dateOut).format('YYYY-MM-DD');
-    // values.WorkExperience[1].YearIn = dayjs(dateIn1).format('YYYY-MM-DD');
-    // values.WorkExperience[1].YearOut = dayjs(dateOut1).format('YYYY-MM-DD');
     for (let x = 0; x < values.WorkExperience.length; x++) {
       if (tempDatePickerYearIn[x] != null) {
         values.WorkExperience[x].YearIn = dayjs(tempDatePickerYearIn[x]).format(
@@ -240,8 +146,6 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
       }
     }
     console.log('values to Input', values.WorkExperience);
-    // values.WorkExperience[2].YearIn = dayjs(dateIn2).format('YYYY-MM-DD');
-    // values.WorkExperience[2].YearOut = dayjs(dateOut2).format('YYYY-MM-DD');
     userInfo.WorkExperience = values.WorkExperience;
     addProfile(values, file, userInfo);
 
@@ -265,7 +169,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
@@ -296,7 +200,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkWork === '' ? (
                 <View>
-                  <Box marginY={'1/3'}>
+                  <Box marginY={'3/5'}>
                     <Text>No data</Text>
                   </Box>
                 </View>
@@ -329,9 +233,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Company Name"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -362,9 +267,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Position"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -398,9 +304,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Level"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -429,9 +336,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Industry"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -464,7 +372,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Start Date"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={
                                       tempDatePickerYearIn[idx]
                                         ? tempDatePickerYearIn[idx]
@@ -472,6 +380,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                     }
                                     fontSize={'sm'}
                                     onChange={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     onPressIn={() => {
@@ -485,13 +394,6 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 isVisible={showDatePickerYearIn}
                                 mode={'single'}
                                 onCancel={() => setShowDatePickerYearIn(false)}
-                                // onConfirm={
-                                //   idx === 0
-                                //     ? onConfirmYearIn
-                                //     : idx === 1
-                                //     ? onConfirmYearIn1
-                                //     : onConfirmYearIn2
-                                // }
                                 onConfirm={
                                   date => onConfirmYearIn(date, values)
                                   // () => {
@@ -523,7 +425,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="End Date"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={
                                       tempDatePickerYearOut[idx]
                                         ? tempDatePickerYearOut[idx]
@@ -531,15 +433,9 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                     }
                                     onChange={onChange}
                                     onBlur={onBlur}
+                                    backgroundColor={'#f2eef3'}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
-                                    // onPressIn={
-                                    //   idx === 0
-                                    //     ? datePickerYearOut
-                                    //     : idx === 1
-                                    //     ? datePickerYearOut1
-                                    //     : datePickerYearOut2
-                                    // }
                                     onPressIn={() => {
                                       setShowDatePickerYearOut(true);
                                       setNowIndex(idx);
@@ -581,9 +477,10 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
                                     multiline
                                     numberOfLines={3}
                                     placeholder="Description"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}

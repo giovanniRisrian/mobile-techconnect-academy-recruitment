@@ -24,6 +24,8 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
+import {goToScreenWithParams} from '../../../../navigation/NavigationHelper';
+import {PROFILE_PATH} from '../../../../navigation/NavigationPath';
 
 const validationSchema = Yup.object().shape({
   Education: Yup.array().of(
@@ -64,7 +66,7 @@ const ProfileEducationScreen = ({bloc}) => {
       },
     ],
   });
-  console.log('checkEducation', checkEducation, '1CheckAGAIN');
+
   const {
     control,
     handleSubmit,
@@ -80,6 +82,11 @@ const ProfileEducationScreen = ({bloc}) => {
     append: EducationAppend,
     remove: EducationRemove,
   } = useFieldArray({control, name: 'Education'});
+
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    changeDisable(!disabled);
+  };
 
   const onSubmit = values => {
     // function to submit
@@ -104,7 +111,7 @@ const ProfileEducationScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
@@ -112,7 +119,7 @@ const ProfileEducationScreen = ({bloc}) => {
               {/* End of Avatar */}
               {/* Start of Edit & Upload Button */}
 
-              <HStack space={4} alignItems="center" marginTop={2}>
+              <Box space={4} alignItems="center">
                 {disabled ? (
                   <Button
                     onPress={() => {
@@ -125,20 +132,15 @@ const ProfileEducationScreen = ({bloc}) => {
                     Edit Profile
                   </Button>
                 ) : (
-                  // <UpploadResumeButtonComponent
-                  //   uploadResume={() => UploadResumeButton(UploadResumeService)}
-                  // />
-                  <Text></Text>
+                  <></>
                 )}
-
-                {/* <IconButton icon={<Icon as name="" />}></IconButton> */}
-              </HStack>
+              </Box>
 
               {/* End of Edit & Upload Button */}
               {/* Start of Form */}
               {checkEducation === '' ? (
                 <View>
-                  <Box marginY={'1/3'}>
+                  <Box marginY={'3/5'}>
                     <Text>No data</Text>
                   </Box>
                 </View>
@@ -171,10 +173,11 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Title"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
+                                    backgroundColor={'#f2eef3'}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
                                   />
@@ -203,8 +206,9 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Institution"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -238,8 +242,9 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Year In"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -270,8 +275,9 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Year Out"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -304,8 +310,9 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Major"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -335,8 +342,9 @@ const ProfileEducationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="GPA"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -409,7 +417,7 @@ const ProfileEducationScreen = ({bloc}) => {
                       <HStack justifyContent="center" mb={1} mt={5}>
                         <Box width={'50%'}>
                           <Button
-                            onPress={() => changeDisable(!disabled)}
+                            onPress={onCancel}
                             variant="subtle"
                             size="xs"
                             colorScheme="red">
