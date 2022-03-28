@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfilePersonalScreen from './ProfilePersonalScreen';
 import ProfileEducationScreen from './ProfileEducationScreen';
 import ProfileOrganizationScreen from './ProfileOrganizationScreen';
@@ -16,7 +16,17 @@ import {ScrollView} from 'native-base';
 import Profile from '../Profile';
 import ProfileService from '../../../../service/ProfileService';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({route}) => {
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState(0);
+  // const [routeParams, setRouteParams] = useState('');
+  const [routes] = React.useState([
+    {key: 'personal', title: 'Personal'},
+    {key: 'education', title: 'Education'},
+    {key: 'organization', title: 'Organization'},
+    {key: 'workexperience', title: 'Work Experience'},
+  ]);
+
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'personal':
@@ -35,15 +45,27 @@ const ProfileScreen = () => {
         return null;
     }
   };
+  console.log('route dari child', route);
 
-  const layout = useWindowDimensions();
-  const [index, setIndex] = useState(0);
-  const [routes] = React.useState([
-    {key: 'personal', title: 'Personal'},
-    {key: 'education', title: 'Education'},
-    {key: 'organization', title: 'Organization'},
-    {key: 'workexperience', title: 'Work Experience'},
-  ]);
+  // const handleSetIndex = index => {
+  //   console.log('masuk handleSetIndex');
+  //   if (route.params.route === 0 || route.params.route) {
+  //     console.log('apakah true', route);
+  //     setIndex(route.params.route);
+  //   } else {
+  //     console.log('normal index', index);
+  //     setIndex(index);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (route.params) {
+  //     // setRouteParams(params.route.params);
+  //     console.log('apakah null?');
+  //     handleSetIndex();
+  //   }
+  // }, [route]);
+
   const renderTabBar = props => (
     <TabBar
       renderLabel={({route, focused, color}) => (
@@ -57,12 +79,14 @@ const ProfileScreen = () => {
           {route.title}
         </Text>
       )}
+      style={{backgroundColor: '#5F4E98'}}
+      indicatorStyle={{backgroundColor: 'white'}}
       {...props}
     />
   );
 
   const _renderLazyPlaceholder = ({route}) => <LazyPlaceholder route={route} />;
-
+  console.log('sekarang indexnya', index);
   return (
     <TabView
       lazy
@@ -70,7 +94,9 @@ const ProfileScreen = () => {
       renderTabBar={renderTabBar}
       navigationState={{index, routes}}
       renderScene={renderScene}
-      onIndexChange={setIndex}
+      onIndexChange={index => {
+        setIndex(index);
+      }}
       initialLayout={{width: layout.width}}
     />
   );

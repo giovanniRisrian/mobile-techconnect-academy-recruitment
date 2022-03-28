@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Text,
 } from 'native-base';
@@ -24,6 +23,7 @@ import {useSelector} from 'react-redux';
 import UpploadResumeButtonComponent from '../../../../component/uploadButton/UploadResumeButtonComponent';
 import UploadResumeButton from '../../../../component/uploadButton/UploadResumeButton';
 import UploadResumeService from '../../../../service/UploadFileService';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   Organization: Yup.array().of(
@@ -74,6 +74,12 @@ const ProfileOrganizationScreen = ({bloc}) => {
     remove: OrganizationRemove,
   } = useFieldArray({control, name: 'Organization'});
 
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
+    changeDisable(!disabled);
+  };
+
   const onSubmit = values => {
     // function to submit
     addProfile(values, file, userInfo);
@@ -97,7 +103,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
@@ -114,6 +120,9 @@ const ProfileOrganizationScreen = ({bloc}) => {
                     }}
                     variant="subtle"
                     colorScheme="primary"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }
                     size="xs">
                     Edit Profile
                   </Button>
@@ -131,7 +140,7 @@ const ProfileOrganizationScreen = ({bloc}) => {
               {/* Start of Form */}
               {checkOrganization === '' ? (
                 <View>
-                  <Box marginY={'1/3'}>
+                  <Box marginY={'3/5'}>
                     <Text>No data</Text>
                   </Box>
                 </View>
@@ -164,9 +173,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Organization"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -197,9 +207,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Scope"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -232,9 +243,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Duration"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -264,9 +276,10 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                 }) => (
                                   <Input
                                     placeholder="Position"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
                                     onChangeText={onChange}
+                                    backgroundColor={'#f2eef3'}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
                                     fontSize={'sm'}
@@ -301,8 +314,9 @@ const ProfileOrganizationScreen = ({bloc}) => {
                                     multiline
                                     numberOfLines={3}
                                     placeholder="Description"
-                                    variant="underlined"
+                                    variant="filled"
                                     value={value}
+                                    backgroundColor={'#f2eef3'}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
                                     isReadOnly={disabled}
@@ -365,6 +379,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                             variant="subtle"
                             colorScheme="primary"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="plus-circle"
+                                size={15}
+                                color={'#06b6d4'}
+                              />
+                            }
                             disabled={OrganizationField.length >= 3}>
                             Add
                           </Button>
@@ -373,9 +394,16 @@ const ProfileOrganizationScreen = ({bloc}) => {
                       <HStack justifyContent="center" mb={1} mt={5}>
                         <Box width={'50%'}>
                           <Button
-                            onPress={() => changeDisable(!disabled)}
+                            onPress={onCancel}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-cancel"
+                                size={15}
+                                color={'#ef4444'}
+                              />
+                            }
                             colorScheme="red">
                             Cancel
                           </Button>
@@ -385,6 +413,13 @@ const ProfileOrganizationScreen = ({bloc}) => {
                             onPress={handleSubmit(onSubmit)}
                             variant="subtle"
                             size="xs"
+                            leftIcon={
+                              <Icon
+                                name="account-check"
+                                size={15}
+                                color={'#3b82f6'}
+                              />
+                            }
                             colorScheme="blue">
                             Submit
                           </Button>

@@ -12,7 +12,6 @@ import {
   VStack,
   Stack,
   IconButton,
-  Icon,
   ScrollView,
   Select,
   Text,
@@ -29,6 +28,7 @@ import DatePicker from 'react-native-neat-date-picker';
 import dayjs from 'dayjs';
 import UploadPictureButton from '../../../../component/uploadPicture/UploadPictureButton';
 import UpploadPictureButtonComponent from '../../../../component/uploadPicture/UploadPictureComponent';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -97,6 +97,13 @@ const ProfilePersonalScreen = ({bloc}) => {
     setShowDatePicker(false);
     setBirthdate(date.dateString);
   };
+
+  const onCancel = () => {
+    // goToScreenWithParams(PROFILE_PATH, {route: 1, key: 'personal'}, false);
+    getDataByID(userInfo.id, userInfo, changeInitial);
+    changeDisable(!disabled);
+  };
+
   const onSubmit = values => {
     // function to submit
     values.Personal.BirthDate = dayjs(birthdate).format('YYYY-MM-DD');
@@ -121,7 +128,7 @@ const ProfilePersonalScreen = ({bloc}) => {
     );
   } else {
     return (
-      <SafeAreaView>
+      <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
           <Box marginTop={5}>
             {/* Start of Avatar */}
@@ -158,7 +165,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                     onPress={() => changeDisable(!disabled)}
                     variant="subtle"
                     colorScheme="primary"
-                    size="xs">
+                    size="xs"
+                    leftIcon={
+                      <Icon name="account-edit" size={15} color={'#06b6d4'} />
+                    }>
                     Edit Profile
                   </Button>
                 ) : (
@@ -190,7 +200,8 @@ const ProfilePersonalScreen = ({bloc}) => {
                           onBlur={onBlur}
                           value={value}
                           placeholder="Name"
-                          variant="underlined"
+                          variant="filled"
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Name)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -219,10 +230,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Email"
-                          variant="underlined"
+                          variant="filled"
                           onChangeText={onChange}
                           onBlur={onBlur}
                           value={value}
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Email)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -253,10 +265,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Phone Number"
-                          variant="underlined"
+                          variant="filled"
                           onChangeText={onChange}
                           onBlur={onBlur}
                           value={value}
+                          backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.TelephoneNo)}
                           isReadOnly={disabled}
                           fontSize={'sm'}
@@ -288,14 +301,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                           selectedValue={value}
                           error={Boolean(errors.Personal?.TelephoneNo)}
                           isDisabled={disabled}
-                          variant="underlined"
+                          variant="filled"
                           accessibilityLabel="Gender"
                           placeholder="Gender"
                           fontSize={'sm'}
-                          // _selectedItem={{
-                          //   bg: 'teal.600',
-                          //   endIcon: <CheckIcon size="2" />,
-                          // }}
+                          backgroundColor={'#f2eef3'}
                           onValueChange={onChange}>
                           <Select.Item label="Male" value="male" />
                           <Select.Item label="Female" value="female" />
@@ -326,10 +336,11 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Birth Date"
-                          variant="underlined"
+                          variant="filled"
                           value={birthdate ? birthdate : value}
                           onChange={onChange}
                           onBlur={onBlur}
+                          backgroundColor={'#f2eef3'}
                           isReadOnly={disabled}
                           fontSize={'sm'}
                           onPressIn={() => setShowDatePicker(true)}
@@ -365,9 +376,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Domicile"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.Domicile)}
                           isReadOnly={disabled}
@@ -399,9 +411,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Working Experience"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(
                             errors.Personal?.TotalWorkingExperience,
@@ -433,9 +446,10 @@ const ProfilePersonalScreen = ({bloc}) => {
                       render={({field: {onChange, onBlur, value}}) => (
                         <Input
                           placeholder="Salary Expectation"
-                          variant="underlined"
+                          variant="filled"
                           value={value}
                           onChangeText={onChange}
+                          backgroundColor={'#f2eef3'}
                           onBlur={onBlur}
                           error={Boolean(errors.Personal?.SalaryExpectation)}
                           isReadOnly={disabled}
@@ -463,7 +477,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                   <HStack
                     justifyContent="flex-start"
                     mt={2}
-                    marginLeft={3}
+                    marginLeft={1}
                     space="2"
                     flexWrap="wrap">
                     {SkillSetField.map((SkillSet, index) => {
@@ -472,16 +486,17 @@ const ProfilePersonalScreen = ({bloc}) => {
                         SkillSetRemove(index);
                       };
                       return (
-                        <Box key={index} minWidth="30%">
+                        <Box key={index} minWidth="47%" mt={1}>
                           <Controller
                             name={`SkillSet[${index}].Skill`}
                             control={control}
                             render={({field: {onChange, onBlur, value}}) => (
                               <Input
                                 placeholder="Skill"
-                                variant="underlined"
+                                variant="filled"
                                 value={value}
                                 onChangeText={onChange}
+                                backgroundColor={'#f2eef3'}
                                 onBlur={onBlur}
                                 error={Boolean(errors.Personal?.SkillSet)}
                                 isReadOnly={disabled}
@@ -532,7 +547,14 @@ const ProfilePersonalScreen = ({bloc}) => {
                           variant="subtle"
                           colorScheme="primary"
                           size="xs"
-                          disabled={SkillSetField.length >= 9}>
+                          leftIcon={
+                            <Icon
+                              name="plus-circle"
+                              size={15}
+                              color={'#06b6d4'}
+                            />
+                          }
+                          disabled={SkillSetField.length >= 10}>
                           Add Skill
                         </Button>
                       </Box>
@@ -547,9 +569,16 @@ const ProfilePersonalScreen = ({bloc}) => {
                   <HStack justifyContent="center" mb={1} mt={5}>
                     <Box width={'50%'}>
                       <Button
-                        onPress={() => changeDisable(!disabled)}
+                        onPress={onCancel}
                         variant="subtle"
                         size="xs"
+                        leftIcon={
+                          <Icon
+                            name="account-cancel"
+                            size={15}
+                            color={'#ef4444'}
+                          />
+                        }
                         colorScheme="red">
                         Cancel
                       </Button>
@@ -559,6 +588,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                         onPress={handleSubmit(onSubmit)}
                         variant="subtle"
                         size="xs"
+                        leftIcon={
+                          <Icon
+                            name="account-check"
+                            size={15}
+                            color={'#3b82f6'}
+                          />
+                        }
                         colorScheme="blue">
                         Submit
                       </Button>
