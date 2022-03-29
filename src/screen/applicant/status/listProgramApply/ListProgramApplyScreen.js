@@ -25,6 +25,9 @@ const ListProgramApplyScreen = ({bloc}) => {
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   const [show, setShow] = useState(false);
+  const testSubmit = () => {
+    console.log('TES KE SUBMIT GA');
+  };
   console.log('list apply', list.ProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
@@ -167,11 +170,12 @@ const ListProgramApplyScreen = ({bloc}) => {
                     onPress={() => setShow(false)}>
                     <Text style={styles.textBack}>Back</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/*<TouchableOpacity
+                    onPress={() => testSubmit()}
                     style={styles.buttonApply}
-                    activeOpacity={1}>
+                    disabled={true}>
                     <Text style={styles.textButton}>Apply</Text>
-                  </TouchableOpacity>
+                </TouchableOpacity>*/}
                 </View>
                 {/*<View
                   style={{
@@ -257,6 +261,7 @@ const styles = StyleSheet.create({
     margin: 6,
     marginLeft: 20,
     marginRight: 20,
+    marginTop: 25,
     borderColor: 'black',
     borderRadius: 10,
   },
@@ -296,12 +301,12 @@ const styles = StyleSheet.create({
   },
   programApplied: {
     fontFamily: 'Montserrat',
-    fontSize: 36,
+    fontSize: 40,
     alignItems: 'center',
     alignSelf: 'center',
     alignContent: 'center',
     color: '#666666',
-    marginTop: 35,
+    marginTop: 40,
   },
   program: {
     backgroundColor: '#ECE1EE',

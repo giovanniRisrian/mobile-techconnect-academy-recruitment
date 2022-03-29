@@ -7,13 +7,18 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {Button} from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {goToLogin} from '../../navigation/NavigationHelper';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {setLogin, setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setLogin,
+  setProfile,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {removeLocalData, storeLocalData} from '../../utils/localStorage';
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -50,9 +55,19 @@ const LogoutButton = () => {
   };
   return (
     <View>
-      <TouchableOpacity style={styles.button} onPress={() => Logout()}>
+      {/*<TouchableOpacity style={styles.button} onPress={() => Logout()}>
         <Text style={styles.text}>Logout</Text>
-      </TouchableOpacity>
+  </TouchableOpacity>*/}
+      <Button
+        onPress={() => Logout()}
+        variant="solid"
+        colorScheme="red"
+        size="xs"
+        leftIcon={<Icon name="logout" size={15} color={'#fdfefe'} />}>
+        {/*leftIcon={<Icon name="logout" size={15} color={'#e74c3c'} />}*/}
+        {/*variant="sublte"*/}
+        Logout
+      </Button>
     </View>
   );
 };

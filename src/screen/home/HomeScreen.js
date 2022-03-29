@@ -22,10 +22,12 @@ const HomeScreen = () => {
   return (
     <View style={styles.program}>
       <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
-      <ReccomendationButtonComponent
-        reccomendationButton={() => ReccomendationButton(UploadResumeService)}
-      />
-      <LogoutButton />
+      <View style={styles.recommendationButton}>
+        <ReccomendationButtonComponent
+          reccomendationButton={() => ReccomendationButton(UploadResumeService)}
+        />
+      </View>
+      {/*<LogoutButton />*/}
       {/* <UpploadResumeButtonComponent
         uploadResume={() => UploadResumeButton(UploadResumeService)}
       /> */}
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
   program: {
     flex: 1,
     backgroundColor: '#ECE1EE',
+  },
+  recommendationButton: {
+    marginTop: 15,
   },
 });
 export default HomeScreen;
