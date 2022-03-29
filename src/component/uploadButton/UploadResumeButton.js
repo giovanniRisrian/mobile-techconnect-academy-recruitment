@@ -6,6 +6,12 @@ import base64 from 'react-native-base64';
 // import Blob from 'fetch-blob';
 // import {Blob} from 'fetch-blob';
 import {useDispatch, useSelector} from 'react-redux';
+import {
+  setProfile,
+  showLoading,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {goToScreen} from '../../navigation/NavigationHelper';
+import {PROFILE_PATH} from '../../navigation/NavigationPath';
 const UploadResumeButton = service => {
   const {
     callUploadResumeService,
@@ -16,6 +22,7 @@ const UploadResumeButton = service => {
   const [singleFile, setSingleFile] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  const dispatch = useDispatch();
   const doUpload = async file => {
     setLoading(true);
     console.log('SIngle File : ', file);
@@ -41,6 +48,9 @@ const UploadResumeButton = service => {
       //       Accept: 'application/json',
       //     },
       //   });
+
+      // setLoading(false);
+      dispatch(showLoading(true));
       const header = {
         Authorization: `Bearer ${isLogin.token}`,
         'Content-Type': 'multipart/form-data',
@@ -215,8 +225,13 @@ const UploadResumeButton = service => {
           Authorization: `Bearer ${isLogin.token}`,
         },
       });
+
+      let resp2 = await getDataApplicantbyId(config);
+      dispatch(setProfile(resp2.data));
+      dispatch(showLoading(false));
       setLoading(false);
       alert('Resume Uploaded and Information Inputed to Profile');
+      goToScreen(PROFILE_PATH, true);
     } catch (err) {
       console.log(err);
       setLoading(false);

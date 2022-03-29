@@ -36,6 +36,7 @@ import {LogBox} from 'react-native';
 const App = () => {
   const store = configureStore();
   LogBox.ignoreLogs(['EventEmitter.removeListener']);
+  LogBox.ignoreLogs(['NativeBase:']);
   if (!global.btoa) {
     global.btoa = encode;
   }

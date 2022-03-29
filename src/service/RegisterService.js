@@ -10,6 +10,16 @@ const RegisterService = () => {
       throw error;
     }
   };
+
+  const getDataApplicantbyId = async header => {
+    try {
+      let data = await clientService().get(`/user`, header);
+      return data;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  };
   const callRegisterGoogleService = async params => {
     try {
       let data = await clientService().registerPost(
@@ -20,16 +30,6 @@ const RegisterService = () => {
     } catch (error) {
       console.log(error);
       throw error;
-    }
-  };
-
-  const getDataApplicantbyId = async header => {
-    try {
-      let data = await clientService().get(`/user`, header);
-      return data;
-    } catch (e) {
-      console.log(e);
-      throw e;
     }
   };
   return {

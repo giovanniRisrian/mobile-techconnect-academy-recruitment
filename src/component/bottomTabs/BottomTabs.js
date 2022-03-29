@@ -23,14 +23,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setTab} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {SET_TAB} from '../../utils/constants';
-const toHome = setNowTab => {
-  setTab(HOME_PATH);
-  setNowTab(HOME_PATH);
+const toHome = dispatch => {
+  dispatch(setTab(HOME_PATH));
+  // setNowTab(HOME_PATH);
   goToScreen(HOME_PATH, false);
 };
-const toVacany = setNowTab => {
-  setTab(VACANY_PATH);
-  setNowTab(VACANY_PATH);
+const toVacany = dispatch => {
+  dispatch(setTab(VACANY_PATH));
+  // setNowTab(VACANY_PATH);
   goToScreen(VACANY_PATH, false);
 };
 
@@ -45,19 +45,22 @@ const toDashboard = role => {
     goToScreen(ADMINISTRATOR.DASHBOARD, false);
   }
 };
-const toProfile = setNowTab => {
-  setTab(PROFILE_PATH);
-  setNowTab(PROFILE_PATH);
+const toProfile = dispatch => {
+  dispatch(setTab(PROFILE_PATH));
+  // setNowTab(PROFILE_PATH);
   goToScreen(PROFILE_PATH, false);
 };
 const toLogin = () => {
   goToLogin();
 };
 const BottomTabs = () => {
-  const [nowTab, setNowTab] = useState(
-    useSelector(state => state.TechconnectAcademyReducer.nowTab),
-  );
-  
+  const dispatch = useDispatch();
+  let nowTab = useSelector(state => state.TechconnectAcademyReducer.nowTab);
+  // let nowTabSebenarnya = useSelector(
+  //   state => state.TechconnectAcademyReducer.nowTab,
+  // );
+  console.log('ini nowTab', nowTab);
+  // console.log('ini nowTabSebenarnya', nowTabSebenarnya);
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
   // const nowTab = useSelector(state => state.TechconnectAcademyReducer.nowTab);
   const active = '#6a00ff';
@@ -67,7 +70,7 @@ const BottomTabs = () => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttonLeft}
-        onPress={() => toHome(setNowTab)}>
+        onPress={() => toHome(dispatch)}>
         <Text style={styles.text}>
           {' '}
           <Icon
@@ -79,7 +82,7 @@ const BottomTabs = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => toVacany(setNowTab)}>
+        onPress={() => toVacany(dispatch)}>
         <Text style={styles.text}>
           {' '}
           <Icon
@@ -99,7 +102,7 @@ const BottomTabs = () => {
       <TouchableOpacity
         style={styles.buttonRight}
         onPress={() => {
-          isLogin != null ? toProfile(setNowTab) : toLogin();
+          isLogin != null ? toProfile(dispatch) : toLogin();
         }}>
         <Text style={styles.text}>
           <Icon
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5.46,
 
     elevation: 9,
-    width:'auto'
+    width: 'auto',
   },
   dialogContentView: {
     flex: 1,

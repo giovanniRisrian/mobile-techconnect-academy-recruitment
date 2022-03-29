@@ -31,6 +31,9 @@ import UploadPictureButton from '../../../../component/uploadPicture/UploadPictu
 import UpploadPictureButtonComponent from '../../../../component/uploadPicture/UploadPictureComponent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinkedInButton from '../../../../component/linkedInButton/linkedInComponent';
+import LinkedIn from '../../../../component/linkedInButton/linkedIn';
+import ProfileService from '../../../../service/ProfileService';
+import LogoutButton from '../../../../component/logoutButton/LogoutButton';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -177,6 +180,18 @@ const ProfilePersonalScreen = ({bloc}) => {
               )}
 
               <HStack space={4} alignItems="center" marginTop={2}>
+                {/*{disabled ? (
+                  <UpploadPictureButtonComponent
+                    uploadPicture={() =>
+                      UploadPictureButton(UploadResumeService)
+                    }
+                  />
+                ) : (
+                  <View></View>
+                )}*/}
+
+                {disabled ? <LogoutButton /> : <View></View>}
+
                 {disabled ? (
                   <Button
                     onPress={() => changeDisable(!disabled)}
@@ -190,7 +205,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                   </Button>
                 ) : (
                   <HStack space={2}>
-                    <LinkedInButton />
+                    <LinkedInButton bloc={() => LinkedIn(ProfileService)} />
                     <UpploadResumeButtonComponent
                       uploadResume={() =>
                         UploadResumeButton(UploadResumeService)

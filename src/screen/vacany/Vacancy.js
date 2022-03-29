@@ -10,7 +10,10 @@ import {
   VACANY_PATH,
 } from '../../navigation/NavigationPath';
 import {useDispatch} from 'react-redux';
-import {showLoading} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setTab,
+  showLoading,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {useSelector} from 'react-redux';
 
@@ -174,7 +177,10 @@ export const Vacancy = service => {
         Alert.alert('Success', null, [
           {
             text: 'OK',
-            onPress: () => goToScreenWithParams(HOME_PATH, context.id, true),
+            onPress: () => {
+              dispatch(setTab(HOME_PATH));
+              goToScreenWithParams(HOME_PATH, context.id, true);
+            },
           },
         ]);
       } else {
@@ -184,8 +190,10 @@ export const Vacancy = service => {
           [
             {
               text: 'OK',
-              onPress: () =>
-                goToScreenWithParams(PROFILE_PATH, context.id, true),
+              onPress: () => {
+                dispatch(setTab(PROFILE_PATH));
+                goToScreenWithParams(PROFILE_PATH, context.id, true);
+              },
             },
           ],
         );
