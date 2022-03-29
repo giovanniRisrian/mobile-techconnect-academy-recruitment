@@ -136,21 +136,40 @@ const ProfilePersonalScreen = ({bloc}) => {
             {/* Start of Avatar */}
             <Center>
               {initialValues.Personal.PhotoFile ? (
-                <Avatar
-                  bg="grey.900"
-                  alignSelf="center"
-                  size="2xl"
-                  source={{
-                    uri: `data:image/jpeg/png/jpg;base64,${initialValues.Personal.PhotoFile}`,
-                  }}></Avatar>
+                <View>
+                  <UpploadPictureButtonComponent
+                    uploadPicture={() =>
+                      UploadPictureButton(UploadResumeService)
+                    }
+                    propsPicture={() => {
+                      return (
+                        <Avatar
+                          bg="grey.900"
+                          alignSelf="center"
+                          size="2xl"
+                          source={{
+                            uri: `data:image/jpeg/png/jpg;base64,${initialValues.Personal.PhotoFile}`,
+                          }}></Avatar>
+                      );
+                    }}
+                  />
+                </View>
               ) : (
                 <View>
-                  <Avatar
-                    bg="grey.900"
-                    alignSelf="center"
-                    size="2xl"
-                    source={require('../../../../assets/images/avatar.png')}></Avatar>
-
+                  <UpploadPictureButtonComponent
+                    uploadPicture={() =>
+                      UploadPictureButton(UploadResumeService)
+                    }
+                    propsPicture={() => {
+                      return (
+                        <Avatar
+                          bg="grey.900"
+                          alignSelf="center"
+                          size="2xl"
+                          source={require('../../../../assets/images/avatar.png')}></Avatar>
+                      );
+                    }}
+                  />
                   {/*<UpploadResumeButtonComponent
                     uploadResume={() => UploadResumeButton(UploadResumeService)}
               />*/}
@@ -158,16 +177,6 @@ const ProfilePersonalScreen = ({bloc}) => {
               )}
 
               <HStack space={4} alignItems="center" marginTop={2}>
-                {disabled ? (
-                  <UpploadPictureButtonComponent
-                    uploadPicture={() =>
-                      UploadPictureButton(UploadResumeService)
-                    }
-                  />
-                ) : (
-                  <View></View>
-                )}
-
                 {disabled ? (
                   <Button
                     onPress={() => changeDisable(!disabled)}
