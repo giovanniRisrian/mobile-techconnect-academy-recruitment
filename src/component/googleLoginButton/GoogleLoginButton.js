@@ -35,14 +35,14 @@ import {storeLocalData} from '../../utils/localStorage';
 const GoogleLoginButton = (serviceLogin, serviceRegister) => {
   const dispatch = useDispatch();
   const {callLoginService, getDataApplicantbyId} = serviceLogin();
-  const {callRegisterService} = serviceRegister();
+  const {callRegisterService, callRegisterGoogleService} = serviceRegister();
   const [isLoading, setLoading] = useState(false);
   const onAuthenticate = async (fullname, email, password) => {
     const params = {fullname, email, password};
     console.log('KALO PARAMNYA INISIH', params);
     setLoading(true);
     try {
-      const response = await callRegisterService(params);
+      const response = await callRegisterGoogleService(params);
       let registerInfo;
       const config = {
         headers: {Authorization: `Bearer ${response.data.token}`},

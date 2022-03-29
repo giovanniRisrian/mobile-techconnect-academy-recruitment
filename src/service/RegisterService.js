@@ -20,9 +20,22 @@ const RegisterService = () => {
       throw e;
     }
   };
+  const callRegisterGoogleService = async params => {
+    try {
+      let data = await clientService().registerPost(
+        '/user/register/google',
+        params,
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
   return {
     callRegisterService,
     getDataApplicantbyId,
+    callRegisterGoogleService,
   };
 };
 
