@@ -1,14 +1,19 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Fragment, useContext, useEffect} from 'react';
+import {Fragment, useContext, useEffect, useState} from 'react';
 import {goToLogin, goToScreen} from '../../../../navigation/NavigationHelper';
 import {VACANY_PATH} from '../../../../navigation/NavigationPath';
 import jwt_decode from 'jwt-decode';
+import dayjs from 'dayjs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icons from 'react-native-vector-icons/Ionicons';
+import {Button} from 'native-base';
 import {
   Image,
   SafeAreaView,
   Text,
   View,
+  Modal,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -19,26 +24,172 @@ const ListProgramApplyScreen = ({bloc}) => {
   const {list, getListAppliedProgram, goToDetailStatus, navigate, loading} =
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
-  // console.log('list apply',list.ProgramInfo);
+  const [show, setShow] = useState(false);
+  console.log('list apply', list.ProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // ProgramPosts ganti jadi ProgramInfo
-  // value.ProgramName jadi value.Program.ProgramName
   let listAppliedProgram =
     list?.ProgramInfo &&
     list.ProgramInfo.map((value, idx) => {
+      const statusApply = value?.ProgramApplicant?.SelectionProcessId;
+      let selectionProcessStatus;
+      if (statusApply == 1) {
+        selectionProcessStatus = 'Administration';
+      } else if (statusApply == 2) {
+        selectionProcessStatus = 'Assessment';
+      } else if (statusApply == 3) {
+        selectionProcessStatus = 'Interview';
+      } else if (statusApply == 4) {
+        selectionProcessStatus = 'Offering Letter';
+      } else if (statusApply == 5) {
+        selectionProcessStatus = 'Welcome To SMM';
+      }
       return (
         <SafeAreaView key={idx} style={styles.containerProgram}>
           <View>
-            <Text style={styles.programName}>{value.Program.ProgramName}</Text>
-            <TouchableOpacity
+            <Text onPress={() => setShow(true)} style={styles.programName}>
+              {value.Program.ProgramName}
+            </Text>
+            <Text style={styles.location}>
+              <Text style={{color: '#5F4E98', marginTop: 2}}>
+                <Icon name="tag" size={18} />
+              </Text>
+              <Text style={styles.programTypeNameandDate}>
+                {'   '}
+                {value.Program.ProgramTypeName.toUpperCase()}
+              </Text>
+            </Text>
+            <Text style={styles.location}>
+              <Icons name="ios-calendar" size={20} color="#5F4E98" />
+              <Text style={styles.programTypeNameandDate}>
+                {'  '}
+                {dayjs(value?.Program?.ProgramActivity.OpenDate).format(
+                  'DD/MM/YYYY',
+                )}
+                -{' '}
+                {dayjs(value?.program?.ProgramActivity.CloseDate).format(
+                  'DD/MM/YYYY',
+                )}
+              </Text>
+            </Text>
+            <Text style={styles.location}>
+              <Icons name="information-circle" size={20} color="#5F4E98" />
+              <Text style={styles.programTypeNameandDate}>
+                {'  '}
+                {value?.ProgramApplicant?.ProcessStatus}
+              </Text>
+            </Text>
+            <Text style={styles.location}>
+              <Icon name="progress-check" size={20} color="#5F4E98" />
+              <Text style={styles.programTypeNameandDate}>
+                {'  '}
+                {selectionProcessStatus}
+                {' ('} {statusApply} {'/ 5)'}
+              </Text>
+            </Text>
+            {/*<TouchableOpacity
               style={styles.buttonDetails}
               onPress={() => goToDetailStatus({programId: value.Program.ID})}>
               <Text style={styles.details}>Details</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>*/}
           </View>
+          <Modal transparent={true} visible={show}>
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                flex: 1,
+              }}>
+              <View
+                style={{
+                  backgroundColor: '#ffffff',
+                  flex: 1,
+                  marginTop: 85,
+                  padding: 40,
+                  borderTopLeftRadius: 25,
+                  borderTopRightRadius: 25,
+                  height: 170,
+                  width: 400,
+                }}>
+                <View>
+                  <Text style={styles.programNameModal}>
+                    {value.Program.ProgramName}
+                  </Text>
+                  <Text style={styles.location}>
+                    <Text style={{color: '#5F4E98', marginTop: 2}}>
+                      <Icon name="tag" size={18} />
+                    </Text>
+                    <Text style={styles.programTypeNameandDate}>
+                      {'   '}
+                      {value.Program.ProgramTypeName.toUpperCase()}
+                    </Text>
+                  </Text>
+                  <Text style={styles.location}>
+                    <Text style={{color: '#5F4E98', marginTop: 2}}>
+                      <Icons name="location" size={18} />
+                    </Text>
+                    <Text style={styles.programTypeNameandDate}>
+                      {'   '}
+                      {value?.Program?.ProgramLocation?.Address}
+                    </Text>
+                  </Text>
+                  <Text style={styles.location}>
+                    <Icons name="ios-calendar" size={20} color="#5F4E98" />
+                    <Text style={styles.programTypeNameandDate}>
+                      {'  '}
+                      {dayjs(value?.Program?.ProgramActivity.OpenDate).format(
+                        'DD/MM/YYYY',
+                      )}
+                      -{' '}
+                      {dayjs(value?.program?.ProgramActivity.CloseDate).format(
+                        'DD/MM/YYYY',
+                      )}
+                    </Text>
+                  </Text>
+                  <Text style={styles.location}>Requirements:</Text>
+                  <Text style={styles.requirement}>
+                    {value?.Program?.Requirement}
+                  </Text>
+                  <Text style={styles.location}>Description:</Text>
+                  <Text style={styles.requirement}>
+                    {value?.Program?.Description}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    marginTop: 10,
+                  }}>
+                  <TouchableOpacity
+                    style={styles.buttonBack}
+                    onPress={() => setShow(false)}>
+                    <Text style={styles.textBack}>Back</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.buttonApply}
+                    activeOpacity={1}>
+                    <Text style={styles.textButton}>Apply</Text>
+                  </TouchableOpacity>
+                </View>
+                {/*<View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    margin: 5,
+                  }}>
+                  <Button
+                    variant="subtle"
+                    colorScheme="red"
+                    size="xs"
+                    onPress={() => setShow(false)}>
+                    Cancel
+                  </Button>
+                </View>*/}
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
       );
     });
@@ -46,8 +197,7 @@ const ListProgramApplyScreen = ({bloc}) => {
     <SafeAreaView style={styles.program}>
       {list?.ProgramInfo !== null ? (
         <View>
-          <Text style={styles.programApplied}>Program</Text>
-          <Text style={styles.programApplied}>Applied</Text>
+          <Text style={styles.programApplied}>Program Applied</Text>
           <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
         </View>
       ) : (
@@ -66,10 +216,6 @@ const ListProgramApplyScreen = ({bloc}) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    textAlign: 'center',
-    color: 'white',
-  },
   button: {
     backgroundColor: '#E60965',
     alignItems: 'center',
@@ -78,18 +224,41 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     color: 'white',
   },
-  image: {
-    width: null,
-    resizeMode: 'contain',
-    height: 400,
+  buttonBack: {
+    backgroundColor: '#EEEEEE',
+    borderRadius: 10,
+    width: '50%',
+    borderColor: '#5F4E98',
+    borderWidth: 4,
   },
-  listAppliedProgram: {
-    marginTop: 20,
+  buttonApply: {
+    backgroundColor: '#5F4E98',
+    borderRadius: 10,
+    width: '50%',
+    marginLeft: 20,
+    padding: 5,
+  },
+  buttonDetails: {
+    backgroundColor: '#725AA4',
+    alignItems: 'flex-start',
+    margin: 6,
+    padding: 6,
+    marginRight: 270,
+    borderRadius: 10,
   },
   container: {
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
+  },
+  containerProgram: {
+    backgroundColor: 'white',
+    padding: 6,
+    margin: 6,
+    marginLeft: 20,
+    marginRight: 20,
+    borderColor: 'black',
+    borderRadius: 10,
   },
   details: {
     color: '#FFFFFF',
@@ -103,8 +272,19 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     color: '#5F4E98',
   },
-  viewProgram: {
-    marginTop: 30,
+  image: {
+    width: null,
+    resizeMode: 'contain',
+    height: 400,
+  },
+  listAppliedProgram: {
+    marginTop: 20,
+  },
+  location: {
+    fontSize: 14,
+    marginRight: 10,
+    marginTop: 10,
+    color: 'black',
   },
   oops: {
     fontFamily: 'Montserrat',
@@ -121,30 +301,51 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     color: '#666666',
+    marginTop: 35,
   },
   program: {
     backgroundColor: '#ECE1EE',
   },
   programName: {
-    fontSize: 14,
+    fontSize: 20,
     color: '#000000',
   },
-  buttonDetails: {
-    backgroundColor: '#725AA4',
-    alignItems: 'flex-start',
-    margin: 6,
-    padding: 6,
-    marginRight: 270,
-    borderRadius: 10,
+  programNameModal: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: '#000000',
+    textAlign: 'center',
+    marginTop: -15,
   },
-  containerProgram: {
-    backgroundColor: 'white',
-    padding: 6,
-    margin: 6,
-    marginLeft: 20,
-    marginRight: 20,
-    borderColor: 'black',
-    borderRadius: 10,
+  programTypeNameandDate: {
+    fontSize: 16,
+    color: 'black',
+    marginTop: 10,
+  },
+  requirement: {
+    textAlign: 'left',
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 16,
+    color: '#2c3e50',
+  },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+  },
+  textButton: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '400',
+  },
+  textBack: {
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: 15,
+  },
+  viewProgram: {
+    marginTop: 30,
   },
 });
 
