@@ -34,8 +34,8 @@ const ListProgramApplyScreen = ({bloc}) => {
     setNowTab(VACANY_PATH);
     goToScreen(VACANY_PATH, false);
   };
-  console.log('list apply', list.ProgramInfo);
-  console.log('panjang list apply', list?.ProgramInfo?.length);
+  //console.log('list apply', list.ProgramInfo);
+  //console.log('panjang list apply', list?.ProgramInfo?.length);
   const lenProgramInfo = list?.ProgramInfo?.length;
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
