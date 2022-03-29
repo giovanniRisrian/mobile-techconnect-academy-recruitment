@@ -19,16 +19,24 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {setTab} from '../../../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 const ListProgramApplyScreen = ({bloc}) => {
   const {list, getListAppliedProgram, goToDetailStatus, navigate, loading} =
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  const [nowTab, setNowTab] = useState(
+    useSelector(state => state.TechconnectAcademyReducer.nowTab),
+  );
   const [show, setShow] = useState(false);
-  const testSubmit = () => {
-    console.log('TES KE SUBMIT GA');
+  const toVacany = setNowTab => {
+    setTab(VACANY_PATH);
+    setNowTab(VACANY_PATH);
+    goToScreen(VACANY_PATH, false);
   };
   console.log('list apply', list.ProgramInfo);
+  console.log('panjang list apply', list?.ProgramInfo?.length);
+  const lenProgramInfo = list?.ProgramInfo?.length;
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,27 +178,7 @@ const ListProgramApplyScreen = ({bloc}) => {
                     onPress={() => setShow(false)}>
                     <Text style={styles.textBack}>Back</Text>
                   </TouchableOpacity>
-                  {/*<TouchableOpacity
-                    onPress={() => testSubmit()}
-                    style={styles.buttonApply}
-                    disabled={true}>
-                    <Text style={styles.textButton}>Apply</Text>
-                </TouchableOpacity>*/}
                 </View>
-                {/*<View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    margin: 5,
-                  }}>
-                  <Button
-                    variant="subtle"
-                    colorScheme="red"
-                    size="xs"
-                    onPress={() => setShow(false)}>
-                    Cancel
-                  </Button>
-                </View>*/}
               </View>
             </View>
           </Modal>
@@ -200,16 +188,41 @@ const ListProgramApplyScreen = ({bloc}) => {
   return (
     <SafeAreaView style={styles.program}>
       {list?.ProgramInfo !== null ? (
-        <View>
-          <Text style={styles.programApplied}>Program Applied</Text>
-          <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
-        </View>
+        lenProgramInfo === 1 ? (
+          <View>
+            <Text style={styles.programAppliedOne}>Program Applied</Text>
+            <View style={styles.listAppliedOneProgram}>
+              {listAppliedProgram}
+            </View>
+            <Text style={styles.searchMoreProgram}>
+              You've been applied for 1 program.
+            </Text>
+            <Text style={styles.searchMoreProgram}>
+              You can find more program to be applied{' '}
+              <Text
+                onPress={() => toVacany(setNowTab)}
+                style={styles.searchMoreProgramHere}>
+                here
+              </Text>
+            </Text>
+            <Image
+              style={styles.imageOneProgram}
+              source={require('../../../../assets/images/Search-rafiki.png')}
+              alt="splash-screen"
+            />
+          </View>
+        ) : (
+          <View>
+            <Text style={styles.programApplied}>Program Applied</Text>
+            <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
+          </View>
+        )
       ) : (
         <View style={styles.viewProgram}>
           <Text style={styles.dontHaveProgram}>You don't have any</Text>
           <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
           <Image
-            style={styles.image}
+            style={styles.imageZeroProgram}
             source={require('../../../../assets/images/Nodata-pana.png')}
             alt="splash-screen"
           />
@@ -276,14 +289,25 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     color: '#5F4E98',
+    marginTop: 10,
   },
-  image: {
+  imageOneProgram: {
     width: null,
     resizeMode: 'contain',
-    height: 400,
+    height: 260,
+    marginTop: 10,
+    marginBottom: -30,
+  },
+  imageZeroProgram: {
+    width: null,
+    resizeMode: 'contain',
+    height: 450,
   },
   listAppliedProgram: {
     marginTop: 20,
+  },
+  listAppliedOneProgram: {
+    marginTop: -20,
   },
   location: {
     fontSize: 14,
@@ -307,6 +331,15 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     color: '#666666',
     marginTop: 40,
+  },
+  programAppliedOne: {
+    fontFamily: 'Montserrat',
+    fontSize: 40,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    color: '#666666',
+    marginTop: 10,
   },
   program: {
     backgroundColor: '#ECE1EE',
@@ -333,6 +366,27 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 16,
     color: '#2c3e50',
+  },
+  searchMoreProgram: {
+    fontFamily: 'monospace',
+    fontSize: 18,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    color: '#5F4E98',
+    marginTop: 10,
+  },
+  searchMoreProgramHere: {
+    fontFamily: 'monospace',
+    fontSize: 18,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    color: '#5F4E98',
+    marginTop: 0,
+    textDecorationLine: 'underline',
   },
   text: {
     textAlign: 'center',
