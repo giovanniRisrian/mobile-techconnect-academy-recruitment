@@ -61,7 +61,7 @@ const LogoutButton = () => {
       <Button
         onPress={() => Logout()}
         variant="solid"
-        colorScheme="red"
+        colorScheme="primary"
         size="xs"
         leftIcon={<Icon name="logout" size={15} color={'#fdfefe'} />}>
         {/*leftIcon={<Icon name="logout" size={15} color={'#e74c3c'} />}*/}
