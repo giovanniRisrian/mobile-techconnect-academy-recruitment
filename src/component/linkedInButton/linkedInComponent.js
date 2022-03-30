@@ -61,8 +61,7 @@ const LinkedInButton = ({bloc}) => {
                   marginTop: -25,
                 }}>
                 <Text style={{fontFamily: 'serif', textAlign: 'left'}}>
-                  Fill this bar with your linkedin link to auto fill data with
-                  your linkedin information
+                  Fill In your LinkedIn URL
                 </Text>
               </View>
               <View

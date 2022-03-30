@@ -56,6 +56,8 @@ const ListProgramApplyScreen = ({bloc}) => {
 
   const lenProgramInfo = list?.ProgramInfo?.length;
   console.log('ini len programInfo', lenProgramInfo);
+  console.log('ini list ProgramInfo');
+  console.log(list?.ProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,6 +112,8 @@ const ListProgramApplyScreen = ({bloc}) => {
               <Text style={styles.programTypeNameandDate}>
                 {'  '}
                 {value?.ProgramApplicant?.ProcessStatus}
+                {' on  '}
+                {dayjs(value?.ProgramApplicant?.CreatedAt).format('DD/MM/YYYY')}
               </Text>
             </Text>
             <Text style={styles.location}>

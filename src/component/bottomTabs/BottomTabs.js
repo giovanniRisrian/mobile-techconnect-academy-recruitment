@@ -31,7 +31,7 @@ const toHome = dispatch => {
 const toVacany = dispatch => {
   dispatch(setTab(VACANY_PATH));
   // setNowTab(VACANY_PATH);
-  goToScreen(VACANY_PATH, false);
+  goToScreen(VACANY_PATH, true);
 };
 
 const toDashboard = role => {

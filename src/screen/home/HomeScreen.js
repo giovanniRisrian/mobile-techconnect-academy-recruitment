@@ -23,7 +23,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.program}>
       <Text style={styles.programApplied}>Program Applied</Text>
-      <ScrollView>
+      <ScrollView style={styles.listProgram}>
         <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
       </ScrollView>
       <View style={styles.recommendationButton}>
@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ECE1EE',
     justifyContent: 'center',
+  },
+  listProgram: {
+    marginTop: 20,
   },
   program: {
     flex: 1,

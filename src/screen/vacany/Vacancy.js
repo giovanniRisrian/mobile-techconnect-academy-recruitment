@@ -168,9 +168,19 @@ export const Vacancy = service => {
       };
       let res;
       let status = await getUserbyId(config);
+      let threeMandatoryField;
+      if (status.notFill.length >= 3) {
+        threeMandatoryField = `${status.notFill[0]},${status.notFill[1]},${status.notFill[2]} ,etc. Mandatory field shown by * symbol`;
+      } else if (status.notFill.length == 2) {
+        threeMandatoryField = `${status.notFill[0]},${status.notFill[1]}`;
+      } else if (status.notFill.length == 1) {
+        threeMandatoryField = `${status.notFill[0]}`;
+      }
+      console.log('ini three Mandatory Field');
+      console.log(threeMandatoryField);
       if (status === true) {
         // console.log("hasilnya applynya",value);
-        // console.log("contextnyaa",context);
+        //console.log('contextnyaa', context);
         // console.log("contextnyaa",config);
 
         res = await applyProgram(value, config);
@@ -187,13 +197,13 @@ export const Vacancy = service => {
       } else {
         Alert.alert(
           `You must filled mandatory field`,
-          `Unfilled fields are ${status?.notFill}`,
+          `Unfilled fields are ${threeMandatoryField}`,
           [
             {
               text: 'OK',
               onPress: () => {
                 dispatch(setTab(PROFILE_PATH));
-                goToScreenWithParams(PROFILE_PATH, context.id, true);
+                goToScreenWithParams(PROFILE_PATH, false, false);
               },
             },
           ],
