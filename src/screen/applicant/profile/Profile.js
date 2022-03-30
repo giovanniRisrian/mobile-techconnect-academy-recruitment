@@ -40,6 +40,7 @@ const Profile = profileService => {
       const response = await updateDataApplicant(values, config);
 
       const response2 = await getDataApplicantbyId(null, config);
+      dispatch(setProfile({}));
       dispatch(setProfile(response2.data));
       dispatch(showLoading(false));
       goToScreen(PROFILE_PATH, true);
@@ -59,6 +60,7 @@ const Profile = profileService => {
       const formData = new FormData();
       formData.append('id', id);
       dispatch(showLoading(true));
+      //dispatch(showLoading(false));
       let dataReceive;
       if (userProfile) {
         dataReceive = userProfile;
@@ -170,6 +172,7 @@ const Profile = profileService => {
       // console.log('++++++++++++++++++++++++++', dataReceive.WorkExperience);
 
       dispatch(showLoading(false));
+      //dispatch(showLoading(true));
       // return response;
     } catch (err) {
       // console

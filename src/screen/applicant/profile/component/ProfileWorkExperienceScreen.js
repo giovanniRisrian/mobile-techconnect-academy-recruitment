@@ -167,7 +167,7 @@ const ProfileWorkExperienceScreen = ({bloc}) => {
     reset(initialValues);
   }, [initialValues]);
 
-  if (isLoading) {
+  if (isLoading || checkWork === null) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Please wait</Text>

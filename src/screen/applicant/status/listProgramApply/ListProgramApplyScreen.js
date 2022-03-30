@@ -25,12 +25,14 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {setTab} from '../../../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {showLoading} from '../../../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 const ListProgramApplyScreen = ({bloc}) => {
   const dispatch = useDispatch();
   const {list, getListAppliedProgram, goToDetailStatus, navigate, loading} =
     bloc();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  //const isLoading = useSelector(state => state.ProfileReducer.isLoading);
   const [nowTab, setNowTab] = useState(
     useSelector(state => state.TechconnectAcademyReducer.nowTab),
   );
@@ -53,6 +55,7 @@ const ListProgramApplyScreen = ({bloc}) => {
   };
 
   const lenProgramInfo = list?.ProgramInfo?.length;
+  console.log('ini len programInfo', lenProgramInfo);
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -202,41 +205,68 @@ const ListProgramApplyScreen = ({bloc}) => {
         </SafeAreaView>
       );
     });
-  return (
-    <SafeAreaView style={styles.program}>
-      {list?.ProgramInfo !== null ? (
-        lenProgramInfo === 1 ? (
-          <View>
-            <View style={styles.listAppliedOneProgram}>
-              {listAppliedProgram}
+  if (list.ProgramInfo === undefined) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Please wait</Text>
+        <ActivityIndicator />
+      </View>
+    );
+  } else {
+    return (
+      <SafeAreaView style={styles.program}>
+        {list?.ProgramInfo !== null ? (
+          lenProgramInfo === 1 ? (
+            <View>
+              <View style={styles.listAppliedOneProgram}>
+                {listAppliedProgram}
+              </View>
+              <Text style={styles.searchMoreProgram}>
+                You've been applied for 1 program.
+              </Text>
+              <Text style={styles.searchMoreProgram}>
+                You can find more program to be applied{' '}
+                <Text
+                  onPress={() => toVacany(setNowTab)}
+                  style={styles.searchMoreProgramHere}>
+                  here
+                </Text>
+              </Text>
+              <Image
+                style={styles.imageOneProgram}
+                source={require('../../../../assets/images/Search-rafiki.png')}
+                alt="splash-screen"
+              />
             </View>
-            <Text style={styles.searchMoreProgram}>
-              You've been applied for 1 program.
-            </Text>
-            <Text style={styles.searchMoreProgram}>
-              You can find more program to be applied{' '}
-              <Text
-                onPress={() => toVacany(setNowTab)}
-                style={styles.searchMoreProgramHere}>
-                here
+          ) : (
+            <View>
+              <ScrollView style={styles.listAppliedProgram}>
+                {listAppliedProgram}
+              </ScrollView>
+              <Text style={styles.searchMoreProgram}>
+                You've been applied for {lenProgramInfo} program.
               </Text>
-            </Text>
-            <Image
-              style={styles.imageOneProgram}
-              source={require('../../../../assets/images/Search-rafiki.png')}
-              alt="splash-screen"
-            />
-          </View>
+              <Text style={styles.searchMoreProgram}>
+                You can find more program to be applied{' '}
+                <Text
+                  onPress={() => toVacany(setNowTab)}
+                  style={styles.searchMoreProgramHere}>
+                  here
+                </Text>
+              </Text>
+              <Image
+                style={styles.imageOneProgram}
+                source={require('../../../../assets/images/Search-rafiki.png')}
+                alt="splash-screen"
+              />
+            </View>
+          )
         ) : (
-          <View>
-            <ScrollView style={styles.listAppliedProgram}>
-              {listAppliedProgram}
-            </ScrollView>
+          <View style={styles.viewProgram}>
+            <Text style={styles.dontHaveProgram}>You don't have any</Text>
+            <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
             <Text style={styles.searchMoreProgram}>
-              You've been applied for {lenProgramInfo} program.
-            </Text>
-            <Text style={styles.searchMoreProgram}>
-              You can find more program to be applied{' '}
+              You can find program to be applied{' '}
               <Text
                 onPress={() => toVacany(setNowTab)}
                 style={styles.searchMoreProgramHere}>
@@ -244,33 +274,15 @@ const ListProgramApplyScreen = ({bloc}) => {
               </Text>
             </Text>
             <Image
-              style={styles.imageOneProgram}
-              source={require('../../../../assets/images/Search-rafiki.png')}
+              style={styles.imageZeroProgram}
+              source={require('../../../../assets/images/Nodata-pana.png')}
               alt="splash-screen"
             />
           </View>
-        )
-      ) : (
-        <View style={styles.viewProgram}>
-          <Text style={styles.dontHaveProgram}>You don't have any</Text>
-          <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
-          <Text style={styles.searchMoreProgram}>
-            You can find program to be applied{' '}
-            <Text
-              onPress={() => toVacany(setNowTab)}
-              style={styles.searchMoreProgramHere}>
-              here
-            </Text>
-          </Text>
-          <Image
-            style={styles.imageZeroProgram}
-            source={require('../../../../assets/images/Nodata-pana.png')}
-            alt="splash-screen"
-          />
-        </View>
-      )}
-    </SafeAreaView>
-  );
+        )}
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
