@@ -179,6 +179,11 @@ const UploadResumeButton = service => {
       } else {
         console.log('Tidak Terupdate');
       }
+      let min = 10000000;
+      let max = 0;
+      let minDate = '2000-01-01',
+        maxDate;
+      let nowStartYear, nowStartMonth, nowEndYear, nowEndMonth, now, end;
       if (profile.experience != null) {
         let experience = profile.experience;
         let tempExperienceArr = [];
@@ -191,17 +196,73 @@ const UploadResumeButton = service => {
           YearOut: '',
           Description: '',
         };
+        let tempArr = [];
+        let tempArrDate = [];
         for (let i = 0; i < experience.length; i++) {
           tempExperience.CompanyName = experience[i].company;
           tempExperience.Position = experience[i].title;
+
+          experience[i].period?.startDate?.year
+            ? (nowStartYear = experience[i].period.startDate.year)
+            : (nowStartYear = 10000000);
+          experience[i].period?.startDate?.month
+            ? (nowStartMonth = experience[i].period.startDate.month)
+            : (nowStartMonth = 1);
+          experience[i].period?.endDate?.year
+            ? (nowEndYear = experience[i].period.endDate.year)
+            : (nowEndYear = 0);
+          experience[i].period?.endDate?.month
+            ? (nowEndMonth = experience[i].period.endDate.month)
+            : (nowEndMonth = 1);
+
+          now = nowStartYear * 100 + nowStartMonth;
+          end = nowEndYear * 100 + nowEndMonth;
+          if (now !== 1) tempArr.push(now);
+          if (end !== 1) tempArr.push(end);
           if (experience[i].period.startDate) {
-            tempExperience.YearIn =
-              experience[i].period.startDate.year.toString();
+            if (
+              experience[i].period.startDate.year &&
+              experience[i].period.startDate.month
+            ) {
+              experience[i].period.startDate.month =
+                experience[i].period.startDate.month.toString();
+              if (experience[i].period.startDate.month.length == 1) {
+                experience[i].period.startDate.month =
+                  '0' + experience[i].period.startDate.month;
+              }
+              tempExperience.YearIn =
+                experience[i].period.startDate.year.toString() +
+                '-' +
+                experience[i].period.startDate.month +
+                '-01';
+            } else {
+              tempExperience.YearIn =
+                experience[i].period.startDate.year.toString() + '-01-01';
+            }
           }
           if (experience[i].period.endDate) {
-            tempExperience.YearOut =
-              experience[i].period.endDate.year.toString();
+            if (
+              experience[i].period.endDate.year &&
+              experience[i].period.endDate.month
+            ) {
+              experience[i].period.endDate.month =
+                experience[i].period.endDate.month.toString();
+              if (experience[i].period.endDate.month.length == 1) {
+                experience[i].period.endDate.month =
+                  '0' + experience[i].period.endDate.month;
+              }
+              tempExperience.YearOut =
+                experience[i].period.endDate.year.toString() +
+                '-' +
+                experience[i].period.endDate.month +
+                '-01';
+            } else {
+              tempExperience.YearOut =
+                experience[i].period.endDate.year.toString();
+            }
           }
+          if (now !== 1) tempArrDate.push(tempExperience.YearIn);
+          if (end !== 1) tempArrDate.push(tempExperience.YearOut);
           tempExperienceArr.push(tempExperience);
           tempExperience = {
             CompanyName: '',
@@ -213,12 +274,34 @@ const UploadResumeButton = service => {
             Description: '',
           };
         }
+        console.log('ini Semua Tanggal Int:', tempArr);
+        console.log('ini Semua Tanggal Date:', tempArrDate);
         mock.WorkExperience = tempExperienceArr;
-        mock.Personal.TotalWorkingExperience = (
-          experience[0].period.startDate.year -
-          (experience[experience.length - 1].period.endDate?.year ||
-            experience[experience.length - 1].period.startDate)
-        ).toString();
+
+        if (!maxDate) {
+          maxDate = minDate;
+        }
+
+        const max = Math.max(...tempArr);
+        const indexMax = tempArr.indexOf(max);
+        const min = Math.min(...tempArr);
+        const indexMin = tempArr.indexOf(min);
+        console.log(max, min, indexMax, indexMin);
+        console.log('MINIMUM ADALAH : ', tempArr[indexMin]);
+        console.log('MAXIMUM ADALAH : ', tempArr[indexMax]);
+
+        let date1 = new Date(tempArrDate[indexMin]);
+        let date2 = new Date(tempArrDate[indexMax]);
+
+        // To calculate the time difference of two dates
+        let Difference_In_Time = date2.getTime() - date1.getTime();
+
+        // To calculate the no. of days between two dates
+        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        let Different_In_Year = Difference_In_Days / 365;
+        console.log('Differentnya', Difference_In_Days);
+        mock.Personal.TotalWorkingExperience =
+          Different_In_Year.toFixed(2).toString();
       }
       const lastResp = await putUpdateProfile(mock, {
         headers: {
