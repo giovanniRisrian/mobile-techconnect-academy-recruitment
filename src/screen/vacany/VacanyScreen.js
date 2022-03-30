@@ -79,7 +79,7 @@ const VacanyScreen = ({vacancy, route}) => {
         {route.params === undefined ? (
           <Text style={styles.textCategories}>All Vacancy</Text>
         ) : (
-          <Text style={styles.textCategories}>
+          <Text style={styles.textRecomendationCategories}>
             Vacancy Based on Job Reccomendations
           </Text>
         )}
@@ -144,6 +144,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   textCategories: {
+    fontSize: 18,
+    color: '#666666',
+    fontWeight: '600',
+    marginTop: 25,
+    marginBottom: 20,
+    marginRight: 25,
+    textAlign: 'center',
+  },
+  textRecomendationCategories: {
     fontSize: 18,
     color: '#666666',
     fontWeight: '600',
