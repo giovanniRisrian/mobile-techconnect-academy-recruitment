@@ -60,7 +60,7 @@ const LinkedInButton = ({bloc}) => {
                 style={{
                   marginTop: -25,
                 }}>
-                <Text>
+                <Text style={{fontFamily: 'serif', textAlign: 'left'}}>
                   Fill this bar with your linkedin link to auto fill data with
                   your linkedin information
                 </Text>
@@ -68,8 +68,8 @@ const LinkedInButton = ({bloc}) => {
               <View
                 style={{
                   borderWidth: 1,
-                  borderColor: 'black',
-                  borderRadius: 10,
+                  borderColor: '#4ebff0',
+                  borderRadius: 20,
                   borderStyle: 'solid',
                   marginTop: 5,
                 }}>
