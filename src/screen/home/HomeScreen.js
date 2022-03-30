@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   Text,
   View,
+  ScrollView,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -20,7 +21,7 @@ import StatusService from '../../service/StatusService';
 import LogoutButton from '../../component/logoutButton/LogoutButton';
 const HomeScreen = () => {
   return (
-    <View style={styles.program}>
+    <ScrollView style={styles.program}>
       <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
       <View style={styles.recommendationButton}>
         <ReccomendationButtonComponent
@@ -31,7 +32,7 @@ const HomeScreen = () => {
       {/* <UpploadResumeButtonComponent
         uploadResume={() => UploadResumeButton(UploadResumeService)}
       /> */}
-    </View>
+    </ScrollView>
   );
 };
 

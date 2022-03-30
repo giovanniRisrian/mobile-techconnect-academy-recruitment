@@ -17,6 +17,7 @@ import {
   SafeAreaView,
   Text,
   View,
+  ScrollView,
   Modal,
   TextInput,
   StyleSheet,
@@ -228,15 +229,39 @@ const ListProgramApplyScreen = ({bloc}) => {
             />
           </View>
         ) : (
-          <View>
+          <ScrollView>
             <Text style={styles.programApplied}>Program Applied</Text>
             <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
-          </View>
+            <Text style={styles.searchMoreProgram}>
+              You've been applied for {lenProgramInfo} program.
+            </Text>
+            <Text style={styles.searchMoreProgram}>
+              You can find more program to be applied{' '}
+              <Text
+                onPress={() => toVacany(setNowTab)}
+                style={styles.searchMoreProgramHere}>
+                here
+              </Text>
+            </Text>
+            <Image
+              style={styles.imageOneProgram}
+              source={require('../../../../assets/images/Search-rafiki.png')}
+              alt="splash-screen"
+            />
+          </ScrollView>
         )
       ) : (
         <View style={styles.viewProgram}>
           <Text style={styles.dontHaveProgram}>You don't have any</Text>
           <Text style={styles.dontHaveProgram}>Applied Program yet</Text>
+          <Text style={styles.searchMoreProgram}>
+            You can find program to be applied{' '}
+            <Text
+              onPress={() => toVacany(setNowTab)}
+              style={styles.searchMoreProgramHere}>
+              here
+            </Text>
+          </Text>
           <Image
             style={styles.imageZeroProgram}
             source={require('../../../../assets/images/Nodata-pana.png')}
@@ -317,7 +342,7 @@ const styles = StyleSheet.create({
   imageZeroProgram: {
     width: null,
     resizeMode: 'contain',
-    height: 450,
+    height: 400,
   },
   listAppliedProgram: {
     marginTop: 20,
