@@ -34,6 +34,7 @@ import LinkedInButton from '../../../../component/linkedInButton/linkedInCompone
 import LinkedIn from '../../../../component/linkedInButton/linkedIn';
 import ProfileService from '../../../../service/ProfileService';
 import LogoutButton from '../../../../component/logoutButton/LogoutButton';
+import ViewPdfButtonComponent from '../../../../component/viewPdf/viewPdfButtonComponent';
 
 const validationSchema = Yup.object().shape({
   Personal: Yup.object().shape({
@@ -179,6 +180,15 @@ const ProfilePersonalScreen = ({bloc}) => {
                 </View>
               )}
 
+              {initialValues.Personal?.ResumeFile && disabled ? (
+                <ViewPdfButtonComponent
+                  propsPdf={() => {
+                    return initialValues.Personal.ResumeFile;
+                  }}
+                />
+              ) : (
+                <Text></Text>
+              )}
               <HStack space={4} alignItems="center" marginTop={2}>
                 {/*{disabled ? (
                   <UpploadPictureButtonComponent
