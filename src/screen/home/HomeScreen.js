@@ -3,6 +3,7 @@ import {
   SafeAreaView,
   Text,
   View,
+  ScrollView,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -21,11 +22,16 @@ import LogoutButton from '../../component/logoutButton/LogoutButton';
 const HomeScreen = () => {
   return (
     <View style={styles.program}>
-      <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
-      <ReccomendationButtonComponent
-        reccomendationButton={() => ReccomendationButton(UploadResumeService)}
-      />
-      <LogoutButton />
+      <Text style={styles.programApplied}>Program Applied</Text>
+      <ScrollView>
+        <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
+      </ScrollView>
+      <View style={styles.recommendationButton}>
+        <ReccomendationButtonComponent
+          reccomendationButton={() => ReccomendationButton(UploadResumeService)}
+        />
+      </View>
+      {/*<LogoutButton />*/}
       {/* <UpploadResumeButtonComponent
         uploadResume={() => UploadResumeButton(UploadResumeService)}
       /> */}
@@ -42,6 +48,18 @@ const styles = StyleSheet.create({
   program: {
     flex: 1,
     backgroundColor: '#ECE1EE',
+  },
+  programApplied: {
+    fontFamily: 'Montserrat',
+    fontSize: 40,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    color: '#666666',
+    marginTop: 20,
+  },
+  recommendationButton: {
+    marginTop: 15,
   },
 });
 export default HomeScreen;

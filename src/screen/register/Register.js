@@ -8,7 +8,10 @@ import {
   VACANY_PATH,
 } from '../../navigation/NavigationPath';
 
-import {setLogin, setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setLogin,
+  setProfile,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
@@ -97,8 +100,9 @@ export const Register = service => {
         registerInfo.token = response.data.token;
 
         const resp2 = await getDataApplicantbyId(config);
-        dispatch(setProfile(resp2.data));
-        dispatch(setLogin(registerInfo));
+        // dispatch(setProfile(resp2.data));
+        // dispatch(setLogin(registerInfo));
+        alert('Register Success,Active your email');
         if (registerInfo.Role === 'user') {
           goToScreen(VACANY_PATH, true);
         }

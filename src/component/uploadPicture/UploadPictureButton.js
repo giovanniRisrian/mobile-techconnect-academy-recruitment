@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {showLoading} from '../../stores/profile/ProfileAction';
 import {goToScreen} from '../../navigation/NavigationHelper';
-import { PROFILE_PATH } from '../../navigation/NavigationPath';
+import {PROFILE_PATH} from '../../navigation/NavigationPath';
 const UploadPictureButton = service => {
   const {
     callUploadPictureService,

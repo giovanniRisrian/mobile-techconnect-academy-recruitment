@@ -7,14 +7,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {Button} from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {goToLogin} from '../../navigation/NavigationHelper';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {setLogin, setProfile} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import {
+  setLogin,
+  setProfile,
+  setTab,
+} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {removeLocalData, storeLocalData} from '../../utils/localStorage';
+import {VACANY_PATH} from '../../navigation/NavigationPath';
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const GoogleLogout = async () => {
@@ -32,14 +39,27 @@ const LogoutButton = () => {
       console.log('Masuik sinikah');
 
       await removeLocalData();
+
+      dispatch(setTab(VACANY_PATH));
+      dispatch(setProfile({}));
+      dispatch(setLogin({}));
+      dispatch(setProfile(null));
+      dispatch(setLogin(null));
       await GoogleLogout();
 
       console.log('KEPENCENT');
+      dispatch(setTab(VACANY_PATH));
+      dispatch(setProfile({}));
+      dispatch(setLogin({}));
       dispatch(setProfile(null));
       dispatch(setLogin(null));
       goToLogin();
     } catch (error) {
       console.log('eh masuk sinikah');
+      dispatch(setProfile({}));
+      dispatch(setLogin({}));
+
+      dispatch(setTab(VACANY_PATH));
       dispatch(setProfile(null));
       dispatch(setLogin(null));
       goToLogin();
@@ -50,9 +70,19 @@ const LogoutButton = () => {
   };
   return (
     <View>
-      <TouchableOpacity style={styles.button} onPress={() => Logout()}>
+      {/*<TouchableOpacity style={styles.button} onPress={() => Logout()}>
         <Text style={styles.text}>Logout</Text>
-      </TouchableOpacity>
+  </TouchableOpacity>*/}
+      <Button
+        onPress={() => Logout()}
+        variant="solid"
+        colorScheme="primary"
+        size="xs"
+        leftIcon={<Icon name="logout" size={15} color={'#fdfefe'} />}>
+        {/*leftIcon={<Icon name="logout" size={15} color={'#e74c3c'} />}*/}
+        {/*variant="sublte"*/}
+        Logout
+      </Button>
     </View>
   );
 };
