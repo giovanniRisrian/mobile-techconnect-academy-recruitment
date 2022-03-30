@@ -46,6 +46,7 @@ const validationSchema = Yup.object().shape({
 
 const ProfileEducationScreen = ({bloc}) => {
   const {addProfile, getDataByID, checkEducation, setCheckEducation} = bloc();
+  //console.log('ini check education', checkEducation);
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
@@ -101,7 +102,7 @@ const ProfileEducationScreen = ({bloc}) => {
     reset(initialValues);
   }, [initialValues]);
 
-  if (isLoading) {
+  if (isLoading || checkEducation === undefined) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>Please wait</Text>
