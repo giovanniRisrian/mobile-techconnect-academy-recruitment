@@ -21,8 +21,11 @@ import StatusService from '../../service/StatusService';
 import LogoutButton from '../../component/logoutButton/LogoutButton';
 const HomeScreen = () => {
   return (
-    <ScrollView style={styles.program}>
-      <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
+    <View style={styles.program}>
+      <Text style={styles.programApplied}>Program Applied</Text>
+      <ScrollView>
+        <ListProgramApplyScreen bloc={() => ListProgramApply(StatusService)} />
+      </ScrollView>
       <View style={styles.recommendationButton}>
         <ReccomendationButtonComponent
           reccomendationButton={() => ReccomendationButton(UploadResumeService)}
@@ -32,7 +35,7 @@ const HomeScreen = () => {
       {/* <UpploadResumeButtonComponent
         uploadResume={() => UploadResumeButton(UploadResumeService)}
       /> */}
-    </ScrollView>
+    </View>
   );
 };
 
@@ -45,6 +48,15 @@ const styles = StyleSheet.create({
   program: {
     flex: 1,
     backgroundColor: '#ECE1EE',
+  },
+  programApplied: {
+    fontFamily: 'Montserrat',
+    fontSize: 40,
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+    color: '#666666',
+    marginTop: 20,
   },
   recommendationButton: {
     marginTop: 15,

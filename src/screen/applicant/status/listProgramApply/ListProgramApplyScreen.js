@@ -207,7 +207,6 @@ const ListProgramApplyScreen = ({bloc}) => {
       {list?.ProgramInfo !== null ? (
         lenProgramInfo === 1 ? (
           <View>
-            <Text style={styles.programAppliedOne}>Program Applied</Text>
             <View style={styles.listAppliedOneProgram}>
               {listAppliedProgram}
             </View>
@@ -229,9 +228,10 @@ const ListProgramApplyScreen = ({bloc}) => {
             />
           </View>
         ) : (
-          <ScrollView>
-            <Text style={styles.programApplied}>Program Applied</Text>
-            <View style={styles.listAppliedProgram}>{listAppliedProgram}</View>
+          <View>
+            <ScrollView style={styles.listAppliedProgram}>
+              {listAppliedProgram}
+            </ScrollView>
             <Text style={styles.searchMoreProgram}>
               You've been applied for {lenProgramInfo} program.
             </Text>
@@ -248,7 +248,7 @@ const ListProgramApplyScreen = ({bloc}) => {
               source={require('../../../../assets/images/Search-rafiki.png')}
               alt="splash-screen"
             />
-          </ScrollView>
+          </View>
         )
       ) : (
         <View style={styles.viewProgram}>
