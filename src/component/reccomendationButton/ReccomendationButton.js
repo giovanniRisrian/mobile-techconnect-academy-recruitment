@@ -9,6 +9,8 @@ import {
 } from '../../navigation/NavigationPath';
 import {Alert} from 'react-native';
 import {setTab} from '../../stores/techconnectAcademy/TechconnectAcademyAction';
+import { SHOW_LOADING } from '../../utils/constants';
+import { showLoading } from '../../stores/profile/ProfileAction';
 const ReccomendationButton = service => {
   const {postGetDataByListId, getJobReccomendationId} = service();
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
@@ -46,7 +48,8 @@ const ReccomendationButton = service => {
             text: 'OK',
             onPress: () => {
               dispatch(setTab(PROFILE_PATH));
-              goToScreenWithParams(PROFILE_PATH, false, false);
+              dispatch(showLoading(true));
+              goToScreenWithParams(PROFILE_PATH, true, false);
             },
           },
         ],

@@ -60,9 +60,8 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
   );
-  const [disabled, changeDisable] = useState(
-    disabledStatus === null ? true : false,
-  );
+  const [disabled, changeDisable] = useState(disabledStatus ? false : true);
+  console.log('ini disabledStatus bawah const', disabledStatus);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [birthdate, setBirthdate] = useState('');
   const isLoading = useSelector(state => state.ProfileReducer.isLoading);
@@ -116,6 +115,8 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
     // function to submit
     values.Personal.BirthDate = dayjs(birthdate).format('YYYY-MM-DD');
     addProfile(values, file, userInfo);
+    console.log('ini disabled', disabled);
+    console.log('ini !disabled', !disabled);
     changeDisable(!disabled);
   };
 

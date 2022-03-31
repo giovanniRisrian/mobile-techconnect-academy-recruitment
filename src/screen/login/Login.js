@@ -20,6 +20,7 @@ import {
   removeLocalData,
   storeLocalData,
 } from '../../utils/localStorage';
+import {Alert} from 'react-native';
 export const Login = service => {
   const {callLoginService, getDataApplicantbyId} = service();
   const [email, setemail] = useState('');
@@ -111,22 +112,35 @@ export const Login = service => {
       if (response) {
         loginInfo = jwt_decode(response.data.token);
         loginInfo.token = response.data.token;
-
-        dispatch(setLogin(loginInfo));
+        if (loginInfo.Role === 'user') {
+          dispatch(setLogin(loginInfo));
+          const resp2 = await getDataApplicantbyId(config);
+          dispatch(setProfile(resp2.data));
+          console.log('Ini Data Didapatkan');
+          console.log('Ditunggu tokennya');
+          await storeLocalData(loginInfo.token);
+          goToScreen(VACANY_PATH, true);
+        } else {
+          Alert.alert(
+            'Login Failed',
+            'Your role dont have authorization to this mobile app',
+          );
+        }
+        /*dispatch(setLogin(loginInfo));
         const resp2 = await getDataApplicantbyId(config);
         dispatch(setProfile(resp2.data));
         console.log('Ini Data Didapatkan');
         console.log('Ditunggu tokennya');
-        await storeLocalData(loginInfo.token);
-        if (loginInfo.Role === 'user') {
+        await storeLocalData(loginInfo.token);*/
+        /*if (loginInfo.Role === 'user') {
           goToScreen(VACANY_PATH, true);
-        }
-        if (loginInfo.Role === 'recruiter') {
+        }*/
+        /*if (loginInfo.Role === 'recruiter') {
           goToScreen(RECRUITER.DASHBOARD, true);
         }
         if (loginInfo.Role === 'administrator') {
           goToScreen(ADMINISTRATOR.DASHBOARD, true);
-        }
+        }*/
       }
     } catch (error) {
       setLoading(false);
