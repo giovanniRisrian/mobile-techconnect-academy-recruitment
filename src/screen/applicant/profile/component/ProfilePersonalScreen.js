@@ -625,7 +625,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                   </HStack>
 
                   <FormControl.HelperText mt={0}>
-                    <Text fontSize={'2xs'}>
+                    <Text fontSize={'2xs'} color="red.600">
                       {errors.SkillSet?.Name
                         ? errors.Personal?.SkillSet.message
                         : ''}
