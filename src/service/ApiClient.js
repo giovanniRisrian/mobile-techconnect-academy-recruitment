@@ -126,7 +126,20 @@ const clientService = () => {
       return result.data;
     } catch (error) {
       console.log(error);
+      //return error;
       throw error;
+    }
+  };
+
+  const getWithAuthRecom = async (url, config) => {
+    try {
+      console.log('apakahmasuksini');
+      let result = await client.get(url, config);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+      //throw error;
     }
   };
 
@@ -167,6 +180,7 @@ const clientService = () => {
     postFile,
     putFile,
     getWithAuth,
+    getWithAuthRecom,
     getWithToken,
     postWitAuth,
   };

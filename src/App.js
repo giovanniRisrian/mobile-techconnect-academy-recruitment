@@ -37,6 +37,7 @@ const App = () => {
   const store = configureStore();
   LogBox.ignoreLogs(['EventEmitter.removeListener']);
   LogBox.ignoreLogs(['NativeBase:']);
+  LogBox.ignoreLogs(['Require cycle:']);
   if (!global.btoa) {
     global.btoa = encode;
   }

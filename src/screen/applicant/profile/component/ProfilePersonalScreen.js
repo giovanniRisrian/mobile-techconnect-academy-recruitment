@@ -54,13 +54,15 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
-const ProfilePersonalScreen = ({bloc}) => {
+const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
   const {addProfile, getDataByID, setChangePhoto, changePhoto} = bloc();
   const [file, setFile] = useState(false);
   const userInfo = useSelector(
     state => state.TechconnectAcademyReducer.isLogin,
   );
-  const [disabled, changeDisable] = useState(true);
+  const [disabled, changeDisable] = useState(
+    disabledStatus === null ? true : false,
+  );
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [birthdate, setBirthdate] = useState('');
   const isLoading = useSelector(state => state.ProfileReducer.isLoading);
@@ -133,6 +135,11 @@ const ProfilePersonalScreen = ({bloc}) => {
       </View>
     );
   } else {
+    {
+      /*if (!disabledStatus) {
+      changeDisable(disabledStatus);
+    }*/
+    }
     return (
       <SafeAreaView backgroundColor="#ECE1EE" style={{flex: 1}}>
         <ScrollView>
@@ -236,7 +243,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Name
+                      Name{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.Name"
@@ -256,7 +269,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Name
                           ? errors.Personal?.Name.message
                           : ''}
@@ -269,7 +282,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Email
+                      Email{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.Email"
@@ -283,13 +302,14 @@ const ProfilePersonalScreen = ({bloc}) => {
                           value={value}
                           backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Email)}
-                          isReadOnly={disabled}
+                          isReadOnly={true}
+                          isDisabled={true}
                           fontSize={'sm'}
                         />
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Email
                           ? errors.Personal?.Email.message
                           : ''}
@@ -304,7 +324,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Phone Number
+                      Phone Number{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.TelephoneNo"
@@ -325,7 +351,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                     />
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.TelephoneNo
                           ? errors.Personal?.TelephoneNo.message
                           : ''}
@@ -338,7 +364,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Gender
+                      Gender{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.Gender"
@@ -360,7 +392,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Gender
                           ? errors.Personal?.Gender.message
                           : ''}
@@ -375,7 +407,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Birth Date
+                      Birth Date{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.BirthDate"
@@ -402,7 +440,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                     />
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.BirthDate
                           ? errors.Personal?.BirthDate.message
                           : ''}
@@ -415,7 +453,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                       marginLeft={2}
                       fontWeight={'light'}
                       fontSize={'xs'}>
-                      Domicile
+                      Domicile{' '}
+                      <Text
+                        fontWeight={'extrabold'}
+                        fontSize={'md'}
+                        color="red.600">
+                        *
+                      </Text>
                     </Text>
                     <Controller
                       name="Personal.Domicile"
@@ -435,7 +479,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Domicile
                           ? errors.Personal?.Domicile.message
                           : ''}
@@ -472,7 +516,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.TotalWorkingExperience
                           ? errors.Personal?.TotalWorkingExperience.message
                           : ''}
@@ -505,7 +549,7 @@ const ProfilePersonalScreen = ({bloc}) => {
                       )}></Controller>
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.SalaryExpectation
                           ? errors.Personal?.SalaryExpectation.message
                           : ''}
@@ -519,7 +563,13 @@ const ProfilePersonalScreen = ({bloc}) => {
                     marginLeft={2}
                     fontWeight={'light'}
                     fontSize={'xs'}>
-                    Skill Set
+                    Skill Set{' '}
+                    <Text
+                      fontWeight={'extrabold'}
+                      fontSize={'md'}
+                      color="red.600">
+                      *
+                    </Text>
                   </Text>
                   <HStack
                     justifyContent="flex-start"

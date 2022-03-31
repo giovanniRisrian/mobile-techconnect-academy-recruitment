@@ -16,7 +16,7 @@ import {ScrollView} from 'native-base';
 import Profile from '../Profile';
 import ProfileService from '../../../../service/ProfileService';
 
-const ProfileScreen = ({route}) => {
+const ProfileScreen = temp => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   // const [routeParams, setRouteParams] = useState('');
@@ -30,7 +30,12 @@ const ProfileScreen = ({route}) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'personal':
-        return <ProfilePersonalScreen bloc={() => Profile(ProfileService)} />;
+        return (
+          <ProfilePersonalScreen
+            disabledStatus={temp.route.params}
+            bloc={() => Profile(ProfileService)}
+          />
+        );
       case 'education':
         return <ProfileEducationScreen bloc={() => Profile(ProfileService)} />;
       case 'organization':
@@ -45,7 +50,7 @@ const ProfileScreen = ({route}) => {
         return null;
     }
   };
-  console.log('route dari child', route);
+  //console.log('route dari child', temp);
 
   // const handleSetIndex = index => {
   //   console.log('masuk handleSetIndex');

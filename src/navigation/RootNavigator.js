@@ -18,7 +18,7 @@ import {
   WEB_PATH,
 } from './NavigationPath';
 import {navigationRef} from './RootNavigation';
-import {Text, View} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import LoginScreen from '../screen/login/LoginScreen';
 import {Login} from '../screen/login/Login';
@@ -41,11 +41,36 @@ import StatusRecruitmentScreen from '../screen/applicant/status/statusRecruitmen
 import StatusRecruitment from '../screen/applicant/status/statusRecruitment/StatusRecruitment';
 import StatusService from '../service/StatusService';
 import WebScreen from '../screen/web/WebScreen';
+
+import jwt_decode from 'jwt-decode';
+import {removeLocalData} from '../utils/localStorage';
+import { setLogin, setProfile, setTab } from '../stores/techconnectAcademy/TechconnectAcademyAction';
+import { goToLogin, goToScreen } from './NavigationHelper';
 const Stack = createNativeStackNavigator();
 // import BottomTabs from '../component/bottomTabs/BottomTabs';
 const RootNavigator = () => {
   const isLogin = useSelector(state => state.TechconnectAcademyReducer.isLogin);
+  const dispatch = useDispatch();
   // console.log('Info Loginnya gesss', isLogin);
+  const checkToken = async () => {
+    if (isLogin !== null) {
+      let userInfo = jwt_decode(isLogin.token);
+      let Role;
+      if (userInfo.exp * 1000 > Date.now()) {
+        Role = userInfo.Role;
+      } else {
+        await removeLocalData();
+        dispatch(setTab(VACANY_PATH));
+        dispatch(setProfile({}));
+        dispatch(setLogin({}));
+        dispatch(setProfile(null));
+        dispatch(setLogin(null));
+        Alert.alert('Token Expired');
+        goToLogin();
+      }
+    }
+  };
+  checkToken();
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator

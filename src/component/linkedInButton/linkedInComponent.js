@@ -61,8 +61,7 @@ const LinkedInButton = ({bloc}) => {
                   marginTop: -25,
                 }}>
                 <Text style={{fontFamily: 'serif', textAlign: 'left'}}>
-                  Fill this bar with your linkedin link to auto fill data with
-                  your linkedin information
+                  Fill In your LinkedIn URL
                 </Text>
               </View>
               <View
@@ -77,7 +76,7 @@ const LinkedInButton = ({bloc}) => {
                   onChangeText={url => setLinkedIn(url)}
                   value={linkedIn}
                   size="xs"
-                  placeholder="Fill your LinkedIn link here "
+                  placeholder="Fill your LinkedIn URL here "
                 />
               </View>
               <View

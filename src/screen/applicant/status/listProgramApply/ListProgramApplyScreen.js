@@ -55,7 +55,17 @@ const ListProgramApplyScreen = ({bloc}) => {
   };
 
   const lenProgramInfo = list?.ProgramInfo?.length;
-  console.log('ini len programInfo', lenProgramInfo);
+  /*console.log('ini len programInfo', lenProgramInfo);
+  console.log('ini list ProgramInfo');
+  console.log(list?.ProgramInfo);
+  console.log('ini programInfo.program activity close date');
+  console.log(list?.ProgramInfo[0].Program.ProgramActivity.CloseDate);
+  console.log('ini saat convert ke dd-mm-yyyy');
+  console.log(
+    dayjs(list?.ProgramInfo[0].Program.ProgramActivity.CloseDate).format(
+      'DD/MM/YYYY',
+    ),
+  );*/
   useEffect(() => {
     if (isLogin) getListAppliedProgram(isLogin.id, isLogin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +110,7 @@ const ListProgramApplyScreen = ({bloc}) => {
                   'DD/MM/YYYY',
                 )}
                 -{' '}
-                {dayjs(value?.program?.ProgramActivity.CloseDate).format(
+                {dayjs(value?.Program?.ProgramActivity.CloseDate).format(
                   'DD/MM/YYYY',
                 )}
               </Text>
@@ -110,6 +120,8 @@ const ListProgramApplyScreen = ({bloc}) => {
               <Text style={styles.programTypeNameandDate}>
                 {'  '}
                 {value?.ProgramApplicant?.ProcessStatus}
+                {' on  '}
+                {dayjs(value?.ProgramApplicant?.CreatedAt).format('DD/MM/YYYY')}
               </Text>
             </Text>
             <Text style={styles.location}>
@@ -173,7 +185,7 @@ const ListProgramApplyScreen = ({bloc}) => {
                         'DD/MM/YYYY',
                       )}
                       -{' '}
-                      {dayjs(value?.program?.ProgramActivity.CloseDate).format(
+                      {dayjs(value?.Program?.ProgramActivity.CloseDate).format(
                         'DD/MM/YYYY',
                       )}
                     </Text>

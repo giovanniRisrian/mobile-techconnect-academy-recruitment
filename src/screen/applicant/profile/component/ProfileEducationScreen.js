@@ -166,7 +166,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                Title
+                                Title{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].Title`}
@@ -188,9 +194,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Title
-                                  ? errors?.Education?.[idx]?.Title.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Title
+                                    ? errors?.Education?.[idx]?.Title.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -199,7 +207,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                Institution
+                                Institution{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].Institution`}
@@ -221,10 +235,12 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Institution
-                                  ? errors?.Education?.[idx]?.Institution
-                                      .message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Institution
+                                    ? errors?.Education?.[idx]?.Institution
+                                        .message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>
@@ -235,7 +251,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                Year In
+                                Year In{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].YearIn`}
@@ -257,9 +279,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.YearIn
-                                  ? errors?.Education?.[idx]?.YearIn.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.YearIn
+                                    ? errors?.Education?.[idx]?.YearIn.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -268,7 +292,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                Year Out
+                                Year Out{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].YearOut`}
@@ -290,9 +320,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.YearOut
-                                  ? errors?.Education?.[idx]?.YearOut.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.YearOut
+                                    ? errors?.Education?.[idx]?.YearOut.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>
@@ -303,7 +335,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                Major
+                                Major{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].Major`}
@@ -324,9 +362,11 @@ const ProfileEducationScreen = ({bloc}) => {
                                 )}
                               />
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Major
-                                  ? errors?.Education?.[idx]?.Major.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Major
+                                    ? errors?.Education?.[idx]?.Major.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -335,7 +375,13 @@ const ProfileEducationScreen = ({bloc}) => {
                                 marginLeft={1}
                                 fontWeight={'light'}
                                 fontSize={'xs'}>
-                                GPA
+                                GPA{' '}
+                                <Text
+                                  fontWeight={'extrabold'}
+                                  fontSize={'md'}
+                                  color="red.600">
+                                  *
+                                </Text>
                               </Text>
                               <Controller
                                 name={`Education[${idx}].GPA`}
@@ -357,9 +403,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.GPA
-                                  ? errors?.Education?.[idx]?.GPA.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.GPA
+                                    ? errors?.Education?.[idx]?.GPA.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>

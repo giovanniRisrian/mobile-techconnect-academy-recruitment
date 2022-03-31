@@ -151,12 +151,17 @@ export const Vacancy = service => {
       } else {
         arrayNotFill.push('Education GPA');
       }
+      console.log('SEBELUM IF COUNTER >= 13');
       if (counter >= 13) {
         return true;
       } else {
         return {status: false, notFill: arrayNotFill};
       }
     } catch (err) {
+      console.log(
+        '********************* INI ERROR PAS RETURN STATUS ***********',
+      );
+      console.log(err);
       throw err;
     }
   };
@@ -168,11 +173,13 @@ export const Vacancy = service => {
       };
       let res;
       let status = await getUserbyId(config);
+      console.log('ini status await getUserById');
+      console.log(status);
       if (status === true) {
         // console.log("hasilnya applynya",value);
-        // console.log("contextnyaa",context);
+        //console.log('contextnyaa', context);
         // console.log("contextnyaa",config);
-
+        console.log('Bawah if status === true');
         res = await applyProgram(value, config);
         console.log('hasilnyaaa', res);
         Alert.alert('Success', null, [
@@ -185,15 +192,25 @@ export const Vacancy = service => {
           },
         ]);
       } else {
+        let threeMandatoryField = '';
+        if (status.notFill.length >= 3) {
+          threeMandatoryField = `${status.notFill[0]},${status.notFill[1]},${status.notFill[2]} ,etc. Mandatory field shown by * symbol`;
+        } else if (status.notFill.length == 2) {
+          threeMandatoryField = `${status.notFill[0]},${status.notFill[1]}`;
+        } else if (status.notFill.length == 1) {
+          threeMandatoryField = `${status.notFill[0]}`;
+        }
+        console.log('ini three Mandatory Field');
+        console.log(threeMandatoryField);
         Alert.alert(
           `You must filled mandatory field`,
-          `Unfilled fields are ${status?.notFill}`,
+          `Unfilled fields are ${threeMandatoryField}`,
           [
             {
               text: 'OK',
               onPress: () => {
                 dispatch(setTab(PROFILE_PATH));
-                goToScreenWithParams(PROFILE_PATH, context.id, true);
+                goToScreenWithParams(PROFILE_PATH, false, false);
               },
             },
           ],

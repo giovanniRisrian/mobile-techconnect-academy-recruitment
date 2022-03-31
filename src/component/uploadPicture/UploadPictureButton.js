@@ -76,7 +76,7 @@ const UploadPictureButton = service => {
     } catch (err) {
       setSingleFile(null);
       if (DocumentPicker.isCancel(err)) {
-        alert('Canceled');
+        //alert('Canceled');
       } else {
         alert('Unknown Error: ' + JSON.stringify(err));
         throw err;

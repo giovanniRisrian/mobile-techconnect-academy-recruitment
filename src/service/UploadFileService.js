@@ -77,7 +77,10 @@ const UploadResumeService = () => {
     return response;
   };
   const getJobReccomendationId = async header => {
-    const response = await clientService().getWithAuth('/user/jobrec', header);
+    const response = await clientService().getWithAuthRecom(
+      '/user/jobrec',
+      header,
+    );
     return response;
   };
   return {

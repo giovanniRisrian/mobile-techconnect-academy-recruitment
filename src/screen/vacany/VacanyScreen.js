@@ -15,6 +15,7 @@ import VacancyList from '../../containers/VacancyList';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const VacanyScreen = ({vacancy, route}) => {
+  //console.log('ini route params', route.params);
   const {
     setList,
     allVacancy,
@@ -75,7 +76,13 @@ const VacanyScreen = ({vacancy, route}) => {
             value={search}
           />
         </View>
-        <Text style={styles.textCategories}>Based on categories</Text>
+        {route.params === undefined ? (
+          <Text style={styles.textCategories}>All Vacancy</Text>
+        ) : (
+          <Text style={styles.textRecomendationCategories}>
+            Vacancy Based on Job Reccomendations
+          </Text>
+        )}
         <FlatList
           data={typeProgram}
           keyExtractor={typeProgram => typeProgram.ID}
@@ -100,12 +107,14 @@ const VacanyScreen = ({vacancy, route}) => {
             />
           </View>
         ) : (
-          <VacancyList
-            programs={list?.ProgramList}
-            vacancyId={vacancyById}
-            doApplyProgram={doApplyProgram}
-            loading={isLoading}
-          />
+          <View>
+            <VacancyList
+              programs={list?.ProgramList}
+              vacancyId={vacancyById}
+              doApplyProgram={doApplyProgram}
+              loading={isLoading}
+            />
+          </View>
         )}
       </View>
     </SafeAreaView>
@@ -136,9 +145,20 @@ const styles = StyleSheet.create({
   },
   textCategories: {
     fontSize: 18,
-    fontWeight: '400',
+    color: '#666666',
+    fontWeight: '600',
     marginTop: 25,
     marginBottom: 20,
+    marginRight: 25,
+    textAlign: 'center',
+  },
+  textRecomendationCategories: {
+    fontSize: 18,
+    color: '#666666',
+    fontWeight: '600',
+    marginTop: 25,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   searchSection: {
     flexDirection: 'row',

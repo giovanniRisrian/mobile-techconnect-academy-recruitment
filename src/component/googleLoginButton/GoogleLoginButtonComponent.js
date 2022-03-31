@@ -47,7 +47,7 @@ const GoogleLoginButtonComponent = ({googleLogin}) => {
           {!isLoading ? (
             <Text style={styles.text}>Login With Google</Text>
           ) : (
-            <ActivityIndicator />
+            <ActivityIndicator color="#FFFFFF" />
           )}
         </TouchableOpacity>
       </LinearGradient>

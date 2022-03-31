@@ -12,6 +12,7 @@ import {
 } from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import {goToScreen} from '../../navigation/NavigationHelper';
 import {PROFILE_PATH} from '../../navigation/NavigationPath';
+import {Alert} from 'react-native';
 const UploadResumeButton = service => {
   const {
     callUploadResumeService,
@@ -125,7 +126,7 @@ const UploadResumeButton = service => {
 
       mock.Personal = dataReceive.Personal;
       mock.Personal.TelephoneNo = summary.phone_number[0];
-      mock.Personal.Email = summary.email[0];
+      //mock.Personal.Email = summary.email[0];
       mock.Personal.ResumeFile = file.name;
 
       mock.Education = dataReceive.Education;
@@ -313,7 +314,10 @@ const UploadResumeButton = service => {
       dispatch(setProfile(resp2.data));
       dispatch(showLoading(false));
       setLoading(false);
-      alert('Resume Uploaded and Information Inputed to Profile');
+      Alert.alert(
+        'Success',
+        'Resume Uploaded and Information Inputed to Profile',
+      );
       goToScreen(PROFILE_PATH, true);
     } catch (err) {
       console.log(err);
@@ -332,7 +336,7 @@ const UploadResumeButton = service => {
     } catch (err) {
       setSingleFile(null);
       if (DocumentPicker.isCancel(err)) {
-        alert('Canceled');
+        //alert('Canceled');
       } else {
         alert('Unknown Error: ' + JSON.stringify(err));
         throw err;
