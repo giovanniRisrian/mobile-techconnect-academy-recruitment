@@ -15,7 +15,7 @@ import VacancyList from '../../containers/VacancyList';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const VacanyScreen = ({vacancy, route}) => {
-  console.log('ini route params', route.params);
+  //console.log('ini route params', route.params);
   const {
     setList,
     allVacancy,

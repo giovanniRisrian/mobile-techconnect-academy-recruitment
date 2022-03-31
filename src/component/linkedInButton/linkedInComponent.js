@@ -76,7 +76,7 @@ const LinkedInButton = ({bloc}) => {
                   onChangeText={url => setLinkedIn(url)}
                   value={linkedIn}
                   size="xs"
-                  placeholder="Fill your LinkedIn link here "
+                  placeholder="Fill your LinkedIn URL here "
                 />
               </View>
               <View
