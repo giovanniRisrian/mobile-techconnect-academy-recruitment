@@ -16,6 +16,7 @@ import {
 } from '../../stores/techconnectAcademy/TechconnectAcademyAction';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import {useSelector} from 'react-redux';
+import {showLoading as showLoadingProfile} from '../../stores/profile/ProfileAction'
 
 export const Vacancy = service => {
   const [list, setList] = useState([]);
@@ -210,7 +211,8 @@ export const Vacancy = service => {
               text: 'OK',
               onPress: () => {
                 dispatch(setTab(PROFILE_PATH));
-                goToScreenWithParams(PROFILE_PATH, false, false);
+                dispatch(showLoadingProfile(true));
+                goToScreenWithParams(PROFILE_PATH, true, false);
               },
             },
           ],

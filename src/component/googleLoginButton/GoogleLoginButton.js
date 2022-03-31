@@ -116,7 +116,7 @@ const GoogleLoginButton = (serviceLogin, serviceRegister) => {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        alert('User cancelled the login flow !');
+        //alert('User cancelled the login flow !');
       } else if (error.code === statusCodes.IN_PROGRESS) {
         alert('Signin in progress');
         // operation (f.e. sign in) is in progress already
