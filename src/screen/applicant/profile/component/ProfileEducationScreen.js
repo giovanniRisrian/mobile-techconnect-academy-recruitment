@@ -194,9 +194,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Title
-                                  ? errors?.Education?.[idx]?.Title.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Title
+                                    ? errors?.Education?.[idx]?.Title.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -233,10 +235,12 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Institution
-                                  ? errors?.Education?.[idx]?.Institution
-                                      .message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Institution
+                                    ? errors?.Education?.[idx]?.Institution
+                                        .message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>
@@ -275,9 +279,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.YearIn
-                                  ? errors?.Education?.[idx]?.YearIn.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.YearIn
+                                    ? errors?.Education?.[idx]?.YearIn.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -314,9 +320,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.YearOut
-                                  ? errors?.Education?.[idx]?.YearOut.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.YearOut
+                                    ? errors?.Education?.[idx]?.YearOut.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>
@@ -354,9 +362,11 @@ const ProfileEducationScreen = ({bloc}) => {
                                 )}
                               />
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.Major
-                                  ? errors?.Education?.[idx]?.Major.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.Major
+                                    ? errors?.Education?.[idx]?.Major.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                             <Box w="48%">
@@ -393,9 +403,11 @@ const ProfileEducationScreen = ({bloc}) => {
                               />
 
                               <FormControl.HelperText>
-                                {errors?.Education?.[idx]?.GPA
-                                  ? errors?.Education?.[idx]?.GPA.message
-                                  : ''}
+                                <Text fontSize={'2xs'} color="red.600">
+                                  {errors?.Education?.[idx]?.GPA
+                                    ? errors?.Education?.[idx]?.GPA.message
+                                    : ''}
+                                </Text>
                               </FormControl.HelperText>
                             </Box>
                           </HStack>

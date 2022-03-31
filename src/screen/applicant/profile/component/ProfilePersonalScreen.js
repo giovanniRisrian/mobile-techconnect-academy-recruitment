@@ -269,7 +269,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Name
                           ? errors.Personal?.Name.message
                           : ''}
@@ -302,13 +302,14 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                           value={value}
                           backgroundColor={'#f2eef3'}
                           error={Boolean(errors.Personal?.Email)}
-                          isReadOnly={disabled}
+                          isReadOnly={true}
+                          isDisabled={true}
                           fontSize={'sm'}
                         />
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Email
                           ? errors.Personal?.Email.message
                           : ''}
@@ -350,7 +351,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                     />
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.TelephoneNo
                           ? errors.Personal?.TelephoneNo.message
                           : ''}
@@ -391,7 +392,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Gender
                           ? errors.Personal?.Gender.message
                           : ''}
@@ -439,7 +440,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                     />
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.BirthDate
                           ? errors.Personal?.BirthDate.message
                           : ''}
@@ -478,7 +479,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.Domicile
                           ? errors.Personal?.Domicile.message
                           : ''}
@@ -515,7 +516,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                       )}
                     />
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.TotalWorkingExperience
                           ? errors.Personal?.TotalWorkingExperience.message
                           : ''}
@@ -548,7 +549,7 @@ const ProfilePersonalScreen = ({bloc, disabledStatus}) => {
                       )}></Controller>
 
                     <FormControl.HelperText mt={0}>
-                      <Text fontSize={'2xs'}>
+                      <Text fontSize={'2xs'} color="red.600">
                         {errors.Personal?.SalaryExpectation
                           ? errors.Personal?.SalaryExpectation.message
                           : ''}
