@@ -15,6 +15,7 @@ import {
 
 import jwt_decode from 'jwt-decode';
 import {useDispatch, useSelector} from 'react-redux';
+import {Alert} from 'react-native';
 export const Register = service => {
   const {callRegisterService, getDataApplicantbyId} = service();
   const [fullname, setFullname] = useState('');
@@ -98,20 +99,23 @@ export const Register = service => {
       if (response) {
         registerInfo = jwt_decode(response.data.token);
         registerInfo.token = response.data.token;
-
-        const resp2 = await getDataApplicantbyId(config);
+        //const resp2 = await getDataApplicantbyId(config);
         // dispatch(setProfile(resp2.data));
         // dispatch(setLogin(registerInfo));
-        alert('Register Success,Active your email');
-        if (registerInfo.Role === 'user') {
-          goToScreen(VACANY_PATH, true);
-        }
-        if (registerInfo.Role === 'recruiter') {
-          goToScreen(RECRUITER.DASHBOARD, true);
-        }
-        if (registerInfo.Role === 'administrator') {
-          goToScreen(ADMINISTRATOR.DASHBOARD, true);
-        }
+        Alert.alert(
+          'Register Success',
+          'Please Activate your account by email. After activate your account, try to login',
+          [
+            {
+              text: 'Go To Login Page',
+              onPress: () => {
+                goToLogin();
+              },
+            },
+          ],
+        );
+        //dispatch(setProfile(resp2.data));
+        goToLogin();
       }
     } catch (error) {
       setLoading(false);
