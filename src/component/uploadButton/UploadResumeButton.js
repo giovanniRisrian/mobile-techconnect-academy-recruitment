@@ -185,7 +185,7 @@ const UploadResumeButton = service => {
       let minDate = '2000-01-01',
         maxDate;
       let nowStartYear, nowStartMonth, nowEndYear, nowEndMonth, now, end;
-      if (profile.experience != null) {
+      if (profile?.experience) {
         let experience = profile.experience;
         let tempExperienceArr = [];
         let tempExperience = {

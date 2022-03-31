@@ -3,7 +3,7 @@ import clientService from './ApiClient';
 const UploadResumeService = () => {
   const callUploadResumeService = async (params, header) => {
     try {
-      const resp = await fetch('http://10.0.2.2:8181/api/resume/upload', {
+      const resp = await fetch('http://13.213.39.143:8001/api/resume/upload', {
         method: 'post',
         headers: header,
         body: params,
@@ -30,7 +30,7 @@ const UploadResumeService = () => {
   const callUploadPictureService = async (params, header) => {
     try {
       const resp = await fetch(
-        'http://10.0.2.2:8181/api/applicant/mobile/update/picture',
+        'http://13.213.39.143:8001/api/applicant/mobile/update/picture',
         {
           method: 'put',
           headers: header,
